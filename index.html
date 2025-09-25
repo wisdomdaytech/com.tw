@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>智日未來科技 WisdomDaytech - AI時代的科技教育領航者 | AI課程培訓專家</title>
+    <meta name="description" content="智日未來科技提供專業AI課程培訓、企業自動化顧問服務。包含AI軟體開發、數據分析、流程自動化、自媒體創作等實戰課程，幫助企業與個人掌握AI時代核心技能。">
+    <meta name="keywords" content="AI課程,人工智慧培訓,企業AI轉型,自動化顧問,AI軟體開發,數據分析,流程自動化,自媒體AI,程式設計,機器學習,深度學習,ChatGPT,Python課程,企業內訓,科技教育,台灣AI教育">
+    <meta name="author" content="智日未來科技科技有限公司">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="zh-TW">
+    <meta name="google-site-verification" content="JWRudwjAkArB6tHu_fS7FSRFCQqJR4AVc7vsOCM6_fI" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://WisdomDaytech.tech/">
+    <meta property="og:title" content="智日未來科技 WisdomDaytech - AI時代的科技教育領航者">
+    <meta property="og:description" content="專業AI課程培訓，讓你用更智慧的方式過好未來每一日">
+    <meta property="og:image" content="https://WisdomDaytech.tech/image/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://WisdomDaytech.tech/">
+    <meta property="twitter:title" content="智日未來科技 WisdomDaytech - AI時代的科技教育領航者">
+    <meta property="twitter:description" content="專業AI課程培訓，讓你用更智慧的方式過好未來每一日">
+    <meta property="twitter:image" content="https://WisdomDaytech.tech/image/og-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://WisdomDaytech.tech/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="image/logo.png">
+    <link rel="apple-touch-icon" href="image/logo.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 動態科技背景 -->
+    <div class="tech-bg">
+        <div class="circuit-pattern"></div>
+        <div class="grid-overlay"></div>
+        <div class="floating-lines">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#home" class="logo" onclick="showPage('home')">
+                <img src="image/logo.png" alt="智日未來科技科技 WisdomDaytech" class="logo-image">
+                <span class="logo-text">智日未來科技 WisdomDaytech</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" onclick="showPage('home')" class="active">首頁</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#corporate" onclick="showPage('corporate')">實體常態課程 <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('ai-automation'); return false;">
+                            <i class="fas fa-cogs"></i>
+                            <span>企業流程 AI 自動化實戰班</span>
+                        </a></li>
+                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('digital-media'); return false;">
+                            <i class="fas fa-video"></i>
+                            <span>自媒體 AI 數位創作實戰班</span>
+                        </a></li>
+                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('ai-analytics'); return false;">
+                            <i class="fas fa-chart-line"></i>
+                            <span>AI 數據分析與決策實戰班</span>
+                        </a></li>
+                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('vibe-coding'); return false;">
+                            <i class="fas fa-code"></i>
+                            <span>Vibe Coding AI 軟體開發實戰班</span>
+                        </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#enterprise-training" onclick="showPage('enterprise-training')">企業內訓課程 <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('enterprise-general'); return false;">
+                            <i class="fas fa-users"></i>
+                            <span>企業常態課內訓包班</span>
+                        </a></li>
+                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('enterprise-custom'); return false;">
+                            <i class="fas fa-tools"></i>
+                            <span>客製化企業內訓包班</span>
+                        </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" style="display: none;">
+                    <a href="#consulting" onclick="showPage('consulting')">自動化顧問</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" onclick="showPage('about')">關於我們</a>
+                </li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- 首頁 -->
+        <section id="home" class="page-section active">
+            <div class="hero">
+                <div class="container">
+                    <h1>智日未來科技 WisdomDaytech</h1>
+                    <p class="slogan">最實用的 AI 課程就在這裡！！！</p>
+                    
+                    <div class="hero-content">
+                        <div class="problem-section">
+                            <h3 class="problem-title">
+                                <i class="fas fa-question-circle"></i>
+                                你是否有以下的煩惱：
+                            </h3>
+                            <div class="problem-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>到底怎麼學才能真正將 AI 活用到日常工作中？</span>
+                            </div>
+                        </div>
+                        
+                        <div class="solution-section">
+                            <h3 class="solution-title">
+                                <i class="fas fa-check-circle"></i>
+                                如果你有這樣的煩惱，那我們的課程就非常適合你！
+                            </h3>
+                            <div class="solution-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>課程中會用最通俗易懂的方式，讓你快速學會各種 AI 應用！</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-rocket"></i>
+                                    <span>不論是在日常生活，還是工作上，都能更輕鬆且智慧的達到目標！</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="slogan">「智日未來科技 AI 課程，幫您打造未來日誌！」</p>
+                    <div class="hero-buttons">
+                        <a href="#corporate" class="btn btn-primary" onclick="showPage('corporate')">
+                            <i class="fas fa-rocket"></i>
+                            實體常態課程
+                        </a>
+                        <a href="#enterprise-training" class="btn btn-secondary" onclick="showPage('enterprise-training')">
+                            <i class="fas fa-users"></i>
+                            企業內訓課程
+                        </a>
+                        <a href="#consulting" class="btn btn-secondary" onclick="showPage('consulting')" style="display: none;">
+                            <i class="fas fa-cogs"></i>
+                            自動化顧問
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <!-- 首頁輪播照片 -->
+                <div class="hero-carousel">
+                    <div class="carousel-container">
+                        <div class="carousel-slides">
+                            <div class="carousel-slide active">
+                                <img src="image/首頁1.jpg" alt="智日未來科技科技教育環境">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="image/首頁2.jpg" alt="AI課程培訓現場">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="image/首頁3.jpg" alt="企業內訓實況">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="image/首頁4.jpg" alt="學員實作成果">
+                            </div>
+                        </div>
+                        <div class="carousel-nav">
+                            <button class="carousel-btn prev" onclick="changeSlide(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="carousel-btn next" onclick="changeSlide(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="carousel-dots">
+                            <span class="dot active" onclick="currentSlide(1)"></span>
+                            <span class="dot" onclick="currentSlide(2)"></span>
+                            <span class="dot" onclick="currentSlide(3)"></span>
+                            <span class="dot" onclick="currentSlide(4)"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-section">
+                    <div class="quote">
+                        "AI將是我們這個時代最重要的技術。每個人都應該學習如何使用AI，就像學習閱讀和寫作一樣重要。"
+                    </div>
+                    <div class="quote-author">— Satya Nadella, Microsoft CEO</div>
+                </div>
+
+                <div class="course-table">
+                    <h3><i class="fas fa-calendar-alt"></i> 近期實體常態課程</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>課程名稱</th>
+                                    <th>上課日期</th>
+                                    <th>上課時間</th>
+                                    <th>上課地點</th>
+                                </tr>
+                            </thead>
+                            <tbody id="course-table-body">
+                                <!-- 課程表格內容將由JavaScript動態生成 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 企業課程 -->
+        <section id="corporate" class="page-section">
+            <div class="container">
+                <div class="hero">
+                    <h1>實體常態課程</h1>
+                    <p class="slogan">為個人量身打造的全方位 AI 應用方案</p>
+                </div>
+
+                <div class="card-grid">
+
+                    <div class="card clickable-card" onclick="showCourseDetail('ai-automation')">
+                        <img src="image/ai-automation.png" alt="企業流程 AI 自動化實戰班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>企業流程 AI 自動化實戰班</h3>
+                        <p>利用 AI 結合雲端自動化工具，實現庶務工作流程自動化，大幅節省時間提升效率。</p>
+                        <br>
+                        <p>🔥 適合：企業行政人員、庶務人員、助理、秘書、財務、人事等。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card clickable-card" onclick="showCourseDetail('digital-media')">
+                        <img src="image/digital-media.png" alt="自媒體 AI 數位創作實戰班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>自媒體 AI 數位創作實戰班</h3>
+                        <p>自媒體經營全自動化解決方案：爬蟲數據收集→AI文案創作→數位媒體製作→自動發布，實現影片頻道經營自動化。</p>
+                        <br>
+                        <p>🔥 適合：自媒體經營者、內容創作者、行銷人員、社群媒體管理員等。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card clickable-card" onclick="showCourseDetail('ai-analytics')">
+                        <img src="image/ai-analytics.png" alt="AI 數據分析與決策實戰班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>AI 數據分析與決策實戰班</h3>
+                        <p>透過AI進行深度視覺化數據分析，找出潛在可分析面向，提供強而有力的數據支撐，輔助企業重要決策制定。</p>
+                        <br>
+                        <p>🔥 適合：企業決策者、管理階層、數據分析師、行銷人員、業務人員等。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card clickable-card" onclick="showCourseDetail('vibe-coding')">
+                        <img src="image/vibe-coding.png" alt="Vibe Coding AI 軟體開發實戰班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Vibe Coding AI 軟體開發班</h3>
+                        <p>主要教授如何使用 AI 開發各種應用，讓你不用會寫程式，也能將腦中的想法透過軟體實現。</p>
+                        <br>
+                        <p>🔥 適合：小白開發者、業務人員、產品經理、UI/UX設計師等。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 企業內訓課程 -->
+        <section id="enterprise-training" class="page-section">
+            <div class="container">
+                <div class="hero">
+                    <h1>企業內訓課程</h1>
+                    <p class="slogan">為企業量身打造的 AI 轉型解決方案</p>
+                </div>
+
+                <div class="card-grid">
+
+                    <div class="card clickable-card" onclick="showCourseDetail('enterprise-general')">
+                        <img src="image/enterprise-training-generally.png" alt="企業常態課內訓包班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>企業常態課內訓包班</h3>
+                        <p>根據常態課程內容，提供企業內部培訓課程，確保每位員工都能便利掌握 AI 技能。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: #718096; font-weight: 600;">依需求報價</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card clickable-card" onclick="showCourseDetail('enterprise-custom')">
+                        <img src="image/enterprise-training-customization.png" alt="客製化企業內訓包班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>客製化企業內訓包班</h3>
+                        <p>根據企業特定需求，提供完全客製化的內部培訓課程，確保每位員工都能掌握適合的 AI 技能。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: #718096; font-weight: 600;">依需求報價</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 自動化顧問 -->
+        <section id="consulting" class="page-section" style="display: none;">
+            <div class="container">
+                <div class="hero">
+                    <h1>自動化顧問服務</h1>
+                    <p class="slogan">專業AI自動化顧問，助您實現企業數位轉型</p>
+                </div>
+
+                <div class="consulting-intro">
+                    <div class="about-content">
+                        <h3>為什麼選擇智日未來科技自動化顧問？</h3>
+                        <p>在AI快速發展的時代，企業面臨前所未有的挑戰與機遇。智日未來科技憑藉豐富的企業輔導經驗與深厚的技術底蘊，為您提供全方位的自動化顧問服務，協助企業在AI浪潮中搶占先機，實現效率躍升與成本優化。</p>
+                        
+                        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                            <div style="text-align: center; padding: 1.5rem; background: #f7fafc; border-radius: 15px;">
+                                <div style="font-size: 2.5rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.5rem;">50+</div>
+                                <div style="color: #4a5568; font-weight: 600;">成功輔導企業</div>
+                            </div>
+                            <div style="text-align: center; padding: 1.5rem; background: #f7fafc; border-radius: 15px;">
+                                <div style="font-size: 2.5rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.5rem;">80%</div>
+                                <div style="color: #4a5568; font-weight: 600;">平均效率提升</div>
+                            </div>
+                            <div style="text-align: center; padding: 1.5rem; background: #f7fafc; border-radius: 15px;">
+                                <div style="font-size: 2.5rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.5rem;">3個月</div>
+                                <div style="color: #4a5568; font-weight: 600;">平均回收投資</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="services-grid">
+                    <h3 style="text-align: center; margin: 3rem 0 2rem 0; font-size: 2rem; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);">核心服務項目</h3>
+                <div class="card-grid">
+                    <div class="card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3>企業現況評估</h3>
+                                <p>深度分析企業現有流程，識別自動化機會點，制定最適合的數位轉型策略藍圖。</p>
+                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                    <li>業務流程盤點與分析</li>
+                                    <li>痛點識別與優先級排序</li>
+                                    <li>ROI評估與效益預測</li>
+                                    <li>技術可行性評估</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-content">
+                        <div class="card-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <h3>AI解決方案設計</h3>
+                                <p>基於企業需求，設計量身訂製的AI自動化解決方案，確保技術與業務完美契合。</p>
+                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                    <li>自動化流程設計</li>
+                                    <li>AI工具選型與配置</li>
+                                    <li>系統整合架構規劃</li>
+                                    <li>數據安全與合規設計</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h3>系統導入實施</h3>
+                                <p>專業團隊協助系統建置與部署，確保自動化方案順利上線，降低導入風險。</p>
+                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                    <li>系統建置與測試</li>
+                                    <li>數據遷移與整合</li>
+                                    <li>使用者培訓與支援</li>
+                                    <li>上線監控與調優</li>
+                                </ul>
+                            </div>
+                    </div>
+
+                    <div class="card">
+                            <div class="card-content">
+                        <div class="card-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h3>效益監控優化</h3>
+                                <p>持續追蹤自動化效益，提供數據驅動的優化建議，確保投資報酬率最大化。</p>
+                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                    <li>效益指標監控</li>
+                                    <li>效能分析與報告</li>
+                                    <li>流程持續優化</li>
+                                    <li>擴展應用規劃</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="industries-section">
+                    <h3 style="text-align: center; margin: 3rem 0 2rem 0; font-size: 2rem; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);">服務產業領域</h3>
+                    <div class="about-content">
+                        <div class="course-features">
+                            <div class="feature-item">
+                                <h4><i class="fas fa-industry" style="margin-right: 0.5rem; color: #00d4ff;"></i>製造業</h4>
+                                <p>生產排程優化、品質檢測自動化、供應鏈管理、設備維護預測</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-store" style="margin-right: 0.5rem; color: #00d4ff;"></i>零售業</h4>
+                                <p>庫存管理、客戶服務自動化、銷售預測、價格優化策略</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-hospital" style="margin-right: 0.5rem; color: #00d4ff;"></i>醫療業</h4>
+                                <p>病歷管理、預約排程、藥物管理、醫療數據分析</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-university" style="margin-right: 0.5rem; color: #00d4ff;"></i>教育業</h4>
+                                <p>學習管理系統、成績分析、課程推薦、行政流程自動化</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-building" style="margin-right: 0.5rem; color: #00d4ff;"></i>服務業</h4>
+                                <p>客戶關係管理、財務流程、人力資源、營運數據分析</p>
+                            </div>
+                            <div class="feature-item">
+                                <h4><i class="fas fa-truck" style="margin-right: 0.5rem; color: #00d4ff;"></i>物流業</h4>
+                                <p>路線最佳化、倉儲管理、配送追蹤、成本控制</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="process-section">
+                    <h3 style="text-align: center; margin: 3rem 0 2rem 0; font-size: 2rem; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);">顧問服務流程</h3>
+                    <div class="course-table">
+                        <div class="table-responsive">
+                            <table class="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>階段</th>
+                                        <th>服務內容</th>
+                                        <th>交付成果</th>
+                                        <th>預估時程</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>需求調研</strong></td>
+                                        <td>企業現況訪談、流程梳理、痛點分析</td>
+                                        <td>現況評估報告、自動化機會清單</td>
+                                        <td>1-2週</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>方案設計</strong></td>
+                                        <td>解決方案設計、技術選型、效益評估</td>
+                                        <td>自動化方案書、實施計畫、ROI分析</td>
+                                        <td>2-3週</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>系統開發</strong></td>
+                                        <td>系統建置、功能開發、整合測試</td>
+                                        <td>自動化系統、操作手冊、測試報告</td>
+                                        <td>4-8週</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>上線支援</strong></td>
+                                        <td>系統部署、用戶培訓、監控優化</td>
+                                        <td>上線報告、培訓文件、維護手冊</td>
+                                        <td>2-4週</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="cta-section" style="text-align: center; margin: 3rem 0;">
+                    <div class="about-content">
+                        <h3>立即開始您的自動化轉型之旅</h3>
+                        <p style="font-size: 1.1rem; margin: 1rem 0 2rem 0;">專業顧問團隊隨時為您提供免費諮詢，協助評估企業自動化潛力</p>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="tel:02-86313606" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                                <i class="fas fa-phone"></i>
+                                立即電話諮詢
+                            </a>
+                            <a href="https://line.me/ti/p/@154gflfs" target="_blank" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                                <i class="fab fa-line" style="color: #00C300;"></i>
+                                Line免費諮詢
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 關於我們 -->
+        <section id="about" class="page-section">
+            <div class="container">
+                <div class="hero">
+                    <h1>關於我們</h1>
+                    <p class="slogan">致力於推動全民科技素養提升</p>
+                </div>
+
+                <div class="about-content">
+                    <h3>品牌故事</h3>
+                    <p>智日未來科技科技，創立於2022年，致力於透過人工智慧與資訊教育，推動全民科技素養的提升。我們為學員打造全方位的智慧學習體驗，透過問題導向式學習，讓科技不只是工具，而是成為日常生活中的智慧夥伴！因為我們相信，知識學習不該被侷限於課堂，而是要活用在每一天的習慣中！讓每個人都能透過科技，過上更聰明、更高效、更有未來感的生活！</p>
+                    <br>
+                    <h3>講師介紹</h3>
+                    <div class="instructor-profile">
+                        <div class="instructor-avatar">
+                            <img src="image/Andy.png" alt="講師張文騫 (3C Andy)" class="instructor-photo">
+                        </div>
+                        <div class="instructor-info">
+                            <h4>張文騫 (3C Andy)</h4>
+                            <p><strong>現職：</strong>智日未來科技執行長</p>
+                            <p><strong>學歷：</strong>政大 圖書資訊與檔案學研究所 碩士</p>
+                            <p><strong>經歷：</strong></p>
+                            <ul class="experience-list">
+                                <li>瑞比智慧科技 AI 轉型顧問</li>
+                                <li>Codingbar程式教育講師</li>
+                                <li>沙箱科技學院主任</li>
+                            </ul>
+                            <br>
+                            <p><strong>授課經歷：</strong></p>
+                            <ul class="experience-list">
+                                <li>柏利金</li>
+                                <li>森永企業</li>
+                                <li>紅人學院</li>
+                                <li>桃園塑膠公會</li>
+                                <li>荖子鍋</li>
+                                <li>台灣經濟研究院七所</li>
+                                <li>第一傳動</li>
+                                <li>雲林輔具資源中心</li>
+                                <li>岳豐科技</li>
+                                <li>花蓮工業會</li>
+                                <li>和泰產險</li>
+                                <li>和成欣業</li>
+                                <li>心路基金會</li>
+                                <li>桃園工業會</li>
+                                <li>新竹工業會</li>
+                                <li>台科大</li>
+                                <li>儒林文教</li>
+                                <li>育苗國際文教</li>
+                                <li>新主流實驗學校</li>
+                                <li>翰科實驗學校</li>
+                                <li>濯亞國際學院</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 課程詳細頁面模板 -->
+        <section id="course-detail" class="page-section">
+            <div class="container">
+                <button class="back-button" id="dynamic-back-button" style="display: none;">
+                    <i class="fas fa-arrow-left"></i> 返回課程列表
+                </button>
+                
+                <div class="course-detail" id="course-detail-content">
+                    <!-- 課程詳細內容將由JavaScript動態載入 -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer版權資訊 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="image/logo.png" alt="智日未來科技 WisdomDaytech" class="footer-logo-image">
+                <span>智日未來科技 WisdomDaytech</span>
+            </div>
+            <div class="footer-text">
+                AI 時代的科技教育領航者，讓你用更智慧的方式過好未來每一日
+            </div>
+            
+            <!-- 聯絡資訊 -->
+            <div class="footer-contact">
+                <h3 style="color: #00d4ff; margin-bottom: 1rem; font-size: 1.2rem;">聯絡我們</h3>
+                <div style="margin-bottom: 1.5rem;">
+                    <a href="https://line.me/ti/p/@154gflfs" target="_blank" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-size: 1rem; padding: 0.8rem 1.5rem;">
+                        <i class="fab fa-line" style="color: #00C300;"></i>
+                        Line諮詢
+                    </a>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-item-footer">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:WisdomDaytech@gmail.com" style="color: #a0aec0; text-decoration: none;">WisdomDaytech@gmail.com</a>
+                    </div>
+                    <div class="contact-item-footer">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:02-86313606" style="color: #a0aec0; text-decoration: none;">02-86313606</a>
+            </div>
+        </div>
+    </div>
+
+            <div class="footer-copyright">
+                © 2025 智日未來科技科技有限公司 WisdomDaytech Technology Co., Ltd. 版權所有
+            </div>
+        </div>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

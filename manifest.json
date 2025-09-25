@@ -1,0 +1,21 @@
+{
+  "name": "智日未來 WisdomDay - AI時代的科技教育領航者",
+  "short_name": "智日未來",
+  "description": "專業AI課程培訓與企業自動化顧問服務，讓你用更智慧的方式過好未來每一日",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e27",
+  "theme_color": "#00d4ff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "image/智日未來 WisdomDay LOGO.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "technology", "business"],
+  "lang": "zh-TW",
+  "scope": "/"
+}
