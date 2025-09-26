@@ -239,7 +239,7 @@ function updateCourseDetailNavState(courseId) {
 
 // 更新頁面標題
 function updatePageTitle(pageId, courseTitle = null) {
-    const baseName = '智日未來 WisdomDay';
+    const baseName = '智日未來科技 WisdomDaytech';
     const pageTitles = {
         'home': `${baseName} - AI時代的科技教育領航者`,
         'corporate': `實體常態課程 - ${baseName}`,
