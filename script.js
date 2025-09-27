@@ -210,7 +210,7 @@ function updateCourseDetailNavState(courseId) {
     let subNavSelector = '';
     
     // 實體常態課程
-    if (['vibe-coding', 'ai-analytics', 'ai-automation', 'digital-media'].includes(courseId)) {
+    if ([ 'ai-automation','ai-analytics','ai-communication','digital-media','vibe-coding'].includes(courseId)) {
         mainNavSelector = 'a[onclick*="corporate"]';
         subNavSelector = `a[onclick*="showCourseDetail('${courseId}')"]`;
     }
@@ -454,24 +454,6 @@ const courseData = {
             
         ]
     },
-    'custom-training': {
-        title: '客製化企業內訓包班',
-        subtitle: '根據企業特定需求，提供完全客製化的內部培訓課程',
-        description: '我們將根據貴公司的具體需求和目標，設計專屬的 AI 培訓課程，確保每位員工都能掌握最適合其工作職能的 AI 技能。',
-        image: 'image/enterprise-training.png',
-        features: [
-            { title: '需求分析', desc: '深入了解企業需求，制定專屬培訓計畫' },
-            { title: '客製課程', desc: '根據企業文化和目標設計專屬課程內容' },
-            { title: '彈性安排', desc: '配合企業時間安排，提供最適合的培訓時程' },
-            { title: '持續支援', desc: '提供課後諮詢和技術支援服務' }
-        ],
-        schedule: [
-            { day: '第一天', time: '09:30-12:00', topic: '企業需求分析與 AI 基礎', content: '• 企業現況分析與需求評估\n• AI 技術概論與應用案例\n• 企業 AI 轉型策略規劃\n• 員工技能現況盤點' },
-            { day: '第一天', time: '13:00-16:30', topic: '客製化 AI 工具導入', content: '• 企業專屬 AI 工具選擇\n• 工具安裝與環境設定\n• 基礎操作教學\n• 實務案例演練' },
-            { day: '第二天', time: '09:30-12:00', topic: '部門應用實戰', content: '• 各部門 AI 應用場景分析\n• 實際業務流程優化\n• 團隊協作 AI 工具使用\n• 效率提升策略制定' },
-            { day: '第二天', time: '13:00-16:30', topic: '成效評估與持續改進', content: '• AI 導入成效評估\n• 問題診斷與解決方案\n• 後續發展規劃\n• 技術支援機制建立' }
-        ]
-    },
     'enterprise-general': {
         title: '企業常態課內訓包班',
         subtitle: '根據常態課程內容，提供企業內部培訓課程',
@@ -484,11 +466,12 @@ const courseData = {
             { title: '實務應用', desc: '結合企業實際業務場景進行教學' }
         ],
         schedule: [
-            { day: '第一天', time: '09:30-12:00', topic: 'AI 基礎概念與工具介紹', content: '• AI 技術概覽\n• 常用 AI 工具介紹\n• 企業 AI 應用案例\n• 基礎操作教學' },
-            { day: '第一天', time: '13:00-16:30', topic: '實務操作演練', content: '• 分組實作練習\n• 企業場景模擬\n• 問題解決討論\n• 成果分享' },
-            { day: '第二天', time: '09:30-12:00', topic: '進階應用與整合', content: '• 進階功能教學\n• 系統整合應用\n• 效率提升技巧\n• 最佳實務分享' },
-            { day: '第二天', time: '13:00-16:30', topic: '企業導入規劃', content: '• 導入策略制定\n• 風險評估與管理\n• 成效評估方法\n• 後續支援機制' }
-        ]
+            { day: '詳細課程細節可參考', time: '', topic: '', content: '' }
+        ],
+        additionalInfo: {
+            buttonText: '實體常態課程',
+            buttonLink: '#corporate'
+        }
     },
     'enterprise-custom': {
         title: '客製化企業內訓包班',
@@ -564,7 +547,7 @@ function showCourseDetail(courseId) {
         window.isFromHomeTable = false;
     } 
     // 實體常態課程：根據當前頁面和點擊來源判斷
-    else if (['vibe-coding', 'ai-analytics', 'ai-automation', 'digital-media'].includes(courseId)) {
+    else if (['ai-automation', 'ai-analytics', 'ai-communication', 'digital-media','vibe-coding'].includes(courseId)) {
         // 檢查是否從首頁的課程表格點擊
         const courseLink = document.querySelector(`#home a[onclick*="showCourseDetail('${courseId}')"]`);
         const isFromHomeTable = currentActive && currentActive.id === 'home' && 
@@ -650,13 +633,23 @@ function showCourseDetail(courseId) {
                 </thead>
                 <tbody>
                     ${course.schedule.map((session, index) => `
-                        ${index === 0 || session.day !== course.schedule[index-1].day ? 
+                        ${session.day && (index === 0 || session.day !== course.schedule[index-1].day) ? 
                             `<tr><td colspan="3" class="day-header">${session.day}</td></tr>` : ''}
-                        <tr>
-                            <td>${session.time}</td>
-                            <td><strong>${session.topic}</strong></td>
-                            <td style="text-align: left; white-space: pre-line;">${session.content}</td>
-                        </tr>
+                        ${session.time === '' && session.topic === '' && session.content === '' && course.additionalInfo ? 
+                            `<tr>
+                                <td colspan="3" style="text-align: center; vertical-align: middle; padding: 2rem 0; background: rgba(247, 250, 252, 0.5);">
+                                    <a href="${course.additionalInfo.buttonLink}" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-size: 1rem; padding: 0.8rem 1.5rem;">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        ${course.additionalInfo.buttonText}
+                                    </a>
+                                </td>
+                            </tr>` : 
+                            `<tr>
+                                <td style="text-align: center;">${session.time}</td>
+                                <td style="text-align: center;"><strong>${session.topic}</strong></td>
+                                <td style="text-align: center; white-space: pre-line;">${session.content}</td>
+                            </tr>`
+                        }
                     `).join('')}
                 </tbody>
             </table>
@@ -664,7 +657,7 @@ function showCourseDetail(courseId) {
 
         <div style="text-align: center; margin-top: 3rem;">
             <a href="#" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 2rem;">
-                <i class="fas fa-phone"></i> 立即報名諮詢
+                <i class="fas fa-phone"></i> 立即報名
             </a>
         </div>
         
