@@ -654,6 +654,118 @@
                 </div>
             </div>
         </section>
+
+        <!-- 報名頁面 -->
+        <section id="registration" class="page-section">
+            <div class="container">
+                <div class="course-detail">
+                    <div class="course-header">
+                        <h1 class="course-title">課程報名</h1>
+                        <p class="course-subtitle">填寫以下資訊完成報名</p>
+                    </div>
+
+                    <div class="registration-form-container" style="background: rgba(255, 255, 255, 0.98); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 20px; padding: 3rem; margin: 2rem 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px);">
+                        <form id="registration-form" style="max-width: 600px; margin: 0 auto;">
+                            <!-- 課程選擇 -->
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="course-select" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">選擇課程 *</label>
+                                <select id="course-select" name="course" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: all 0.3s ease;">
+                                    <option value="">請選擇課程</option>
+                                    <option value="ai-automation">工作流程 AI 自動化實戰班</option>
+                                    <option value="ai-analytics">AI 數據分析與決策輔佐班</option>
+                                    <option value="ai-communication">商務營運 AI 通訊助理班</option>
+                                    <option value="digital-media">自媒體 AI 數位創作經營班</option>
+                                    <option value="vibe-coding">Vibe Coding AI 軟體開發班</option>
+                                    <option value="enterprise-general">企業常態課內訓包班</option>
+                                    <option value="enterprise-custom">客製化企業內訓包班</option>
+                                </select>
+                            </div>
+
+                            <!-- 個人資訊 -->
+                            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                                <div class="form-group">
+                                    <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">姓名 *</label>
+                                    <input type="text" id="name" name="name" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">電話 *</label>
+                                    <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">Email *</label>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="email" id="email" name="email" required style="flex: 1; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                    <button type="button" id="send-email-verification" onclick="sendEmailVerification()" style="padding: 1rem 1.5rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 10px; font-size: 0.9rem; white-space: nowrap; cursor: pointer; transition: all 0.3s ease;">發送驗證碼</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="verification-code" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">Email驗證碼 *</label>
+                                <input type="text" id="verification-code" name="verification-code" required maxlength="6" style="width: 200px; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; text-align: center; letter-spacing: 0.2rem;" placeholder="6位數字" disabled>
+                                <small id="verification-hint" style="display: block; margin-top: 0.5rem; color: #718096;">請先輸入Email並發送驗證碼</small>
+                            </div>
+
+                            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                                <div class="form-group">
+                                    <label for="company" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">公司/組織</label>
+                                    <input type="text" id="company" name="company" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tax-id" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">統編</label>
+                                    <input type="text" id="tax-id" name="tax-id" maxlength="8" pattern="[0-9]{8}" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;" placeholder="8位數字">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="position" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">職位</label>
+                                <input type="text" id="position" name="position" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="experience" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">AI 相關經驗</label>
+                                <select id="experience" name="experience" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: all 0.3s ease;">
+                                    <option value="">請選擇</option>
+                                    <option value="none">完全沒有經驗</option>
+                                    <option value="basic">基礎了解</option>
+                                    <option value="intermediate">有一些使用經驗</option>
+                                    <option value="advanced">熟練使用</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="expectations" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">學習期望與目標</label>
+                                <textarea id="expectations" name="expectations" rows="4" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; resize: vertical; transition: all 0.3s ease;" placeholder="請描述您希望透過這門課程達成的目標..."></textarea>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 2rem;">
+                                <label for="how-know" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">如何得知本課程</label>
+                                <select id="how-know" name="how-know" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: all 0.3s ease;">
+                                    <option value="">請選擇</option>
+                                    <option value="google">Google 搜尋</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="line">Line</option>
+                                    <option value="friend">朋友推薦</option>
+                                    <option value="colleague">同事推薦</option>
+                                    <option value="other">其他</option>
+                                </select>
+                            </div>
+
+                            <!-- 提交按鈕 -->
+                            <div style="text-align: center; margin-top: 3rem;">
+                                <button type="button" onclick="goBackToCourseDetail()" class="btn btn-secondary" style="margin-right: 1rem; background: #718096; color: white; border: none;">
+                                    <i class="fas fa-arrow-left"></i> 返回課程
+                                </button>
+                                <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; font-size: 1.1rem; padding: 1rem 2rem;">
+                                    <i class="fas fa-paper-plane"></i> 提交報名
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer版權資訊 -->
