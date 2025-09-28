@@ -658,6 +658,10 @@
         <!-- 報名頁面 -->
         <section id="registration" class="page-section">
             <div class="container">
+                <button class="back-button" id="registration-back-button" style="display: none;">
+                    <i class="fas fa-arrow-left"></i> 返回課程
+                </button>
+                
                 <div class="course-detail">
                     <div class="course-header">
                         <h1 class="course-title">課程報名</h1>
@@ -750,9 +754,6 @@
 
                             <!-- 提交按鈕 -->
                             <div style="text-align: center; margin-top: 3rem;">
-                                <button type="button" onclick="goBackToCourseDetail()" class="btn btn-secondary" style="margin-right: 1rem; background: #718096; color: white; border: none;">
-                                    <i class="fas fa-arrow-left"></i> 返回課程
-                                </button>
                                 <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; font-size: 1.1rem; padding: 1rem 2rem;">
                                     <i class="fas fa-paper-plane"></i> 提交報名
                                 </button>

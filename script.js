@@ -28,14 +28,24 @@ function showPage(pageId) {
     });
     
     // 管理返回按鈕顯示
-    const backButton = document.getElementById('dynamic-back-button');
-    if (backButton) {
-        // 只在課程詳細頁面和報名頁面顯示返回按鈕
-        if (pageId === 'course-detail' || pageId === 'registration') {
-            // 返回按鈕的具體設置會在各自的函數中處理
-        } else {
-            backButton.style.display = 'none';
+    const courseBackButton = document.getElementById('dynamic-back-button');
+    const registrationBackButton = document.getElementById('registration-back-button');
+    
+    if (pageId === 'course-detail') {
+        // 課程詳細頁面：顯示課程返回按鈕，隱藏報名返回按鈕
+        if (courseBackButton) courseBackButton.style.display = 'inline-flex';
+        if (registrationBackButton) registrationBackButton.style.display = 'none';
+    } else if (pageId === 'registration') {
+        // 報名頁面：顯示報名返回按鈕，隱藏課程返回按鈕
+        if (registrationBackButton) {
+            registrationBackButton.style.display = 'inline-flex';
+            registrationBackButton.onclick = goBackToCourseDetail;
         }
+        if (courseBackButton) courseBackButton.style.display = 'none';
+    } else {
+        // 其他頁面：隱藏所有返回按鈕
+        if (courseBackButton) courseBackButton.style.display = 'none';
+        if (registrationBackButton) registrationBackButton.style.display = 'none';
     }
     
     // 更新瀏覽器URL（pushState用於用戶操作）
@@ -290,12 +300,18 @@ function showRegistration(courseId) {
     // 切換到報名頁面
     showPage('registration');
     
-    // 顯示返回按鈕
-    const backButton = document.getElementById('dynamic-back-button');
-    if (backButton) {
-        backButton.innerHTML = '<i class="fas fa-arrow-left"></i> 返回課程';
-        backButton.onclick = goBackToCourseDetail;
-        backButton.style.display = 'inline-flex';
+    // 顯示報名頁面的返回按鈕（浮動在左上角）
+    const registrationBackButton = document.getElementById('registration-back-button');
+    if (registrationBackButton) {
+        registrationBackButton.onclick = goBackToCourseDetail;
+        registrationBackButton.style.display = 'inline-flex';
+        registrationBackButton.innerHTML = '<i class="fas fa-arrow-left"></i> 返回課程';
+    }
+    
+    // 隱藏課程詳細頁面的返回按鈕
+    const courseBackButton = document.getElementById('dynamic-back-button');
+    if (courseBackButton) {
+        courseBackButton.style.display = 'none';
     }
     
     // 自動選擇課程
