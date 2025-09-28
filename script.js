@@ -944,7 +944,7 @@ const courseData = {
 let dynamicCourseData = [];
 
 // Apps Script Web App URLs（分離的兩個服務）
-const COURSE_DATA_API_URL = 'https://script.google.com/macros/s/AKfycbwTPXoiZzgyFxuZouo_bx96rQ5ui-J5W9Tk6Gb-YjfwjW_1MPNdWEsibVO7fTV_x_dV/exec';
+const COURSE_DATA_API_URL = 'https://script.google.com/macros/s/AKfycbzqvq46QPHmEWS4wxkH7TAjtqjipk69DPBW7PNndbKPQC3ZYpPJM4bwgw8cI1cj9Ak/exec';
 const REGISTRATION_API_URL = 'https://script.google.com/macros/s/AKfycbx4p_OiUukaS0WIC023NwvrMaeocc8AlzMB2PH1A0ccw5KV8mBvDjZ9h1WaS_PSKRiE/exec';
 
 // 生成分組課程表格HTML（按課程類型分組，每種課程顯示最近3堂）
