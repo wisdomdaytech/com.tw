@@ -1574,6 +1574,29 @@ tbody tr:hover {
     }
 }
 
+/* 課程狀態樣式 */
+.course-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-block;
+    text-align: center;
+    min-width: 70px;
+}
+
+.status-ongoing {
+    background: linear-gradient(135deg, #e53e3e, #f56565);
+    color: white;
+    box-shadow: 0 2px 8px rgba(229, 62, 62, 0.3);
+}
+
+.status-upcoming {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3);
+}
+
 /* Smooth scrolling and animations */
 html {
     scroll-behavior: smooth;
