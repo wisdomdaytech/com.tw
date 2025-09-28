@@ -27,8 +27,19 @@ function showPage(pageId) {
         item.classList.remove('mobile-active');
     });
     
+    // 管理返回按鈕顯示
+    const backButton = document.getElementById('dynamic-back-button');
+    if (backButton) {
+        // 只在課程詳細頁面和報名頁面顯示返回按鈕
+        if (pageId === 'course-detail' || pageId === 'registration') {
+            // 返回按鈕的具體設置會在各自的函數中處理
+        } else {
+            backButton.style.display = 'none';
+        }
+    }
+    
     // 更新瀏覽器URL（pushState用於用戶操作）
-    if (pageId !== 'course-detail') {
+    if (pageId !== 'course-detail' && pageId !== 'registration') {
         history.pushState({page: pageId}, '', `#${pageId}`);
     }
     
@@ -279,6 +290,14 @@ function showRegistration(courseId) {
     // 切換到報名頁面
     showPage('registration');
     
+    // 顯示返回按鈕
+    const backButton = document.getElementById('dynamic-back-button');
+    if (backButton) {
+        backButton.innerHTML = '<i class="fas fa-arrow-left"></i> 返回課程';
+        backButton.onclick = goBackToCourseDetail;
+        backButton.style.display = 'inline-flex';
+    }
+    
     // 自動選擇課程
     const courseSelect = document.getElementById('course-select');
     if (courseSelect && courseId) {
@@ -516,7 +535,7 @@ function handleRegistrationSubmit(event) {
     })
     .then(() => {
         // 由於no-cors模式，我們無法讀取回應，但假設成功
-        alert('報名成功！我們會盡快與您聯繫。\n您的資料已安全儲存。');
+        alert('報名成功！我們會盡快與您聯繫！');
         
         // 重置表單
         event.target.reset();
