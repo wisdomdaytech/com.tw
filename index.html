@@ -220,21 +220,8 @@
 
                 <div class="course-table">
                     <h3><i class="fas fa-calendar-alt"></i> 近期實體常態課程</h3>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>課程名稱</th>
-                                    <th>上課日期</th>
-                                    <th>上課時間</th>
-                                    <th>上課地點</th>
-                                    <th>狀態</th>
-                                </tr>
-                            </thead>
-                            <tbody id="course-table-body">
-                                <!-- 課程表格內容將由JavaScript動態生成 -->
-                            </tbody>
-                        </table>
+                    <div id="course-tables-container">
+                        <!-- 課程表格內容將由JavaScript動態生成 -->
                     </div>
                 </div>
             </div>
@@ -684,6 +671,11 @@
                                     <option value="enterprise-general">企業常態課內訓包班</option>
                                     <option value="enterprise-custom">客製化企業內訓包班</option>
                                 </select>
+                            </div>
+
+                            <!-- 時段選擇 -->
+                            <div id="schedule-selection-container" style="display: none;">
+                                <!-- 時段選擇內容將由JavaScript動態生成 -->
                             </div>
 
                             <!-- 個人資訊 -->
