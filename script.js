@@ -1,4 +1,3 @@
-// 課程資料最後更新時間: 2025/9/30 上午12:36:36
 // 頁面切換功能（用戶點擊觸發）
 function showPage(pageId) {
     // 隱藏所有頁面
@@ -731,8 +730,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 處理初始URL
     handleUrlAndInit();
     
-    // 初始化課程表格（從Apps Script即時獲取資料）
-    loadCourseDataFromAPI();
+    // 初始化課程表格（使用Google Apps Script自動推送的資料）
+    const courseTablesContainer = document.getElementById('course-tables-container');
+    if (courseTablesContainer) {
+        courseTablesContainer.innerHTML = generateSortedCourseTable();
+    }
     
     // 初始化輪播功能
     if (document.querySelector('.carousel-slide')) {
@@ -941,117 +943,10 @@ const courseData = {
     }
 };
 
-// 全域變數存儲課程資料（由前端即時從Google Apps Script獲取）
-let dynamicCourseData = [
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2025/10/21(二)",
-    "上課日期2": "2025/10/29(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2025/12/15(一)",
-    "上課日期2": "2025/12/22(一)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2025/12/16(二)",
-    "上課日期2": "2025/12/23(二)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2025/12/17(三)",
-    "上課日期2": "2025/12/24(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2025/12/18(四)",
-    "上課日期2": "2025/12/25(四)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2025/12/19(五)",
-    "上課日期2": "2025/12/26(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/1/5(一)",
-    "上課日期2": "2026/1/6(二)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/1/6(二)",
-    "上課日期2": "2026/1/7(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/1/7(三)",
-    "上課日期2": "2026/1/8(四)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/1/8(四)",
-    "上課日期2": "2026/1/9(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/1/9(五)",
-    "上課日期2": "2026/1/10(六)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2025/9/23(二)",
-    "上課日期2": "2025/9/30(二)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2025/9/24(三)",
-    "上課日期2": "2025/10/1(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2025/9/25(四)",
-    "上課日期2": "2025/10/2(四)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2025/9/26(五)",
-    "上課日期2": "2025/10/3(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  }
-];
+// 全域變數存儲課程資料（由Google Apps Script自動推送更新到GitHub）
+let dynamicCourseData = [];
 
-// Apps Script Web App URLs（分離的兩個服務）
-const COURSE_DATA_API_URL = 'https://script.google.com/macros/s/AKfycbzqvq46QPHmEWS4wxkH7TAjtqjipk69DPBW7PNndbKPQC3ZYpPJM4bwgw8cI1cj9Ak/exec';
+// Apps Script Web App URL（報名與驗證服務）
 const REGISTRATION_API_URL = 'https://script.google.com/macros/s/AKfycbx4p_OiUukaS0WIC023NwvrMaeocc8AlzMB2PH1A0ccw5KV8mBvDjZ9h1WaS_PSKRiE/exec';
 
 // 生成分組課程表格HTML（按課程類型分組，每種課程顯示最近3堂）
@@ -1466,76 +1361,8 @@ function generateCourseScheduleSection(courseId) {
     `;
 }
 
-// 從Google Apps Script即時獲取課程資料
-async function loadCourseDataFromAPI() {
-    try {
-        console.log('開始從Apps Script獲取課程資料...');
-        
-        const response = await fetch(`${COURSE_DATA_API_URL}?action=getCourseData`, {
-            method: 'GET',
-            mode: 'cors'
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP錯誤: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        if (result.success && result.data) {
-            dynamicCourseData = result.data;
-            console.log(`成功獲取 ${dynamicCourseData.length} 筆課程資料`);
-            
-            // 更新首頁課程表格
-            updateCourseTablesDisplay();
-            
-            return true;
-        } else {
-            throw new Error(result.message || '獲取資料失敗');
-        }
-        
-    } catch (error) {
-        console.error('獲取課程資料失敗:', error);
-        
-        // 使用預設資料作為備用
-        console.log('使用預設課程資料作為備用');
-        dynamicCourseData = [];
-        updateCourseTablesDisplay();
-        
-        return false;
-    }
-}
-
-// 更新課程表格顯示
-function updateCourseTablesDisplay() {
-    const courseTablesContainer = document.getElementById('course-tables-container');
-    if (courseTablesContainer) {
-        courseTablesContainer.innerHTML = generateSortedCourseTable();
-    }
-}
-
-// 重新載入課程資料
-async function reloadCourseData() {
-    const success = await loadCourseDataFromAPI();
-    if (success) {
-        // 如果當前在課程詳細頁面，也要更新時段顯示
-        const currentPage = document.querySelector('.page-section.active');
-        if (currentPage && currentPage.id === 'course-detail') {
-            // 重新生成課程詳細頁面的時段區段
-            const courseDetailContent = document.getElementById('course-detail-content');
-            if (courseDetailContent) {
-                // 獲取當前課程ID
-                const currentUrl = window.location.hash;
-                const courseIdMatch = currentUrl.match(/course-(.+)/);
-                if (courseIdMatch) {
-                    const courseId = courseIdMatch[1];
-                    showCourseDetail(courseId);
-                }
-            }
-        }
-    }
-    return success;
-}
+// 課程資料現在由Google Apps Script自動推送到GitHub
+// dynamicCourseData陣列會在下方自動更新
 
 // 全域變數儲存返回頁面
 let previousPage = 'corporate';
