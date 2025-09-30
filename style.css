@@ -1385,160 +1385,96 @@ tbody tr:hover {
         font-size: 1rem;
     }
 
-    /* 手機版表格改為卡片式布局 */
+    /* 手機版表格優化 */
     .table-responsive {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .table-responsive table {
-        display: none; /* 隱藏原本的表格 */
-    }
-
-    /* 手機版卡片式課程顯示 */
-    .mobile-course-cards {
-        display: block;
-    }
-
-    .mobile-course-card {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .mobile-course-card .course-name {
-        font-weight: 600;
-        color: #2d3748;
-        margin-bottom: 0.8rem;
-        font-size: 1rem;
-        border-bottom: 2px solid #00d4ff;
-        padding-bottom: 0.5rem;
-    }
-
-    .mobile-course-card .course-info {
-        display: grid;
-        gap: 0.5rem;
-    }
-
-    .mobile-course-card .info-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.3rem 0;
-        border-bottom: 1px solid #f7fafc;
-    }
-
-    .mobile-course-card .info-row:last-child {
-        border-bottom: none;
-    }
-
-    .mobile-course-card .info-label {
-        font-weight: 500;
-        color: #4a5568;
-        font-size: 0.9rem;
-        min-width: 60px;
-    }
-
-    .mobile-course-card .info-value {
-        color: #2d3748;
-        font-size: 0.9rem;
-        text-align: right;
-        flex: 1;
-    }
-
-    .mobile-course-card .location-link {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .mobile-course-card .location-link:hover {
-        color: #00d4ff;
-        text-decoration: underline;
-    }
-
-    .mobile-course-card .course-status {
-        padding: 0.2rem 0.6rem;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 0.8rem;
-        display: inline-block;
-    }
-
-    /* 課程詳細頁面手機版卡片 */
-    .mobile-schedule-cards {
-        display: block;
-    }
-
-    .mobile-schedule-card {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .mobile-schedule-card .schedule-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.8rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #00d4ff;
-    }
-
-    .mobile-schedule-card .schedule-date {
-        font-weight: 600;
-        color: #2d3748;
-        font-size: 0.95rem;
-    }
-
-    .mobile-schedule-card .schedule-status {
-        padding: 0.2rem 0.6rem;
-        border-radius: 12px;
-        font-weight: 600;
+        width: 100%;
+        min-width: 500px;
         font-size: 0.75rem;
     }
 
-    .mobile-schedule-card .schedule-details {
-        display: grid;
-        gap: 0.4rem;
-        margin-bottom: 1rem;
+    .schedule-table th,
+    .schedule-table td {
+        padding: 0.4rem 0.2rem;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        vertical-align: middle;
     }
 
-    .mobile-schedule-card .detail-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .schedule-table th:first-child,
+    .schedule-table td:first-child {
+        min-width: 100px;
+        font-size: 0.7rem;
     }
 
-    .mobile-schedule-card .detail-label {
-        font-weight: 500;
-        color: #4a5568;
-        font-size: 0.85rem;
-        min-width: 50px;
+    .schedule-table th:nth-child(2),
+    .schedule-table td:nth-child(2) {
+        min-width: 70px;
     }
 
-    .mobile-schedule-card .detail-value {
-        color: #2d3748;
-        font-size: 0.85rem;
-        text-align: right;
-        flex: 1;
+    .schedule-table th:nth-child(3),
+    .schedule-table td:nth-child(3) {
+        min-width: 90px;
+        font-size: 0.7rem;
     }
 
-    .mobile-schedule-card .register-button {
-        width: 100%;
+    .schedule-table th:nth-child(4),
+    .schedule-table td:nth-child(4) {
+        min-width: 60px;
         text-align: center;
     }
 
-    .mobile-schedule-card .btn {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
+    .schedule-table th:nth-child(5),
+    .schedule-table td:nth-child(5) {
+        min-width: 70px;
+        text-align: center;
+    }
+
+    /* 手機版按鈕優化 */
+    .schedule-table .btn {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        border-radius: 4px;
+        white-space: nowrap;
+    }
+
+    .schedule-table .btn i {
+        font-size: 0.7rem;
+        margin-right: 0.2rem;
+    }
+
+    /* 課程狀態在手機版的優化 */
+    .course-status {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.65rem;
         border-radius: 8px;
-        min-width: 100px;
+        display: inline-block;
+        text-align: center;
+        min-width: 50px;
+    }
+
+    /* 地點連結在手機版的優化 */
+    .location-link {
+        font-size: 0.7rem;
+        display: inline-block;
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .location-link::after {
+        content: "📍";
+        margin-left: 0.2rem;
+        font-size: 0.7rem;
     }
 
 
@@ -1734,10 +1670,10 @@ tbody tr:hover {
     }
 }
 
-/* 桌面版隱藏手機版卡片 */
+/* 隱藏手機版卡片，統一使用表格 */
 .mobile-course-cards,
 .mobile-schedule-cards {
-    display: none;
+    display: none !important;
 }
 
 /* 課程狀態樣式 */
