@@ -1,4 +1,3 @@
-// 課程資料最後更新時間: 2025/9/30 下午12:37:42
 // 頁面切換功能（用戶點擊觸發）
 function showPage(pageId) {
     // 隱藏所有頁面
@@ -1039,113 +1038,7 @@ const courseData = {
 };
 
 // 全域變數存儲課程資料（由Google Apps Script自動推送更新到GitHub）
-let dynamicCourseData = [
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/3(二)",
-    "上課日期2": "2026/3/4(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/5(四)",
-    "上課日期2": "2026/3/6(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/10(二)",
-    "上課日期2": "2026/3/11(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/12(四)",
-    "上課日期2": "2026/3/13(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/3/17(二)",
-    "上課日期2": "2026/3/18(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/19(四)",
-    "上課日期2": "2026/3/20(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/24(二)",
-    "上課日期2": "2026/3/25(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/26(四)",
-    "上課日期2": "2026/3/27(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/31(二)",
-    "上課日期2": "2026/4/1(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/7(二)",
-    "上課日期2": "2026/4/8(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/4/9(四)",
-    "上課日期2": "2026/4/10(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/4/14(二)",
-    "上課日期2": "2026/4/15(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/4/16(四)",
-    "上課日期2": "2026/4/17(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/4/21(二)",
-    "上課日期2": "2026/4/22(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/23(四)",
-    "上課日期2": "2026/4/24(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  }
-];
+let dynamicCourseData = [];
 
 // Apps Script Web App URL（報名與驗證服務）
 const REGISTRATION_API_URL = 'https://script.google.com/macros/s/AKfycbxmlEZUL2lUl9VkjQESboesDEr-w0IxyYcIqLbmG4a-_b2hzfEUaxIIBJiZdtfY9l9m/exec';
@@ -1262,6 +1155,43 @@ function generateSortedCourseTable() {
             `;
         }).join('');
         
+        // 生成手機版卡片
+        const mobileCards = courses.map(course => {
+            const scheduleText = formatScheduleText(course['上課日期1'], course['上課日期2']);
+            
+            return `
+            <div class="mobile-course-card">
+                <div class="course-name">
+                    <a href="javascript:void(0)" onclick="showCourseDetail('${courseId}'); return false;" class="course-link">
+                        ${courseName}
+                    </a>
+                </div>
+                <div class="course-info">
+                    <div class="info-row">
+                        <span class="info-label">日期</span>
+                        <span class="info-value">${scheduleText}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">時間</span>
+                        <span class="info-value">${course['上課時間'] || ''}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">地點</span>
+                        <span class="info-value">
+                            <a href="https://www.google.com/maps/search/${encodeURIComponent(course['上課地點'] || '')}" target="_blank" class="location-link" title="點擊開啟Google Maps">${course['上課地點'] || ''}</a>
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">狀態</span>
+                        <span class="info-value">
+                            <span class="course-status ${course.statusClass}">${course.status}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            `;
+        }).join('');
+
         tablesHTML += `
         <div class="course-group-table" style="margin-bottom: 2rem;">
             <h4 class="course-group-title">
@@ -1283,6 +1213,9 @@ function generateSortedCourseTable() {
                         ${tableRows}
                     </tbody>
                 </table>
+                <div class="mobile-course-cards">
+                    ${mobileCards}
+                </div>
             </div>
         </div>
         `;
@@ -1304,6 +1237,39 @@ function generateDefaultCourseTable() {
     let tablesHTML = '';
     
     courses.forEach(([courseId, course]) => {
+        // 生成手機版卡片
+        const mobileCard = `
+        <div class="mobile-course-card">
+            <div class="course-name">
+                <a href="javascript:void(0)" onclick="showCourseDetail('${courseId}'); return false;" class="course-link">
+                    ${course.title}
+                </a>
+            </div>
+            <div class="course-info">
+                <div class="info-row">
+                    <span class="info-label">日期</span>
+                    <span class="info-value">${course.scheduleText}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">時間</span>
+                    <span class="info-value">${course.time}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">地點</span>
+                    <span class="info-value">
+                        <a href="https://www.google.com/maps/search/${encodeURIComponent(course.location)}" target="_blank" class="location-link" title="點擊開啟Google Maps">${course.location}</a>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">狀態</span>
+                    <span class="info-value">
+                        <span class="course-status status-upcoming">即將到來</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        `;
+
         tablesHTML += `
         <div class="course-group-table" style="margin-bottom: 2rem;">
             <h4 class="course-group-title">
@@ -1330,6 +1296,9 @@ function generateDefaultCourseTable() {
         </tr>
                     </tbody>
                 </table>
+                <div class="mobile-course-cards">
+                    ${mobileCard}
+                </div>
             </div>
         </div>
         `;
@@ -1532,6 +1501,43 @@ function generateCourseScheduleSection(courseId) {
         </tr>
         `;
     }).join('');
+
+    // 生成手機版卡片
+    const mobileScheduleCards = processedSchedules.map((schedule, index) => {
+        const scheduleText = formatScheduleText(schedule['上課日期1'], schedule['上課日期2']);
+        const scheduleId = `${courseId}-${index}`;
+        
+        return `
+        <div class="mobile-schedule-card" data-schedule-id="${scheduleId}" data-can-register="${schedule.canRegister}">
+            <div class="schedule-header">
+                <div class="schedule-date">${scheduleText}</div>
+                <div class="schedule-status ${schedule.statusClass}">${schedule.status}</div>
+            </div>
+            <div class="schedule-details">
+                <div class="detail-row">
+                    <span class="detail-label">時間</span>
+                    <span class="detail-value">${schedule['上課時間'] || ''}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">地點</span>
+                    <span class="detail-value">
+                        <a href="https://www.google.com/maps/search/${encodeURIComponent(schedule['上課地點'] || '')}" target="_blank" class="location-link" title="點擊開啟Google Maps">${schedule['上課地點'] || ''}</a>
+                    </span>
+                </div>
+            </div>
+            <div class="register-button">
+                ${schedule.canRegister ? 
+                    `<button class="btn btn-primary" onclick="showRegistration('${courseId}', '${scheduleId}')">
+                        <i class="fas fa-user-plus"></i> 立即報名
+                    </button>` :
+                    `<button class="btn" style="background: #e2e8f0; color: #718096; cursor: not-allowed;" disabled>
+                        ${schedule.status === '進行中' ? '進行中' : '已截止'}
+                    </button>`
+                }
+            </div>
+        </div>
+        `;
+    }).join('');
     
     // 儲存課程時段資料供報名頁面使用
     window.courseScheduleData = window.courseScheduleData || {};
@@ -1556,6 +1562,9 @@ function generateCourseScheduleSection(courseId) {
                         ${tableRows}
                     </tbody>
                 </table>
+                <div class="mobile-schedule-cards">
+                    ${mobileScheduleCards}
+                </div>
             </div>
         </div>
     </div>
