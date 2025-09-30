@@ -664,6 +664,7 @@ th, td {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
 }
 
 th {
@@ -1397,7 +1398,7 @@ tbody tr:hover {
 
     .table-responsive table {
         width: 100%;
-        min-width: 500px;
+        min-width: 400px;
         font-size: 0.75rem;
     }
 
@@ -1405,37 +1406,52 @@ tbody tr:hover {
     .schedule-table td {
         padding: 0.4rem 0.2rem;
         font-size: 0.75rem;
-        white-space: nowrap;
         vertical-align: middle;
     }
 
+    /* 上課日期欄位 - 允許換行 */
     .schedule-table th:first-child,
     .schedule-table td:first-child {
-        min-width: 100px;
+        min-width: 80px;
+        max-width: 120px;
         font-size: 0.7rem;
+        white-space: normal;
+        word-wrap: break-word;
+        line-height: 1.2;
     }
 
+    /* 上課時間欄位 - 不換行 */
     .schedule-table th:nth-child(2),
     .schedule-table td:nth-child(2) {
-        min-width: 70px;
+        min-width: 60px;
+        white-space: nowrap;
     }
 
+    /* 上課地點欄位 - 允許換行 */
     .schedule-table th:nth-child(3),
     .schedule-table td:nth-child(3) {
-        min-width: 90px;
+        min-width: 70px;
+        max-width: 100px;
         font-size: 0.7rem;
+        white-space: normal;
+        word-wrap: break-word;
+        line-height: 1.2;
     }
 
+    /* 狀態欄位 - 不換行 */
     .schedule-table th:nth-child(4),
     .schedule-table td:nth-child(4) {
-        min-width: 60px;
+        min-width: 50px;
         text-align: center;
+        white-space: nowrap;
     }
 
+    /* 報名按鈕欄位 - 不換行 */
     .schedule-table th:nth-child(5),
     .schedule-table td:nth-child(5) {
-        min-width: 70px;
+        min-width: 60px;
         text-align: center;
+        white-space: nowrap;
     }
 
     /* 手機版按鈕優化 */
@@ -1464,11 +1480,9 @@ tbody tr:hover {
     /* 地點連結在手機版的優化 */
     .location-link {
         font-size: 0.7rem;
-        display: inline-block;
-        max-width: 80px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        display: inline;
+        word-wrap: break-word;
+        line-height: 1.2;
     }
 
     .location-link::after {
