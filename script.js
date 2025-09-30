@@ -1,4 +1,3 @@
-// 課程資料最後更新時間: 2025/9/30 上午1:26:14
 // 頁面切換功能（用戶點擊觸發）
 function showPage(pageId) {
     // 隱藏所有頁面
@@ -354,8 +353,102 @@ function updateScheduleSelection(courseId, selectedScheduleId = null) {
         return;
     }
     
-    // 檢查是否有該課程的時段資料
-    const scheduleData = window.courseScheduleData && window.courseScheduleData[courseId];
+    // 檢查是否有該課程的時段資料，如果沒有則嘗試生成
+    let scheduleData = window.courseScheduleData && window.courseScheduleData[courseId];
+    
+    // 如果沒有時段資料，嘗試從動態課程資料生成
+    if (!scheduleData || scheduleData.length === 0) {
+        const course = courseData[courseId];
+        if (course && dynamicCourseData && dynamicCourseData.length > 0) {
+            // 過濾出對應課程的時段
+            const courseSchedules = dynamicCourseData.filter(item => {
+                const courseName = item['課程名稱'];
+                return courseName === course.title;
+            });
+            
+            if (courseSchedules.length > 0) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                // 處理並排序課程時段
+                const processedSchedules = courseSchedules.map(schedule => {
+                    const date1 = parseDate(schedule['上課日期1']);
+                    const date2 = parseDate(schedule['上課日期2']);
+                    
+                    let status = '';
+                    let statusClass = '';
+                    let priority = 0;
+                    let canRegister = false;
+                    
+                    // 判斷課程狀態
+                    if (date1 && date2) {
+                        if (date1 <= today && date2 >= today) {
+                            // 進行中
+                            status = '進行中';
+                            statusClass = 'status-ongoing';
+                            priority = 1;
+                            canRegister = false;
+                        } else if (date1 > today) {
+                            // 即將到來
+                            status = '即將到來';
+                            statusClass = 'status-upcoming';
+                            priority = 2;
+                            canRegister = true;
+                        } else {
+                            // 已結束
+                            status = '已結束';
+                            statusClass = 'status-ended';
+                            priority = 3;
+                            canRegister = false;
+                        }
+                    } else if (date1) {
+                        if (date1.toDateString() === today.toDateString()) {
+                            status = '進行中';
+                            statusClass = 'status-ongoing';
+                            priority = 1;
+                            canRegister = false;
+                        } else if (date1 > today) {
+                            status = '即將到來';
+                            statusClass = 'status-upcoming';
+                            priority = 2;
+                            canRegister = true;
+                        } else {
+                            status = '已結束';
+                            statusClass = 'status-ended';
+                            priority = 3;
+                            canRegister = false;
+                        }
+                    }
+                    
+                    return {
+                        ...schedule,
+                        date1,
+                        date2,
+                        status,
+                        statusClass,
+                        priority,
+                        canRegister,
+                        earliestDate: date1 || date2,
+                        daysFromToday: date1 ? Math.abs((date1 - today) / (1000 * 60 * 60 * 24)) : 999
+                    };
+                }).sort((a, b) => {
+                    // 按優先級排序（進行中 > 即將到來 > 已結束）
+                    if (a.priority !== b.priority) {
+                        return a.priority - b.priority;
+                    }
+                    // 相同優先級按距離今天的天數排序
+                    return a.daysFromToday - b.daysFromToday;
+                });
+                
+                // 儲存時段資料
+                window.courseScheduleData = window.courseScheduleData || {};
+                window.courseScheduleData[courseId] = processedSchedules;
+                scheduleData = processedSchedules;
+            }
+        }
+    }
+    
+    // 如果還是沒有時段資料，隱藏時段選擇
     if (!scheduleData || scheduleData.length === 0) {
         scheduleContainer.style.display = 'none';
         return;
@@ -945,113 +1038,7 @@ const courseData = {
 };
 
 // 全域變數存儲課程資料（由Google Apps Script自動推送更新到GitHub）
-let dynamicCourseData = [
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/3(二)",
-    "上課日期2": "2026/3/4(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/5(四)",
-    "上課日期2": "2026/3/6(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/10(二)",
-    "上課日期2": "2026/3/11(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/12(四)",
-    "上課日期2": "2026/3/13(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/3/17(二)",
-    "上課日期2": "2026/3/18(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/19(四)",
-    "上課日期2": "2026/3/20(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/24(二)",
-    "上課日期2": "2026/3/25(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/26(四)",
-    "上課日期2": "2026/3/27(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/31(二)",
-    "上課日期2": "2026/4/1(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/7(二)",
-    "上課日期2": "2026/4/8(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/4/9(四)",
-    "上課日期2": "2026/4/10(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/4/14(二)",
-    "上課日期2": "2026/4/15(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/4/16(四)",
-    "上課日期2": "2026/4/17(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/4/21(二)",
-    "上課日期2": "2026/4/22(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/23(四)",
-    "上課日期2": "2026/4/24(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  }
-];
+let dynamicCourseData = [];
 
 // Apps Script Web App URL（報名與驗證服務）
 const REGISTRATION_API_URL = 'https://script.google.com/macros/s/AKfycbxmlEZUL2lUl9VkjQESboesDEr-w0IxyYcIqLbmG4a-_b2hzfEUaxIIBJiZdtfY9l9m/exec';
