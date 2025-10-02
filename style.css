@@ -1479,15 +1479,17 @@ tbody tr:hover {
 
     /* 課程狀態在手機版的優化 */
     .schedule-table .course-status {
-        padding: 0.2rem 0.3rem;
-        font-size: 0.65rem;
-        border-radius: 6px;
+        padding: 0.2rem 0.2rem;
+        font-size: 0.6rem;
+        border-radius: 4px;
         display: block;
         text-align: center;
         width: 100%;
-        line-height: 1.2;
+        line-height: 1.1;
         word-wrap: break-word;
         white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-all;
     }
 
     /* 地點連結在手機版的優化 */
@@ -1574,15 +1576,17 @@ tbody tr:hover {
 
     /* 首頁課程表格狀態樣式 */
     .course-group-table .course-status {
-        padding: 0.2rem 0.3rem;
-        font-size: 0.65rem;
-        border-radius: 6px;
+        padding: 0.2rem 0.2rem;
+        font-size: 0.6rem;
+        border-radius: 4px;
         display: block;
         text-align: center;
         width: 100%;
-        line-height: 1.2;
+        line-height: 1.1;
         word-wrap: break-word;
         white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-all;
     }
 
     /* 首頁課程表格地點連結 */
