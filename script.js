@@ -1,4 +1,3 @@
-// 課程資料最後更新時間: 2025/10/2 下午10:45:48
 // 頁面切換功能（用戶點擊觸發）
 function showPage(pageId) {
     // 隱藏所有頁面
@@ -293,6 +292,9 @@ function showRegistration(courseId, scheduleId = null) {
     window.currentRegistrationCourse = courseId;
     window.currentRegistrationSchedule = scheduleId;
     
+    // 重置Email驗證狀態
+    resetEmailVerificationState();
+    
     // 更新頁面標題
     updatePageTitle('registration', '課程報名');
     
@@ -519,6 +521,45 @@ let emailVerified = false;
 let verificationCodeSent = false;
 let currentUserEmail = ''; // 記錄當前用戶的Email
 
+// 重置Email驗證狀態
+function resetEmailVerificationState() {
+    // 重置所有驗證相關變數
+    generatedVerificationCode = '';
+    emailVerified = false;
+    verificationCodeSent = false;
+    currentUserEmail = '';
+    
+    // 重置UI元素
+    const emailInput = document.getElementById('email');
+    const verificationInput = document.getElementById('verification-code');
+    const sendBtn = document.getElementById('send-email-verification');
+    const hint = document.getElementById('verification-hint');
+    
+    if (emailInput) {
+        emailInput.value = '';
+        emailInput.style.borderColor = '';
+        emailInput.style.backgroundColor = '';
+    }
+    
+    if (verificationInput) {
+        verificationInput.value = '';
+        verificationInput.disabled = true;
+        verificationInput.style.borderColor = '';
+        verificationInput.style.backgroundColor = '';
+    }
+    
+    if (sendBtn) {
+        sendBtn.textContent = '發送驗證碼';
+        sendBtn.disabled = false;
+        sendBtn.style.background = '';
+    }
+    
+    if (hint) {
+        hint.textContent = '請先輸入Email並發送驗證碼';
+        hint.style.color = '#718096';
+    }
+}
+
 // 生成更安全的驗證碼（包含時間戳避免衝突）
 function generateSecureCode() {
     const timestamp = Date.now().toString().slice(-4); // 取時間戳後4位
@@ -552,6 +593,11 @@ function sendEmailVerification() {
     // 顯示驗證碼（開發階段用，實際部署時移除）
     console.log('驗證碼:', generatedVerificationCode);
     
+    // 獲取當前選擇的課程類型
+    const courseSelect = document.getElementById('course-select');
+    const selectedCourse = courseSelect ? courseSelect.value : '';
+    const isEnterpriseCourse = ['enterprise-general', 'enterprise-custom'].includes(selectedCourse);
+    
     // 發送Email驗證碼到Google Apps Script
     const GOOGLE_SCRIPT_URL = REGISTRATION_API_URL;
     
@@ -570,6 +616,8 @@ function sendEmailVerification() {
             action: 'sendVerification',
             email: email,
             code: generatedVerificationCode,
+            courseType: isEnterpriseCourse ? 'enterprise' : 'regular',
+            selectedCourse: selectedCourse,
             timestamp: Date.now() // 加入時間戳
         })
     });
@@ -732,6 +780,14 @@ function handleRegistrationSubmit(event) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
     submitBtn.disabled = true;
     
+    // 準備發送的資料，加入課程類型資訊
+    const submissionData = {
+        ...data,
+        action: 'submitRegistration',
+        courseType: ['enterprise-general', 'enterprise-custom'].includes(data.course) ? 'enterprise' : 'regular',
+        timestamp: Date.now()
+    };
+    
     // 發送到Google Apps Script
     // 請將下面的URL替換為您的Google Apps Script部署URL
     const GOOGLE_SCRIPT_URL = REGISTRATION_API_URL;
@@ -742,7 +798,7 @@ function handleRegistrationSubmit(event) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(submissionData)
     })
     .then(() => {
         // 由於no-cors模式，我們無法讀取回應，但假設成功
@@ -1039,113 +1095,7 @@ const courseData = {
 };
 
 // 全域變數存儲課程資料（由Google Apps Script自動推送更新到GitHub）
-let dynamicCourseData = [
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/3(二)",
-    "上課日期2": "2026/3/4(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/5(四)",
-    "上課日期2": "2026/3/6(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/10(二)",
-    "上課日期2": "2026/3/11(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/12(四)",
-    "上課日期2": "2026/3/13(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/3/17(二)",
-    "上課日期2": "2026/3/18(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/19(四)",
-    "上課日期2": "2026/3/20(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/24(二)",
-    "上課日期2": "2026/3/25(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/26(四)",
-    "上課日期2": "2026/3/27(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/31(二)",
-    "上課日期2": "2026/4/1(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/7(二)",
-    "上課日期2": "2026/4/8(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/4/9(四)",
-    "上課日期2": "2026/4/10(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/4/14(二)",
-    "上課日期2": "2026/4/15(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/4/16(四)",
-    "上課日期2": "2026/4/17(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/4/21(二)",
-    "上課日期2": "2026/4/22(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/23(四)",
-    "上課日期2": "2026/4/24(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  }
-];
+let dynamicCourseData = [];
 
 // Apps Script Web App URL（報名與驗證服務）
 const REGISTRATION_API_URL = 'https://script.google.com/macros/s/AKfycbzOvqWqexStJaVmNfWGE6x-YKZzIg_c_LWBVfqWVvpgfcwv3vzhqMKrW0t3aeyJwM7I/exec';
