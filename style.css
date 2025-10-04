@@ -1491,6 +1491,51 @@ tbody tr:hover {
         overflow-wrap: break-word;
         word-break: break-all;
     }
+    
+    /* 特定狀態文字的強制換行處理 */
+    .schedule-table .course-status[data-status="即將到來"] {
+        font-size: 0;
+    }
+    
+    .schedule-table .course-status[data-status="即將到來"]:before {
+        content: "即將\A到來";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+    
+    .schedule-table .course-status[data-status="進行中"] {
+        font-size: 0;
+    }
+    
+    .schedule-table .course-status[data-status="進行中"]:before {
+        content: "進行\A中";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+    
+    .schedule-table .course-status[data-status="已結束"] {
+        font-size: 0;
+    }
+    
+    .schedule-table .course-status[data-status="已結束"]:before {
+        content: "已\A結束";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+    
+    .schedule-table .course-status[data-status="已截止"] {
+        font-size: 0;
+    }
+    
+    .schedule-table .course-status[data-status="已截止"]:before {
+        content: "已\A截止";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
 
     /* 地點連結在手機版的優化 */
     .schedule-table .location-link {
@@ -1587,6 +1632,51 @@ tbody tr:hover {
         white-space: normal;
         overflow-wrap: break-word;
         word-break: break-all;
+    }
+    
+    /* 首頁課程表格特定狀態文字的強制換行處理 */
+    .course-group-table .course-status[data-status="即將到來"] {
+        font-size: 0;
+    }
+    
+    .course-group-table .course-status[data-status="即將到來"]:before {
+        content: "即將\A到來";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+    
+    .course-group-table .course-status[data-status="進行中"] {
+        font-size: 0;
+    }
+    
+    .course-group-table .course-status[data-status="進行中"]:before {
+        content: "進行\A中";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+    
+    .course-group-table .course-status[data-status="已結束"] {
+        font-size: 0;
+    }
+    
+    .course-group-table .course-status[data-status="已結束"]:before {
+        content: "已\A結束";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
+    }
+    
+    .course-group-table .course-status[data-status="已截止"] {
+        font-size: 0;
+    }
+    
+    .course-group-table .course-status[data-status="已截止"]:before {
+        content: "已\A截止";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
     }
 
     /* 首頁課程表格地點連結 */

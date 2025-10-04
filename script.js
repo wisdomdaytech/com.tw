@@ -1,4 +1,3 @@
-// 課程資料最後更新時間: 2025/10/4 上午3:52:24
 // 頁面切換功能（用戶點擊觸發）
 function showPage(pageId) {
     // 隱藏所有頁面
@@ -1096,113 +1095,7 @@ const courseData = {
 };
 
 // 全域變數存儲課程資料（由Google Apps Script自動推送更新到GitHub）
-let dynamicCourseData = [
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/3(二)",
-    "上課日期2": "2026/3/4(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/5(四)",
-    "上課日期2": "2026/3/6(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/10(二)",
-    "上課日期2": "2026/3/11(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/12(四)",
-    "上課日期2": "2026/3/13(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/3/17(二)",
-    "上課日期2": "2026/3/18(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/3/19(四)",
-    "上課日期2": "2026/3/20(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/3/24(二)",
-    "上課日期2": "2026/3/25(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/3/26(四)",
-    "上課日期2": "2026/3/27(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/3/31(二)",
-    "上課日期2": "2026/4/1(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/7(二)",
-    "上課日期2": "2026/4/8(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "工作流程 AI 自動化實戰班",
-    "上課日期1": "2026/4/9(四)",
-    "上課日期2": "2026/4/10(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "AI 數據分析與決策輔佐班",
-    "上課日期1": "2026/4/14(二)",
-    "上課日期2": "2026/4/15(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "商務營運 AI 通訊助理班",
-    "上課日期1": "2026/4/16(四)",
-    "上課日期2": "2026/4/17(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "自媒體 AI 數位創作經營班",
-    "上課日期1": "2026/4/21(二)",
-    "上課日期2": "2026/4/22(三)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  },
-  {
-    "課程名稱": "Vibe Coding AI 軟體開發班",
-    "上課日期1": "2026/4/23(四)",
-    "上課日期2": "2026/4/24(五)",
-    "上課時間": "09:30~16:30",
-    "上課地點": "GACC傑登商務會議中心"
-  }
-];
+let dynamicCourseData = [];
 
 // Apps Script Web App URL（報名與驗證服務）
 const REGISTRATION_API_URL = 'https://script.google.com/macros/s/AKfycbzOvqWqexStJaVmNfWGE6x-YKZzIg_c_LWBVfqWVvpgfcwv3vzhqMKrW0t3aeyJwM7I/exec';
@@ -1314,7 +1207,7 @@ function generateSortedCourseTable() {
                 <td>${scheduleText}</td>
                 <td>${course['上課時間'] || ''}</td>
                 <td><a href="https://www.google.com/maps/search/${encodeURIComponent(course['上課地點'] || '')}" target="_blank" class="location-link" title="點擊開啟Google Maps">${course['上課地點'] || ''}</a></td>
-                <td><span class="course-status ${course.statusClass}">${course.status}</span></td>
+                <td><span class="course-status ${course.statusClass}" data-status="${course.status}">${course.status}</span></td>
             </tr>
             `;
         }).join('');
@@ -1383,7 +1276,7 @@ function generateDefaultCourseTable() {
             <td>${course.scheduleText}</td>
             <td>${course.time}</td>
             <td><a href="https://www.google.com/maps/search/${encodeURIComponent(course.location)}" target="_blank" class="location-link" title="點擊開啟Google Maps">${course.location}</a></td>
-                            <td><span class="course-status status-upcoming">即將到來</span></td>
+                            <td><span class="course-status status-upcoming" data-status="即將到來">即將到來</span></td>
         </tr>
                     </tbody>
                 </table>
@@ -1575,7 +1468,7 @@ function generateCourseScheduleSection(courseId) {
             <td>${scheduleText}</td>
             <td>${schedule['上課時間'] || ''}</td>
             <td><a href="https://www.google.com/maps/search/${encodeURIComponent(schedule['上課地點'] || '')}" target="_blank" class="location-link" title="點擊開啟Google Maps">${schedule['上課地點'] || ''}</a></td>
-            <td><span class="course-status ${schedule.statusClass}">${schedule.status}</span></td>
+            <td><span class="course-status ${schedule.statusClass}" data-status="${schedule.status}">${schedule.status}</span></td>
             <td style="text-align: center;">
                 ${schedule.canRegister ? 
                     `<button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="showRegistration('${courseId}', '${scheduleId}')">
