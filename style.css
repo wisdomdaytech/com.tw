@@ -1453,7 +1453,7 @@ tbody tr:hover {
         white-space: normal;
         line-height: 1.2;
         min-height: 2rem;
-        padding: 0.1rem 0.05rem;
+        padding: 0.3rem 0.05rem;
         vertical-align: middle;
     }
 
@@ -1508,7 +1508,7 @@ tbody tr:hover {
     /* 特定狀態文字的強制換行處理 */
     .schedule-table .course-status[data-status="即將到來"] {
         font-size: 0;
-        padding: 0.1rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="即將到來"]:before {
@@ -1525,7 +1525,7 @@ tbody tr:hover {
     
     .schedule-table .course-status[data-status="進行中"] {
         font-size: 0;
-        padding: 0.1rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="進行中"]:before {
@@ -1542,7 +1542,7 @@ tbody tr:hover {
     
     .schedule-table .course-status[data-status="已結束"] {
         font-size: 0;
-        padding: 0.1rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="已結束"]:before {
@@ -1559,7 +1559,7 @@ tbody tr:hover {
     
     .schedule-table .course-status[data-status="已截止"] {
         font-size: 0;
-        padding: 0.1rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="已截止"]:before {
@@ -1942,7 +1942,7 @@ tbody tr:hover {
 
 /* 課程狀態樣式 */
 .course-status {
-    padding: 0.3rem 0.8rem;
+    padding: 0.3rem 0.2rem;
     border-radius: 15px;
     font-weight: 600;
     font-size: 0.85rem;
