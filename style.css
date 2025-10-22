@@ -1586,7 +1586,7 @@ tbody tr:hover {
     }
 
     .course-detail .schedule-table .course-status[data-status="即將到來"] {
-        font-size: 0.65rem;
+        font-size: 0;
         padding: 0.25rem 0.1rem;
     }
     
@@ -1598,7 +1598,7 @@ tbody tr:hover {
     }
     
     .course-detail .schedule-table .course-status[data-status="進行中"] {
-        font-size: 0.65rem;
+        font-size: 0;
         padding: 0.25rem 0.1rem;
     }
     
@@ -1610,7 +1610,7 @@ tbody tr:hover {
     }
     
     .course-detail .schedule-table .course-status[data-status="已結束"] {
-        font-size: 0.65rem;
+        font-size: 0;
         padding: 0.25rem 0.1rem;
     }
     
@@ -1622,7 +1622,7 @@ tbody tr:hover {
     }
     
     .course-detail .schedule-table .course-status[data-status="已截止"] {
-        font-size: 0.65rem;
+        font-size: 0;
         padding: 0.25rem 0.1rem;
     }
     
