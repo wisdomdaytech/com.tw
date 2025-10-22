@@ -1508,7 +1508,7 @@ tbody tr:hover {
     /* 特定狀態文字的強制換行處理 */
     .schedule-table .course-status[data-status="即將到來"] {
         font-size: 0;
-        padding: 0.05rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="即將到來"]:before {
@@ -1525,7 +1525,7 @@ tbody tr:hover {
     
     .schedule-table .course-status[data-status="進行中"] {
         font-size: 0;
-        padding: 0.05rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="進行中"]:before {
@@ -1542,7 +1542,7 @@ tbody tr:hover {
     
     .schedule-table .course-status[data-status="已結束"] {
         font-size: 0;
-        padding: 0.05rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="已結束"]:before {
@@ -1559,7 +1559,7 @@ tbody tr:hover {
     
     .schedule-table .course-status[data-status="已截止"] {
         font-size: 0;
-        padding: 0.05rem 0.05rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .schedule-table .course-status[data-status="已截止"]:before {
