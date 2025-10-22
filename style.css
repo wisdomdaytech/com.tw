@@ -1576,22 +1576,22 @@ tbody tr:hover {
 
     /* 課程詳細頁面的狀態顯示優化 - 使用與首頁相同的兩行換行模式 */
     .course-detail .schedule-table td:nth-child(4) {
-        padding: 0.2rem 0.05rem;
+        padding: 0.2rem 0;
+        text-align: center;
     }
     
     .course-detail .schedule-table .course-status {
-        padding: 0.2rem 0.05rem;
+        padding: 0.2rem 0.3rem;
         font-size: 0.6rem;
         border-radius: 4px;
-        display: block;
+        display: inline-block;
         text-align: center;
-        width: 100%;
         line-height: 1.1;
         word-wrap: break-word;
         white-space: normal;
         overflow-wrap: break-word;
-        word-break: break-all;
         box-sizing: border-box;
+        max-width: 90%;
     }
     
     .course-detail .schedule-table .course-status[data-status="即將到來"] {
