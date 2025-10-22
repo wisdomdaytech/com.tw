@@ -1574,67 +1574,68 @@ tbody tr:hover {
         box-sizing: border-box;
     }
 
-    /* 課程詳細頁面的狀態顯示優化 - 覆蓋手機版每字換行的設定 */
+    /* 課程詳細頁面的狀態顯示優化 - 使用與首頁相同的兩行換行模式 */
+    .course-detail .schedule-table td:nth-child(4) {
+        padding: 0.2rem 0.05rem;
+    }
+    
     .course-detail .schedule-table .course-status {
-        padding: 0.2rem 0.1rem;
+        padding: 0.2rem 0.05rem;
         font-size: 0.6rem;
-        min-height: auto;
-        line-height: 1.2;
+        border-radius: 4px;
         display: block;
         text-align: center;
-        width: auto;
-        margin: 0 auto;
-        max-width: fit-content;
+        width: 100%;
+        line-height: 1.1;
+        word-wrap: break-word;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-all;
         box-sizing: border-box;
-        border-radius: 4px;
     }
-
+    
     .course-detail .schedule-table .course-status[data-status="即將到來"] {
         font-size: 0;
-        padding: 0.2rem 0.1rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="即將到來"]:before {
         content: "即將\A到來";
-        font-size: 0.55rem;
-        line-height: 1.25;
         white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
     }
     
     .course-detail .schedule-table .course-status[data-status="進行中"] {
         font-size: 0;
-        padding: 0.2rem 0.2rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="進行中"]:before {
-        content: "進行中";
-        font-size: 0.55rem;
-        line-height: 1.2;
-        white-space: nowrap;
+        content: "進行\A中";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
     }
     
     .course-detail .schedule-table .course-status[data-status="已結束"] {
         font-size: 0;
-        padding: 0.2rem 0.2rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="已結束"]:before {
-        content: "已結束";
-        font-size: 0.55rem;
-        line-height: 1.2;
-        white-space: nowrap;
+        content: "已\A結束";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
     }
     
     .course-detail .schedule-table .course-status[data-status="已截止"] {
         font-size: 0;
-        padding: 0.2rem 0.2rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="已截止"]:before {
-        content: "已截止";
-        font-size: 0.55rem;
-        line-height: 1.2;
-        white-space: nowrap;
+        content: "已\A截止";
+        white-space: pre-line;
+        font-size: 0.6rem;
+        line-height: 1.1;
     }
 
     /* 地點連結在手機版的優化 */
