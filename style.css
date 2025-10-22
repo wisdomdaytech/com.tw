@@ -1576,75 +1576,75 @@ tbody tr:hover {
 
     /* 課程詳細頁面的狀態顯示優化 - 使用完全垂直顯示避免溢出 */
     .course-detail .schedule-table td:nth-child(4) {
-        padding: 0.2rem 0.05rem !important;
+        padding: 0.2rem 0 !important;
         text-align: center !important;
         vertical-align: middle !important;
     }
     
     .course-detail .schedule-table .course-status {
-        padding: 0.2rem 0.2rem !important;
+        padding: 0.2rem 0.15rem !important;
         font-size: 0.6rem !important;
-        border-radius: 4px !important;
+        border-radius: 3px !important;
         display: inline-block !important;
         text-align: center !important;
         line-height: 1.15 !important;
         box-sizing: border-box !important;
         width: auto !important;
-        max-width: 100% !important;
+        max-width: 90% !important;
         min-height: auto !important;
         overflow: hidden !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
     }
     
     .course-detail .schedule-table .course-status[data-status="即將到來"] {
         font-size: 0 !important;
-        padding: 0.25rem 0.2rem !important;
+        padding: 0.25rem 0.15rem !important;
     }
     
     .course-detail .schedule-table .course-status[data-status="即將到來"]:before {
         content: "即\A將\A到\A來";
         white-space: pre-line;
-        font-size: 0.55rem;
-        line-height: 1.15;
+        font-size: 0.5rem;
+        line-height: 1.2;
         display: block;
     }
     
     .course-detail .schedule-table .course-status[data-status="進行中"] {
         font-size: 0 !important;
-        padding: 0.25rem 0.2rem !important;
+        padding: 0.25rem 0.15rem !important;
     }
     
     .course-detail .schedule-table .course-status[data-status="進行中"]:before {
         content: "進\A行\A中";
         white-space: pre-line;
-        font-size: 0.55rem;
-        line-height: 1.15;
+        font-size: 0.5rem;
+        line-height: 1.2;
         display: block;
     }
     
     .course-detail .schedule-table .course-status[data-status="已結束"] {
         font-size: 0 !important;
-        padding: 0.25rem 0.2rem !important;
+        padding: 0.25rem 0.15rem !important;
     }
     
     .course-detail .schedule-table .course-status[data-status="已結束"]:before {
         content: "已\A結\A束";
         white-space: pre-line;
-        font-size: 0.55rem;
-        line-height: 1.15;
+        font-size: 0.5rem;
+        line-height: 1.2;
         display: block;
     }
     
     .course-detail .schedule-table .course-status[data-status="已截止"] {
         font-size: 0 !important;
-        padding: 0.25rem 0.2rem !important;
+        padding: 0.25rem 0.15rem !important;
     }
     
     .course-detail .schedule-table .course-status[data-status="已截止"]:before {
         content: "已\A截\A止";
         white-space: pre-line;
-        font-size: 0.55rem;
-        line-height: 1.15;
+        font-size: 0.5rem;
+        line-height: 1.2;
         display: block;
     }
 
