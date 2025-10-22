@@ -1512,7 +1512,7 @@ tbody tr:hover {
     }
     
     .schedule-table .course-status[data-status="即將到來"]:before {
-        content: "即將\A到來";
+        content: "即\A將\A到\A來";
         white-space: pre-line;
         font-size: 0.55rem;
         line-height: 1.15;
@@ -1529,7 +1529,7 @@ tbody tr:hover {
     }
     
     .schedule-table .course-status[data-status="進行中"]:before {
-        content: "進行\A中";
+        content: "進\A行\A中";
         white-space: pre-line;
         font-size: 0.55rem;
         line-height: 1.15;
@@ -1546,7 +1546,7 @@ tbody tr:hover {
     }
     
     .schedule-table .course-status[data-status="已結束"]:before {
-        content: "已\A結束";
+        content: "已\A結\A束";
         white-space: pre-line;
         font-size: 0.55rem;
         line-height: 1.15;
@@ -1563,7 +1563,7 @@ tbody tr:hover {
     }
     
     .schedule-table .course-status[data-status="已截止"]:before {
-        content: "已\A截止";
+        content: "已\A截\A止";
         white-space: pre-line;
         font-size: 0.55rem;
         line-height: 1.15;
