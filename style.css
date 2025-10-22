@@ -1488,7 +1488,7 @@ tbody tr:hover {
 
     /* 課程狀態在手機版的優化 */
     .schedule-table .course-status {
-        padding: 0.25rem 0.05rem;
+        padding: 0.05rem 0.05rem;
         font-size: 0.6rem;
         border-radius: 4px;
         display: block;
