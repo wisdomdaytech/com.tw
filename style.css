@@ -1576,61 +1576,67 @@ tbody tr:hover {
 
     /* 課程詳細頁面的狀態顯示優化 - 覆蓋手機版每字換行的設定 */
     .course-detail .schedule-table .course-status {
-        padding: 0.25rem 0.1rem;
+        padding: 0.25rem 0.05rem;
         font-size: 0.65rem;
         min-height: auto;
         line-height: 1.2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .course-detail .schedule-table .course-status[data-status="即將到來"] {
         font-size: 0;
-        padding: 0.25rem 0.1rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="即將到來"]:before {
         content: "即將\A到來";
-        font-size: 0.65rem;
-        line-height: 1.3;
+        font-size: 0.6rem;
+        line-height: 1.25;
         white-space: pre-line;
+        display: block;
     }
     
     .course-detail .schedule-table .course-status[data-status="進行中"] {
         font-size: 0;
-        padding: 0.25rem 0.1rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="進行中"]:before {
         content: "進行中";
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         line-height: 1.2;
         white-space: nowrap;
+        display: block;
     }
     
     .course-detail .schedule-table .course-status[data-status="已結束"] {
         font-size: 0;
-        padding: 0.25rem 0.1rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="已結束"]:before {
         content: "已結束";
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         line-height: 1.2;
         white-space: nowrap;
+        display: block;
     }
     
     .course-detail .schedule-table .course-status[data-status="已截止"] {
         font-size: 0;
-        padding: 0.25rem 0.1rem;
+        padding: 0.25rem 0.05rem;
     }
     
     .course-detail .schedule-table .course-status[data-status="已截止"]:before {
         content: "已截止";
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         line-height: 1.2;
         white-space: nowrap;
+        display: block;
     }
 
     /* 地點連結在手機版的優化 */
