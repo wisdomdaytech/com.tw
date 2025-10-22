@@ -1574,6 +1574,65 @@ tbody tr:hover {
         box-sizing: border-box;
     }
 
+    /* 課程詳細頁面的狀態顯示優化 - 覆蓋手機版每字換行的設定 */
+    .course-detail .schedule-table .course-status {
+        padding: 0.25rem 0.1rem;
+        font-size: 0.65rem;
+        min-height: auto;
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .course-detail .schedule-table .course-status[data-status="即將到來"] {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.1rem;
+    }
+    
+    .course-detail .schedule-table .course-status[data-status="即將到來"]:before {
+        content: "即將\A到來";
+        font-size: 0.65rem;
+        line-height: 1.3;
+        white-space: pre-line;
+    }
+    
+    .course-detail .schedule-table .course-status[data-status="進行中"] {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.1rem;
+    }
+    
+    .course-detail .schedule-table .course-status[data-status="進行中"]:before {
+        content: "進行中";
+        font-size: 0.65rem;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+    
+    .course-detail .schedule-table .course-status[data-status="已結束"] {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.1rem;
+    }
+    
+    .course-detail .schedule-table .course-status[data-status="已結束"]:before {
+        content: "已結束";
+        font-size: 0.65rem;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+    
+    .course-detail .schedule-table .course-status[data-status="已截止"] {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.1rem;
+    }
+    
+    .course-detail .schedule-table .course-status[data-status="已截止"]:before {
+        content: "已截止";
+        font-size: 0.65rem;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
     /* 地點連結在手機版的優化 */
     .schedule-table .location-link {
         font-size: 0.75rem;
