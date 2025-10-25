@@ -1584,7 +1584,7 @@ tbody tr:hover {
     }
     
     @media (max-width: 768px) {
-        /* 修正課程詳細頁面狀態欄排版 */
+        /* 修正課程詳細頁面狀態欄排版：嚴禁溢出欄位寬度 */
         .course-detail .schedule-table .course-status {
           font-size: 0;
           padding: 0.25rem 0.1rem !important;
@@ -1592,11 +1592,14 @@ tbody tr:hover {
           display: inline-block !important;
           text-align: center !important;
           line-height: 1.25 !important;
-          width: 90% !important;
-          max-width: 90% !important;
+          width: auto !important;
+          max-width: 100% !important;
+          min-width: 0 !important; /* 取消全域 min-width:70px 影響 */
           white-space: normal !important;
           overflow-wrap: break-word !important;
           word-break: break-word !important;
+          box-sizing: border-box !important;
+          margin: 0 auto !important;
         }
       
         .course-detail .schedule-table .course-status[data-status="即將到來"]:before {
