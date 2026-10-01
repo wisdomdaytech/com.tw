@@ -152,6 +152,10 @@ function createNewRegistrationSheet(spreadsheet, sheetName) {
 // ===== 準備要寫入的資料 =====
 function prepareRowData(data) {
   const courseNames = {
+    'ai-essential': '人人都該會的生成式 AI 應用班',
+    'human-resources': '人資 AI 招募排班績效班',
+    'microsoft-ai': 'Microsoft AI 工作自動化班',
+    'cluade-master': 'Claude 全能 AI Agent 大師班',
     'ai-automation': '工作流程 AI 自動化實戰班',
     'ai-analytics': 'AI 數據分析與決策輔佐班',
     'ai-communication': '商務營運 AI 通訊助理班',
@@ -452,6 +456,10 @@ function validateCourseData(courseData) {
 function sendPaymentNoticeEmail(email, courseId, scheduleId, name, isEnterpriseCourse = false) {
   try {
     const courseNames = {
+      'ai-essential': '人人都該會的生成式 AI 應用班',
+      'human-resources': '人資 AI 招募排班績效班',
+      'microsoft-ai': 'Microsoft AI 工作自動化班',
+      'cluade-master': 'Claude 全能 AI Agent 大師班',
       'ai-automation': '工作流程 AI 自動化實戰班',
       'ai-analytics': 'AI 數據分析與決策輔佐班',
       'ai-communication': '商務營運 AI 通訊助理班',
@@ -498,6 +506,9 @@ function sendPaymentNoticeEmail(email, courseId, scheduleId, name, isEnterpriseC
 }
 
 function createPaymentNoticeTemplate(name, courseName, scheduleInfo, isEnterpriseCourse) {
+  const isEssentialCourse = courseName === '人人都該會的生成式 AI 應用班';
+  const originalPrice = isEssentialCourse ? '8,000' : '16,000';
+  const price = isEssentialCourse ? '5,000' : '10,000';
   if (isEnterpriseCourse) {
     // ===== 企業課程信件內容 =====
     return `
@@ -578,7 +589,7 @@ function createPaymentNoticeTemplate(name, courseName, scheduleInfo, isEnterpris
         </div>
         <h3 style="color: #2d3748; font-size: 18px; margin: 25px 0 10px;">課程價格</h3>
         <p style="font-size: 16px; color: #e53e3e; font-weight: bold; text-align: center;">
-          原價 NT$ 16,000 → NT$ 10,000<br>
+          原價 NT$ ${originalPrice} → NT$ ${price}<br>
           <span style="color: #38a169;">限時優惠 38% OFF</span>
         </p>
         <p style="color: #718096; font-size: 14px; text-align: center; margin-top: 30px;">
@@ -652,8 +663,13 @@ function formatDateString(dateInput) {
 
 function getCourseIdFromName(courseName) {
   const courseMapping = {
+    '人人都該會的生成式 AI 應用班': 'ai-essential',
+    '人資 AI 招募排班績效班': 'human-resources',
+    'Microsoft AI 工作自動化班': 'microsoft-ai',
+    'Claude 全能 AI Agent 大師班': 'cluade-master',
     '工作流程 AI 自動化實戰班': 'ai-automation',
     'AI 數據分析與決策輔佐班': 'ai-analytics', 
+    '數據分析 AI 決策輔佐班': 'ai-analytics',
     '商務營運 AI 通訊助理班': 'ai-communication',
     '自媒體 AI 數位創作經營班': 'digital-media',
     'Vibe Coding AI 軟體開發班': 'vibe-coding',

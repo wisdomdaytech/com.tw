@@ -41,6 +41,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <script src="theme-init.js"></script>
+    <script src="theme.js" defer></script>
+
     <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -72,36 +75,52 @@
                 <li class="nav-item dropdown">
                     <a href="#corporate" onclick="showPage('corporate')">實體常態課程 <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('ai-automation'); return false;">
+                        <li><a href="#course-ai-essential" data-course-id="ai-essential">
+                            <i class="fa-solid fa-eye"></i>
+                            <span><span style="color:var(--category-red)">必修基礎(6hr)</span> 人人都該會的生成式 AI 應用班</span>
+                        </a></li>
+                        <li><a href="#course-ai-automation" data-course-id="ai-automation">
                             <i class="fas fa-cogs"></i>
-                            <span>工作流程 AI 自動化實戰班</span>
+                            <span><span style="color:var(--category-orange)">行政必修(12hr)</span> 工作流程 AI 自動化實戰班</span>
                         </a></li>
-                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('ai-analytics'); return false;">
+                        <li><a href="#course-ai-analytics" data-course-id="ai-analytics">
                             <i class="fas fa-chart-line"></i>
-                            <span>AI 數據分析與決策輔佐班</span>
+                            <span><span style="color:var(--category-orange)">財管必修(12hr)</span> AI 數據分析與決策輔佐班</span>
                         </a></li>
-                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('ai-communication'); return false;">
+                        <li><a href="#course-ai-communication" data-course-id="ai-communication">
                             <i class="fas fa-envelope"></i>
-                            <span>商務營運 AI 通訊助理班</span>
+                            <span><span style="color:var(--category-orange)">營運必修(12hr)</span> 商務營運 AI 通訊助理班</span>
                         </a></li>
-                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('digital-media'); return false;">
+                        <li><a href="#course-digital-media" data-course-id="digital-media">
                             <i class="fas fa-video"></i>
-                            <span>自媒體 AI 數位創作經營班</span>
+                            <span><span style="color:var(--category-orange)">行銷必修(12hr)</span> 自媒體 AI 數位創作經營班</span>
                         </a></li>
-                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('vibe-coding'); return false;">
+                        <li><a href="#course-human-resources" data-course-id="human-resources">
+                            <i class="fa-solid fa-address-book"></i>
+                            <span><span style="color:var(--category-orange)">人資必修(12hr)</span> 人資 AI 招募排班績效班</span>
+                        </a></li>
+                        <li><a href="#course-vibe-coding" data-course-id="vibe-coding">
                             <i class="fas fa-code"></i>
-                            <span>Vibe Coding AI 軟體開發班</span>
+                            <span><span style="color:var(--category-orange)">開發必修(12hr)</span> Vibe Coding AI 軟體開發班</span>
+                        </a></li>
+                        <li><a href="#course-microsoft-ai" data-course-id="microsoft-ai">
+                            <i class="fa-brands fa-microsoft"></i>
+                            <span><span style="color:var(--category-green)">微軟環境(12hr)</span> Microsoft AI 工作自動化班</span>
+                        </a></li>
+                        <li><a href="#course-cluade-master" data-course-id="cluade-master">
+                            <i class="fa-solid fa-robot"></i>
+                            <span><span style="color:var(--category-green)">AI 工具(12hr)</span> Claude 全能 AI Agent 大師班</span>
                         </a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#enterprise-training" onclick="showPage('enterprise-training')">企業內訓課程 <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('enterprise-general'); return false;">
+                        <li><a href="#course-enterprise-general" data-course-id="enterprise-general">
                             <i class="fas fa-users"></i>
                             <span>企業常態課內訓包班</span>
                         </a></li>
-                        <li><a href="javascript:void(0)" onclick="window.clickedFromNavMenu = true; showCourseDetail('enterprise-custom'); return false;">
+                        <li><a href="#course-enterprise-custom" data-course-id="enterprise-custom">
                             <i class="fas fa-tools"></i>
                             <span>客製化企業內訓包班</span>
                         </a></li>
@@ -114,11 +133,17 @@
                     <a href="#about" onclick="showPage('about')">關於我們</a>
                 </li>
             </ul>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切換為淺色模式" title="切換為淺色模式">
+                <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+                <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.5 14.5A9 9 0 0 1 9.5 3.5a9 9 0 1 0 11 11Z"/></svg>
+            </button>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
             </button>
         </nav>
     </header>
+
+    <div id="theme-toast" class="theme-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <main class="main-content">
         <!-- 首頁 -->
@@ -237,7 +262,26 @@
 
                 <div class="card-grid">
 
-                    <div class="card clickable-card" onclick="showCourseDetail('ai-automation')">
+                    <a class="card clickable-card" href="#course-ai-essential" data-course-id="ai-essential">
+                        <img src="image/ai-essential.png" alt="人人都該會的生成式 AI 應用班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h3>人人都該會的生成式 AI 應用班</h3>
+                        <p>⏱️ 時長：1天共6小時</p>
+                        <br>
+                        <p>一天掌握生成式 AI 與工作自動化入門</p>
+                        <br>
+                        <p class="course-card-audience" data-course-audience="ai-essential">🔥 適合：所有企業工作者、行政人員，以及希望入門 AI 的零基礎學員。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 8,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 5,000</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="card clickable-card" href="#course-ai-automation" data-course-id="ai-automation">
                         <img src="image/ai-automation.png" alt="工作流程 AI 自動化實戰班" class="card-image">
                         <div class="card-content">
                         <div class="card-icon">
@@ -246,17 +290,17 @@
                         <h3>工作流程 AI 自動化實戰班</h3>
                         <p>⏱️ 時長：2天共12小時</p>
                         <br>
-                        <p>利用 AI 結合雲端自動化工具，實現庶務工作流程自動化，大幅降低出錯率，同時節省時間提升效率。</p>
+                        <p>GAS 複雜流程整合 × Make.com 規則式客服</p>
                         <br>
-                        <p>🔥 適合：企業行政人員、庶務人員、助理、財務、人事等。</p>
+                        <p class="course-card-audience" data-course-audience="ai-automation">🔥 適合：行政人員、庶務人員、助理及有基礎 AI 應用經驗的工作者。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
-                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
                                 <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="card clickable-card" onclick="showCourseDetail('ai-analytics')">
+                    <a class="card clickable-card" href="#course-ai-analytics" data-course-id="ai-analytics">
                         <img src="image/ai-analytics.png" alt="AI 數據分析與決策輔佐班" class="card-image">
                         <div class="card-content">
                         <div class="card-icon">
@@ -265,17 +309,17 @@
                         <h3>AI 數據分析與決策輔佐班</h3>
                         <p>⏱️ 時長：2天共12小時</p>
                         <br>
-                        <p>透過 AI 進行深度數據分析，找出潛在可分析面向，提供強而有力的數據支撐，輔助企業重要決策制定。</p>
+                        <p>從資料清理到儀表板與自動化決策報告</p>
                         <br>
-                        <p>🔥 適合：企業決策者、管理階層、數據分析師、行銷人員、業務人員等。</p>
+                        <p class="course-card-audience" data-course-audience="ai-analytics">🔥 適合：財務人員、管理階層、決策者、數據分析師、行銷及業務人員。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
-                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
                                 <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="card clickable-card" onclick="showCourseDetail('ai-communication')">
+                    <a class="card clickable-card" href="#course-ai-communication" data-course-id="ai-communication">
                         <img src="image/ai-communication.png" alt="商務營運 AI 通訊助理班" class="card-image">
                         <div class="card-content">
                         <div class="card-icon">
@@ -284,17 +328,17 @@
                         <h3>商務營運 AI 通訊助理班</h3>
                         <p>⏱️ 時長：2天共12小時</p>
                         <br>
-                        <p>結合 AI 自動化與數據分析，進而實現庫存管理等商務流程通知自動化，打造個人專屬的通訊助理。</p>
+                        <p>Make.com 通訊助理 × GAS 與 Ragic 營運串接</p>
                         <br>
-                        <p>🔥 適合：企業管理階層、數據分析師、行政人員、庶務人員、助理、財務、人事等。</p>
+                        <p class="course-card-audience" data-course-audience="ai-communication">🔥 適合：營運管理師、ERP／CRM 專案人員、管理階層與負責採購、庫存、銷售的工作者。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
-                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
                                 <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="card clickable-card" onclick="showCourseDetail('digital-media')">
+                    <a class="card clickable-card" href="#course-digital-media" data-course-id="digital-media">
                         <img src="image/digital-media.png" alt="自媒體 AI 數位創作經營班" class="card-image">
                         <div class="card-content">
                         <div class="card-icon">
@@ -303,17 +347,36 @@
                         <h3>自媒體 AI 數位創作經營班</h3>
                         <p>⏱️ 時長：2天共12小時</p>
                         <br>
-                        <p>藉由 AI 來全自動化經營自媒體，從爬蟲數據收集→ AI 文案創作→數位媒體製作→自動發布，實現頻道經營自動化。</p>
+                        <p>AI 生圖生影、虛擬主播與社群自動化經營</p>
                         <br>
-                        <p>🔥 適合：自媒體經營者、內容創作者、行銷人員、社群媒體管理員等。</p>
+                        <p class="course-card-audience" data-course-audience="digital-media">🔥 適合：行銷人員、社群媒體管理員、自媒體經營者與內容創作者。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
-                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
                                 <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="card clickable-card" onclick="showCourseDetail('vibe-coding')">
+                    <a class="card clickable-card" href="#course-human-resources" data-course-id="human-resources">
+                        <img src="image/human-resources.png" alt="人資 AI 招募排班績效班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-address-book"></i>
+                        </div>
+                        <h3>人資 AI 招募排班績效班</h3>
+                        <p>⏱️ 時長：2天共12小時</p>
+                        <br>
+                        <p>建立招募、排班、薪資與多級績效審核 Web 系統</p>
+                        <br>
+                        <p class="course-card-audience" data-course-audience="human-resources">🔥 適合：HR 專員、人資主管、薪酬管理師及排班調度人員。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="card clickable-card" href="#course-vibe-coding" data-course-id="vibe-coding">
                         <img src="image/vibe-coding.png" alt="Vibe Coding AI 軟體開發班" class="card-image">
                         <div class="card-content">
                         <div class="card-icon">
@@ -322,15 +385,53 @@
                         <h3>Vibe Coding AI 軟體開發班</h3>
                         <p>⏱️ 時長：2天共12小時</p>
                         <br>
-                        <p>使用 AI 快速開發各種應用及網站，讓你不用會寫程式，也能將腦中的想法架構透過軟體實現。</p>
+                        <p>從自然語言開發到具會員與資料庫的網站部署</p>
                         <br>
-                        <p>🔥 適合：小白開發者、業務人員、產品經理、UI/UX設計師等。</p>
+                        <p class="course-card-audience" data-course-audience="vibe-coding">🔥 適合：想開發工具的非技術人員、產品經理、新創團隊及個人創作者。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
-                                <span style="color: #a0aec0; text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
                                 <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                    
+                    <a class="card clickable-card" href="#course-microsoft-ai" data-course-id="microsoft-ai">
+                        <img src="image/microsoft-ai.png" alt="Microsoft AI 工作自動化班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fa-brands fa-microsoft"></i>
+                        </div>
+                        <h3>Microsoft AI 工作自動化班</h3>
+                        <p>⏱️ 時長：2天共12小時</p>
+                        <br>
+                        <p>Copilot × Make.com × VBA 跨檔案辦公自動化</p>
+                        <br>
+                        <p class="course-card-audience" data-course-audience="microsoft-ai">🔥 適合：以 Microsoft 作為日常辦公環境的企業、行政人員及數據與簡報工作者。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a class="card clickable-card" href="#course-cluade-master" data-course-id="cluade-master">
+                        <img src="image/cluade-master.png" alt="Claude 全能 AI Agent 大師班" class="card-image">
+                        <div class="card-content">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <h3>Claude 全能 AI Agent 大師班</h3>
+                        <p>⏱️ 時長：2天共12小時</p>
+                        <br>
+                        <p>Chat、Artifacts、Cowork 與 Claude Code 全面實作</p>
+                        <br>
+                        <p class="course-card-audience" data-course-audience="cluade-master">🔥 適合：使用 Claude 付費方案的企業工作者、個人創作者與希望建立 AI Agent 的學員。</p>
+                            <div class="price-preview" style="margin-top: 1rem; text-align: center;">
+                                <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
+                                <span style="color: #e53e3e; font-weight: 700; font-size: 1.2rem; margin-left: 0.5rem;">NT$ 10,000</span>
+                            </div>
+                        </div>
+                    </a>
 
                 </div>
             </div>
@@ -346,7 +447,7 @@
 
                 <div class="card-grid">
 
-                    <div class="card clickable-card" onclick="showCourseDetail('enterprise-general')">
+                    <a class="card clickable-card" href="#course-enterprise-general" data-course-id="enterprise-general">
                         <img src="image/enterprise-training-generally.png" alt="企業常態課內訓包班" class="card-image">
                         <div class="card-content">
                         <div class="card-icon">
@@ -355,12 +456,12 @@
                         <h3>企業常態課內訓包班</h3>
                         <p>根據常態課程內容，提供企業內部培訓課程，每位員工都能便利的掌握 AI 技能。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
-                                <span style="color: #718096; font-weight: 600;">依需求報價</span>
+                                <span style="color: var(--muted); font-weight: 600;">依需求報價</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="card clickable-card" onclick="showCourseDetail('enterprise-custom')">
+                    <a class="card clickable-card" href="#course-enterprise-custom" data-course-id="enterprise-custom">
                         <img src="image/enterprise-training-customization.png" alt="客製化企業內訓包班" class="card-image">
                         <div class="card-content">
                         <div class="card-icon">
@@ -369,10 +470,10 @@
                         <h3>客製化企業內訓包班</h3>
                         <p>了解企業特定需求，提供完全客製化的內部培訓課程，以符合每個部門職位最適合的 AI 技能學習。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
-                                <span style="color: #718096; font-weight: 600;">依需求報價</span>
+                                <span style="color: var(--muted); font-weight: 600;">依需求報價</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                 </div>
             </div>
@@ -392,17 +493,17 @@
                         <p>在 AI 快速發展的時代，企業面臨前所未有的挑戰與機遇。智日未來科技憑藉豐富的企業輔導經驗與深厚的技術底蘊，為您提供全方位的自動化顧問服務，協助企業在 AI 浪潮中搶占先機，實現效率躍升與成本優化。</p>
                         
                         <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                            <div style="text-align: center; padding: 1.5rem; background: #f7fafc; border-radius: 15px;">
+                            <div style="text-align: center; padding: 1.5rem; background: var(--surface-soft); border-radius: 15px;">
                                 <div style="font-size: 2.5rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.5rem;">50+</div>
-                                <div style="color: #4a5568; font-weight: 600;">成功輔導企業</div>
+                                <div style="color: var(--text-secondary); font-weight: 600;">成功輔導企業</div>
                             </div>
-                            <div style="text-align: center; padding: 1.5rem; background: #f7fafc; border-radius: 15px;">
+                            <div style="text-align: center; padding: 1.5rem; background: var(--surface-soft); border-radius: 15px;">
                                 <div style="font-size: 2.5rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.5rem;">80%</div>
-                                <div style="color: #4a5568; font-weight: 600;">平均效率提升</div>
+                                <div style="color: var(--text-secondary); font-weight: 600;">平均效率提升</div>
                             </div>
-                            <div style="text-align: center; padding: 1.5rem; background: #f7fafc; border-radius: 15px;">
+                            <div style="text-align: center; padding: 1.5rem; background: var(--surface-soft); border-radius: 15px;">
                                 <div style="font-size: 2.5rem; font-weight: 700; color: #00d4ff; margin-bottom: 0.5rem;">3個月</div>
-                                <div style="color: #4a5568; font-weight: 600;">平均回收投資</div>
+                                <div style="color: var(--text-secondary); font-weight: 600;">平均回收投資</div>
                             </div>
                         </div>
                     </div>
@@ -418,7 +519,7 @@
                                 </div>
                                 <h3>企業現況評估</h3>
                                 <p>深度分析企業現有流程，識別自動化機會點，制定最適合的數位轉型策略藍圖。</p>
-                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                <ul style="margin-top: 1rem; color: var(--muted); list-style-type: disc; padding-left: 1.5rem;">
                                     <li>業務流程盤點與分析</li>
                                     <li>痛點識別與優先級排序</li>
                                     <li>ROI評估與效益預測</li>
@@ -434,7 +535,7 @@
                                 </div>
                                 <h3>AI 解決方案設計</h3>
                                 <p>基於企業需求，設計量身訂製的 AI 自動化解決方案，確保技術與業務完美契合。</p>
-                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                <ul style="margin-top: 1rem; color: var(--muted); list-style-type: disc; padding-left: 1.5rem;">
                                     <li>自動化流程設計</li>
                                     <li>AI 工具選型與配置</li>
                                     <li>系統整合架構規劃</li>
@@ -450,7 +551,7 @@
                                 </div>
                                 <h3>系統導入實施</h3>
                                 <p>專業團隊協助系統建置與部署，確保自動化方案順利上線，降低導入風險。</p>
-                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                <ul style="margin-top: 1rem; color: var(--muted); list-style-type: disc; padding-left: 1.5rem;">
                                     <li>系統建置與測試</li>
                                     <li>數據遷移與整合</li>
                                     <li>使用者培訓與支援</li>
@@ -466,7 +567,7 @@
                                 </div>
                                 <h3>效益監控優化</h3>
                                 <p>持續追蹤自動化效益，提供數據驅動的優化建議，確保投資報酬率最大化。</p>
-                                <ul style="margin-top: 1rem; color: #718096; list-style-type: disc; padding-left: 1.5rem;">
+                                <ul style="margin-top: 1rem; color: var(--muted); list-style-type: disc; padding-left: 1.5rem;">
                                     <li>效益指標監控</li>
                                     <li>效能分析與報告</li>
                                     <li>流程持續優化</li>
@@ -590,40 +691,48 @@
                             <img src="image/Andy.png" alt="講師張文騫 (3C Andy)" class="instructor-photo">
                         </div>
                         <div class="instructor-info">
-                            <h4>張文騫 (3C Andy)</h4>
-                            <p><strong>現職：</strong>智日未來科技執行長</p>
-                            <p><strong>學歷：</strong>政大 圖書資訊與檔案學研究所 碩士</p>
-                            <p><strong>經歷：</strong></p>
+                            <h4>張文騫 (Andy)</h4>
+                            <p><strong>現職單位：</strong>智日未來科技執行長</p>
+                            <p><strong>最高學歷：</strong>政大 圖書資訊與檔案學研究所 碩士</p>
+                            <p><strong>AI 證照：</strong></p>
+                            <ul class="experience-list">
+                                <li>國際：Generative AI for Educators with Gemini</li>
+                                <li>經濟部：IPAS AI應用規劃師中級、IPAS AI應用規劃師初級</li>
+                            </ul>
+                            <br>
+                            <p><strong>工作經歷：</strong></p>
                             <ul class="experience-list">
                                 <li>瑞比智慧科技 AI 轉型顧問</li>
                                 <li>Codingbar程式教育講師</li>
                                 <li>沙箱科技學院主任</li>
                             </ul>
                             <br>
-                            <p><strong>授課經歷：</strong></p>
+                            <p><strong>顧問經歷：</strong></p>
                             <ul class="experience-list">
-                                <li>柏利金</li>
-                                <li>森永企業</li>
-                                <li>紅人學院</li>
-                                <li>桃園塑膠公會</li>
-                                <li>荖子鍋</li>
-                                <li>台灣經濟研究院七所</li>
-                                <li>第一傳動</li>
-                                <li>雲林輔具資源中心</li>
-                                <li>岳豐科技</li>
-                                <li>花蓮工業會</li>
-                                <li>和泰產險</li>
-                                <li>和成欣業</li>
-                                <li>心路基金會</li>
-                                <li>桃園工業會</li>
-                                <li>新竹工業會</li>
-                                <li>台科大</li>
-                                <li>儒林文教</li>
-                                <li>育苗國際文教</li>
-                                <li>新主流實驗學校</li>
-                                <li>翰科實驗學校</li>
-                                <li>濯亞國際學院</li>
+                                <li>2026年：漫步旅居、岱鐠、瑟鎂</li>
+                                <li>2025年：映誠、智食良果、金益鼎</li>
                             </ul>
+                            <br>
+                            <p><strong>授課經歷：</strong></p>
+                            <h4>企業端授課單位</h4>
+                            <p>
+                                <strong>交通運輸</strong>：台灣高鐵(THSRC)<br>
+                                <strong>研究機構</strong>：紡織所(TTRI)、台灣經濟研究院七所(TIER)<br>
+                                <strong>製造工業</strong>：伯堅股份(BURGEON)、允越科技(YUN YUE TECH)、岱鐠科技(DediProg)、安諾電子(ATC)、河洛半導體(HI-LO SYSTEM)、邑昇實業(EISO/DOSUN)、豐營工業(FUNG YIN)、建凱機電(LONG SHINE)、第一傳動(TiMOTION)、和成欣業(HCG)、森永企業(FREE BIRD)、岳豐科技(YFC-BONEAGLE)<br>
+                                <strong>金融保險</strong>：國泰人壽(CATHAY LIFE)、和泰產險(HOTAI INSURANCE)<br>
+                                <strong>餐飲食品</strong>：客來喜(LA CREACION)、百鮮企(LINCO-FOOD)、振鈁阿中丸子(ZHEN FANG/A CHUN WAN NA)、荖子鍋(LAOZI HOT POT)、橙姑娘(ORANGELADY)<br>
+                                <strong>廣告行銷</strong>：侒可傳媒(ANKE MEDIA)、迷母豐盛(MEMES)、映誠(YING CHERNG)、柏利金(POLIKIN)<br>
+                                <strong>教育培訓</strong>：104人資學院(104)、紅人學院(TCTA)、全國創新創業總會(NiEA)<br>
+                                <strong>醫療社福</strong>：新活藝術(NAAS)、全國物理治療總會(TPTA)、心路基金會(SYIN LU)、雲林輔具資源中心(YLAD YUNLIN)<br>
+                                <strong>產業公會</strong>：桃園工策會(T.IDIPC)、台灣塑膠公會(TTPIA)、花蓮工業會(HCIA)、桃園工業會(TCIA)、新竹工業會(HCIA)<br>
+                                <strong>旅宿服務</strong>：漫步旅居(MEANDER GROUP)
+                            </p>
+                            <h4>學生端授課單位</h4>
+                            <p>
+                                <strong>高等教育</strong>：台科大(NTUST)<br>
+                                <strong>實驗學校</strong>：新主流實驗學校(STARLANDEDU)、濯亞國際學院(RUAH)<br>
+                                <strong>文教機構</strong>：吉德堡儒林文教(KIDCASTLE RULIN)、育苗國際文教(YU MIAO/WINWIN)、何嘉仁國際文教(HESS)
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -632,10 +741,17 @@
 
         <!-- 課程詳細頁面模板 -->
         <section id="course-detail" class="page-section">
+            <div id="course-switch-status" class="theme-toast" role="status" aria-live="polite" aria-atomic="true"></div>
             <div class="container">
-                <button class="back-button" id="dynamic-back-button" style="display: none;">
-                    <i class="fas fa-arrow-left"></i> 返回課程列表
-                </button>
+                <div class="course-toolbar-slot">
+                <div class="course-detail-toolbar">
+                    <button class="back-button" id="dynamic-back-button" style="display: none;" aria-describedby="course-navigation-hint">
+                        <i class="fas fa-arrow-left"></i> 返回課程列表
+                    </button>
+                    <div id="course-switcher-container"></div>
+                    <p id="course-navigation-hint" class="course-swipe-hint" role="tooltip"><span class="touch-swipe-hint">右滑上一堂・左滑下一堂</span><span class="mouse-swipe-hint">左右拖曳內頁，或點擊箭頭切換課程</span></p>
+                </div>
+                </div>
                 
                 <div class="course-detail" id="course-detail-content">
                     <!-- 課程詳細內容將由JavaScript動態載入 -->
@@ -656,13 +772,17 @@
                         <p class="course-subtitle">填寫以下資訊完成報名</p>
                     </div>
 
-                    <div class="registration-form-container" style="background: rgba(255, 255, 255, 0.98); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 20px; padding: 3rem; margin: 2rem 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px);">
+                    <div class="registration-form-container" style="background: var(--surface); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 20px; padding: 3rem; margin: 2rem 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px);">
                         <form id="registration-form" style="max-width: 800px; margin: 0 auto;">
                             <!-- 課程選擇 -->
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="course-select" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">選擇課程 *</label>
-                                <select id="course-select" name="course" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: all 0.3s ease;">
+                                <label for="course-select" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">選擇課程 *</label>
+                                <select id="course-select" name="course" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--surface); transition: all 0.3s ease;">
                                     <option value="">請選擇課程</option>
+                                    <option value="ai-essential">人人都該會的生成式 AI 應用班</option>
+                                    <option value="human-resources">人資 AI 招募排班績效班</option>
+                                    <option value="microsoft-ai">Microsoft AI 工作自動化班</option>
+                                    <option value="cluade-master">Claude 全能 AI Agent 大師班</option>
                                     <option value="ai-automation">工作流程 AI 自動化實戰班</option>
                                     <option value="ai-analytics">AI 數據分析與決策輔佐班</option>
                                     <option value="ai-communication">商務營運 AI 通訊助理班</option>
@@ -680,45 +800,45 @@
 
                             <!-- 個人資訊 -->
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">姓名 *</label>
-                                <input type="text" id="name" name="name" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">姓名 *</label>
+                                <input type="text" id="name" name="name" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
                             </div>
                             
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="phone" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">電話 *</label>
-                                <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                <label for="phone" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">電話 *</label>
+                                <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">Email *</label>
-                                <input type="email" id="email" name="email" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; margin-bottom: 0.5rem;">
+                                <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">Email *</label>
+                                <input type="email" id="email" name="email" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; margin-bottom: 0.5rem;">
                                 <button type="button" id="send-email-verification" onclick="sendEmailVerification()" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 10px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">發送驗證碼</button>
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="verification-code" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">Email驗證碼 *</label>
-                                <input type="text" id="verification-code" name="verification-code" required maxlength="6" style="width: 200px; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; text-align: center; letter-spacing: 0.2rem;" placeholder="6位數字" disabled>
-                                <small id="verification-hint" style="display: block; margin-top: 0.5rem; color: #718096;">請先輸入Email並發送驗證碼</small>
+                                <label for="verification-code" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">Email驗證碼 *</label>
+                                <input type="text" id="verification-code" name="verification-code" required maxlength="6" style="width: 200px; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s ease; text-align: center; letter-spacing: 0.2rem;" placeholder="6位數字" disabled>
+                                <small id="verification-hint" style="display: block; margin-top: 0.5rem; color: var(--muted);">請先輸入Email並發送驗證碼</small>
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="company" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">公司/組織</label>
-                                <input type="text" id="company" name="company" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                <label for="company" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">公司/組織</label>
+                                <input type="text" id="company" name="company" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="tax-id" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">統編</label>
-                                <input type="text" id="tax-id" name="tax-id" maxlength="8" pattern="[0-9]{8}" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;" placeholder="8位數字">
+                                <label for="tax-id" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">統編</label>
+                                <input type="text" id="tax-id" name="tax-id" maxlength="8" pattern="[0-9]{8}" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;" placeholder="8位數字">
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="position" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">職位</label>
-                                <input type="text" id="position" name="position" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
+                                <label for="position" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">職位</label>
+                                <input type="text" id="position" name="position" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s ease;">
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="experience" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">AI 相關經驗</label>
-                                <select id="experience" name="experience" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: all 0.3s ease;">
+                                <label for="experience" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">AI 相關經驗</label>
+                                <select id="experience" name="experience" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--surface); transition: all 0.3s ease;">
                                     <option value="">請選擇</option>
                                     <option value="none">完全沒有經驗</option>
                                     <option value="basic">基礎了解</option>
@@ -728,13 +848,13 @@
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="expectations" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">學習期望與目標</label>
-                                <textarea id="expectations" name="expectations" rows="4" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; resize: vertical; transition: all 0.3s ease;" placeholder="請描述您希望透過這門課程達成的目標..."></textarea>
+                                <label for="expectations" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">學習期望與目標</label>
+                                <textarea id="expectations" name="expectations" rows="4" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; resize: vertical; transition: all 0.3s ease;" placeholder="請描述您希望透過這門課程達成的目標..."></textarea>
                             </div>
 
                             <div class="form-group" style="margin-bottom: 2rem;">
-                                <label for="how-know" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">如何得知本課程</label>
-                                <select id="how-know" name="how-know" style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: all 0.3s ease;">
+                                <label for="how-know" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">如何得知本課程</label>
+                                <select id="how-know" name="how-know" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--surface); transition: all 0.3s ease;">
                                     <option value="">請選擇</option>
                                     <option value="google">Google 搜尋</option>
                                     <option value="facebook">Facebook</option>
@@ -781,17 +901,17 @@
                 <div class="contact-grid">
                     <div class="contact-item-footer">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:WisdomDaytech@gmail.com" style="color: #a0aec0; text-decoration: none;">WisdomDaytech@gmail.com</a>
+                        <a href="mailto:WisdomDaytech@gmail.com" style="color: var(--muted); text-decoration: none;">WisdomDaytech@gmail.com</a>
                     </div>
                     <div class="contact-item-footer">
                         <i class="fas fa-phone"></i>
-                        <a href="tel:02-86313606" style="color: #a0aec0; text-decoration: none;">02-86313606</a>
+                        <a href="tel:02-86313606" style="color: var(--muted); text-decoration: none;">02-86313606</a>
             </div>
         </div>
     </div>
 
             <div class="footer-copyright">
-                © 2025 智日未來科技有限公司 WisdomDaytech Technology Co., Ltd. 版權所有
+                © 2026 智日未來科技有限公司 WisdomDaytech Technology Co., Ltd. 版權所有
             </div>
         </div>
     </footer>

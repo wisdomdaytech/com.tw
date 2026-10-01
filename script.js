@@ -232,14 +232,14 @@ function updateCourseDetailNavState(courseId) {
     let subNavSelector = '';
     
     // 實體常態課程
-    if ([ 'ai-automation','ai-analytics','ai-communication','digital-media','vibe-coding'].includes(courseId)) {
+    if (Object.keys(courseData).filter(id => !id.startsWith('enterprise-')).includes(courseId)) {
         mainNavSelector = 'a[onclick*="corporate"]';
-        subNavSelector = `a[onclick*="showCourseDetail('${courseId}')"]`;
+        subNavSelector = `a[data-course-id="${courseId}"]`;
     }
     // 企業內訓課程
     else if (['enterprise-general', 'enterprise-custom'].includes(courseId)) {
         mainNavSelector = 'a[onclick*="enterprise-training"]';
-        subNavSelector = `a[onclick*="showCourseDetail('${courseId}')"]`;
+        subNavSelector = `a[data-course-id="${courseId}"]`;
     }
     
     // 設置主選單高亮
@@ -464,8 +464,8 @@ function updateScheduleSelection(courseId, selectedScheduleId = null) {
     if (availableSchedules.length === 0) {
         scheduleContainer.innerHTML = `
         <div class="form-group" style="margin-bottom: 2rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">課程時段</label>
-            <div style="padding: 1rem; background: #fff5f5; border: 1px solid #fed7d7; border-radius: 10px; color: #e53e3e;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">課程時段</label>
+            <div style="padding: 1rem; background: var(--notice-bg); border: 1px solid var(--notice-border); border-radius: 10px; color: #e53e3e;">
                 <i class="fas fa-exclamation-triangle"></i> 目前沒有可報名的時段，請稍後再試
             </div>
         </div>
@@ -488,12 +488,12 @@ function updateScheduleSelection(courseId, selectedScheduleId = null) {
     
     scheduleContainer.innerHTML = `
     <div class="form-group" style="margin-bottom: 2rem;">
-        <label for="schedule-select" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #2d3748; font-size: 1.1rem;">選擇課程時段 *</label>
-        <select id="schedule-select" name="schedule" required style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; background: white; transition: all 0.3s ease;">
+        <label for="schedule-select" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text); font-size: 1.1rem;">選擇課程時段 *</label>
+        <select id="schedule-select" name="schedule" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--surface); transition: all 0.3s ease;">
             <option value="">請選擇上課時段</option>
             ${scheduleOptions}
         </select>
-        <small style="display: block; margin-top: 0.5rem; color: #718096;">請選擇您希望參加的課程時段</small>
+        <small style="display: block; margin-top: 0.5rem; color: var(--muted);">請選擇您希望參加的課程時段</small>
     </div>
     `;
     
@@ -557,7 +557,7 @@ function resetEmailVerificationState() {
     
     if (hint) {
         hint.textContent = '請先輸入Email並發送驗證碼';
-        hint.style.color = '#718096';
+        hint.style.color = 'var(--muted)';
     }
 }
 
@@ -638,7 +638,7 @@ function sendEmailVerification() {
         // 更新按鈕狀態
         sendBtn.textContent = '重新發送 (60s)';
         sendBtn.disabled = true;
-        sendBtn.style.background = '#718096';
+        sendBtn.style.background = 'var(--muted)';
         
         // 60秒後才能重新發送
         let countdown = 60;
@@ -835,6 +835,26 @@ function handleRegistrationSubmit(event) {
 
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
+    initializeCourseSwipe();
+    initializeCourseToolbar();
+    // Only intercept ordinary clicks; let the browser handle new-tab/window gestures.
+    document.addEventListener('click', function(event) {
+        if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const link = event.target.closest('a[data-course-id]');
+        if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+        if (!courseData[link.dataset.courseId]) return;
+        event.preventDefault();
+        window.clickedFromNavMenu = Boolean(link.closest('.nav-menu'));
+        showCourseDetail(link.dataset.courseId);
+        if (link.hasAttribute('data-course-step')) announceCourseSwitch(courseData[link.dataset.courseId].title);
+    });
+
+    // 主頁與內頁共用適合對象，課程資料變更時自動保持一致。
+    document.querySelectorAll('[data-course-audience]').forEach(element => {
+        const course = courseData[element.dataset.courseAudience];
+        if (course) element.textContent = '🔥 適合：' + course.audience;
+    });
+
     // 為卡片和其他元素添加滾動動畫類
     const animatedElements = document.querySelectorAll('.card, .course-table, .about-content');
     animatedElements.forEach(el => el.classList.add('fade-in'));
@@ -935,129 +955,682 @@ window.addEventListener('resize', function() {
 
 // 課程資料庫
 const courseData = {
-    'ai-automation': {
-        title: '工作流程 AI 自動化實戰班',
-        subtitle: '運用 AI 實現工作流程自動化，大幅提升營運效率',
-        description: '本課程教你如何使用 Google Apps Script 、 Make.com 等工具，建立智能化的工作流程自動化系統，減少重複性工作，提升企業整體效率。',
-        image: 'image/ai-automation.png',
-        firstClassDate: '2025/9/5', // 第一堂課日期
-        scheduleText: '2025/9/5(五)、2025/9/12(五)', // 完整課程時間
-        time: '09:30~16:30',
-        location: 'GACC傑登商務會議中心',
-        features: [
-            { title: '熱門 AI 工具輕鬆上手', desc: '熱門生成式 AI 工具實戰運用' },
-            { title: '流程分析與設計', desc: '識別可自動化流程，設計最佳化工作流程' },
-            { title: 'Google Apps Script 初探', desc: '自動化文件與試算表處理' },
-            { title: 'Make.com 入門', desc: '掌握視覺化流程建構與 API 整合技巧' }
+    "ai-essential": {
+        "title": "人人都該會的生成式 AI 應用班",
+        "subtitle": "一天掌握生成式 AI 與工作自動化入門",
+        "description": "從生成式 AI 的日常應用與提示詞技巧出發，透過實作學會使用 Google Apps Script 處理數據、發送提醒與設定自動化觸發條件，建立自己的第一個工作自動化流程。",
+        "audience": "所有企業工作者、行政人員，以及希望入門 AI 的零基礎學員。",
+        "image": "image/ai-essential.png",
+        "days": 1,
+        "hours": 6,
+        "originalPrice": 8000,
+        "price": 5000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶可連網的筆記型電腦，並準備 Google 帳號。",
+        "features": [
+            {
+                "title": "生成式 AI 實戰",
+                "desc": "了解 AI 發展與日常工作應用。"
+            },
+            {
+                "title": "Prompt 設計",
+                "desc": "練習清楚表達任務、條件與輸出格式。"
+            },
+            {
+                "title": "GAS 入門",
+                "desc": "以 AI 協助編寫 Google Apps Script。"
+            },
+            {
+                "title": "提醒自動化",
+                "desc": "完成數據分析、提醒與觸發條件設定。"
+            }
         ],
-        schedule: [
-            { day: '第一天', time: '09:30-12:00', topic: '生成式 AI 應用實戰', content: '• AI 發展現況\n• Prompt設定技巧\n• 生成式 AI 實戰' },
-            { day: '第一天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第一天', time: '13:00-16:30', topic: '工作流程 AI 自動化', content: '• Google Apps Script入門\n• 關鍵字新聞抓取自動化\n• 自動化觸發條件設定' },
-            { day: '第二天', time: '09:30-12:00', topic: '複雜流程 AI 自動化', content: '• 多檔案間數據整合\n• 錯誤處理與例外管理\n• 流程測試與除錯' },
-            { day: '第二天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第二天', time: '13:00-16:30', topic: 'No-code 流程自動化', content: '• Line 官方帳號自動化\n• 客服 AI 聊天機器人\n• 監控與維護機制建立' }
+        "schedule": [
+            {
+                "day": "第一天",
+                "time": "09:30-12:00",
+                "topic": "生成式 AI 應用實戰",
+                "content": "• AI 發展現況\n• Prompt 設定技巧\n• 生成式 AI 實戰",
+                "period": "上午"
+            },
+            {
+                "day": "第一天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第一天",
+                "time": "13:00-16:30",
+                "topic": "工作流程 AI 自動化初探",
+                "content": "• Google Apps Script 入門\n• 數據分析與提醒自動化\n• 自動化觸發條件設定",
+                "period": "下午"
+            }
         ]
     },
-    'ai-analytics': {
-        title: 'AI 數據分析與決策輔佐班',
-        subtitle: '運用 AI 技術進行深度數據挖掘，提供企業決策強力支撐',
-        description: '本課程專為企業決策者與數據分析師設計，教你如何運用數據分析 ICLT 準則，同時搭配 AI 在 Google Apps Script 環境中，進行高效視覺化數據分析洞察隱藏的商機，並建立數據驅動的決策機制。',
-        image: 'image/ai-analytics.png',
-        firstClassDate: '2025/9/3', // 第一堂課日期
-        scheduleText: '2025/9/3(三)、2025/9/10(三)', // 完整課程時間
-        time: '09:30~16:30',
-        location: 'GACC傑登商務會議中心',
-        features: [
-            { title: '熱門 AI 工具輕鬆上手', desc: '熱門生成式 AI 工具實戰運用' },
-            { title: '智能數據清理', desc: '使用 AI 工具快速處理髒數據與缺失值' },
-            { title: '預測模型建立', desc: '建構業務預測模型，預測銷售與市場趨勢' },
-            { title: '視覺化報表', desc: '製作互動式儀表板與數據視覺化報表' }
+    "ai-automation": {
+        "title": "工作流程 AI 自動化實戰班",
+        "subtitle": "GAS 複雜流程整合 × Make.com 規則式客服",
+        "description": "進階運用 GAS 串接多檔案數據，建立可測試與除錯的自動化流程，再以 Make.com 完成問卷生成、LINE 官方帳號串接與規則式問答。依問題分類逐步引導，最後根據 Google Sheets 資料提供對應答案。",
+        "audience": "行政人員、庶務人員、助理及有基礎 AI 應用經驗的工作者。",
+        "image": "image/ai-automation.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶可連網的筆記型電腦，並準備 Google 帳號。",
+        "features": [
+            {
+                "title": "多檔案整合",
+                "desc": "以 GAS 串接數據並處理例外。"
+            },
+            {
+                "title": "問卷自動生成",
+                "desc": "以 Make.com 建立問卷生成流程。"
+            },
+            {
+                "title": "規則式問答",
+                "desc": "透過條件分支引導問題，查詢 Sheets 回答。"
+            },
+            {
+                "title": "維護與監控",
+                "desc": "建立流程測試、錯誤紀錄與維護機制。"
+            }
         ],
-        schedule: [
-            { day: '第一天', time: '09:30-12:00', topic: '生成式 AI 應用實戰', content: '• AI 發展現況\n• Prompt設定技巧\n• 生成式 AI 實戰' },
-            { day: '第一天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第一天', time: '13:00-16:30', topic: '工作流程 AI 自動化', content: '• Google Apps Script入門\n• 關鍵字新聞抓取自動化\n• 自動化觸發條件設定' },
-            { day: '第二天', time: '09:30-12:00', topic: '數據分析 ICLT 準則', content: '• 探索性數據分析法\n• 數據清理 AI 輔助技術\n• 特徵選取 AI 優化'},
-            { day: '第二天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第二天', time: '13:00-16:30', topic: '視覺化儀表板設計', content: '• 互動式儀表板設計\n• 自動化報表生成\n• 決策建議系統建立' },
+        "schedule": [
+            {
+                "day": "第一天",
+                "time": "09:30-12:00",
+                "topic": "GAS 複雜流程 AI 自動化",
+                "content": "• 多檔案間數據整合\n• 錯誤處理與例外管理",
+                "period": "上午"
+            },
+            {
+                "day": "第一天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第一天",
+                "time": "13:00-16:30",
+                "topic": "流程測試與 Make.com 問卷生成",
+                "content": "• 流程測試與除錯\n• Make.com 問卷自動化生成\n• 串接表單與 Google Sheets",
+                "period": "下午"
+            },
+            {
+                "day": "第二天",
+                "time": "09:30-12:00",
+                "topic": "No-code 流程自動化",
+                "content": "• LINE 官方帳號自動化\n• 客服 AI 聊天機器人\n• 監控與維護機制建立",
+                "period": "上午"
+            },
+            {
+                "day": "第二天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第二天",
+                "time": "13:00-16:30",
+                "topic": "Make.com 規則式問答實戰",
+                "content": "• 透過規則分類問題，不經 AI 分析數據\n• 依不同問題逐層引導與條件分流\n• 依 Google Sheets 資料內容提供答案",
+                "period": "下午"
+            }
         ]
     },
-    'ai-communication': {
-        title: '商務營運 AI 通訊助理班',
-        subtitle: '透過 AI 實現庫存管理等商務流程通知自動化，打造個人專屬的通訊助理',
-        description: '本課程將帶你進階運用 Google Apps Script 與 Make.com 等工具，建立高效率的數據分析與通知自動化系統，並透過自動發送 Email、LINE 等訊息渠道，實現即時商務提醒、庫存管理通知與營運決策支援，協助你優化管理流程並提升工作效率。',
-        image: 'image/ai-communication.png',
-        firstClassDate: '2025/8/22', // 第一堂課日期
-        scheduleText: '2025/8/22(五)、2025/8/29(五)', // 完整課程時間
-        time: '09:30~16:30',
-        location: 'GACC傑登商務會議中心',
-        features: [
-            { title: '熱門 AI 工具輕鬆上手', desc: '熱門生成式 AI 工具實戰運用' },
-            { title: '商務數據分析自動化', desc: '運用 AI 分析銷售、庫存與營運數據' },
-            { title: '即時通訊自動通知', desc: '透過 Email 與 LINE 自動推送提醒與報告' },
-            { title: 'Make.com 進階應用', desc: '多流程整合、跨平台 API 串接與錯誤處理' }
+    "ai-analytics": {
+        "title": "AI 數據分析與決策輔佐班",
+        "subtitle": "從資料清理到儀表板與自動化決策報告",
+        "description": "學習數據分析法則，以 AI 協助資料前處理與非結構化資料轉換，進行探索式數據分析與異常偵測。結合 Make.com 分析銷售數據，再以 GAS 製作視覺化儀表板及 Google Slides 自動化報告。",
+        "audience": "財務人員、管理階層、決策者、數據分析師、行銷及業務人員。",
+        "image": "image/ai-analytics.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶可連網的筆記型電腦，並準備 Google 帳號。",
+        "features": [
+            {
+                "title": "AI 資料前處理",
+                "desc": "清理資料並將非結構化內容轉為報表。"
+            },
+            {
+                "title": "EDA 與異常偵測",
+                "desc": "探索趨勢、關聯與異常數據。"
+            },
+            {
+                "title": "銷售數據分析",
+                "desc": "以 Make.com 串接銷售資料分析流程。"
+            },
+            {
+                "title": "自動化報告",
+                "desc": "以 GAS 製作圖表並生成 Google Slides。"
+            }
         ],
-        schedule: [
-            { day: '第一天', time: '09:30-12:00', topic: '生成式 AI 應用實戰', content: '• AI 發展現況\n• Prompt設定技巧\n• 生成式 AI 實戰' },
-            { day: '第一天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第一天', time: '13:00-16:30', topic: '工作流程 AI 自動化', content: '• Google Apps Script入門\n• 關鍵字新聞抓取自動化\n• 自動化觸發條件設定' },
-            { day: '第二天', time: '09:30-12:00', topic: '進階通訊自動化實戰', content: '• 多資料來源整合判斷\n• 庫存與銷售異常通知系統\n• 即時營運監控與自動提醒' },
-            { day: '第二天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第二天', time: '13:00-16:30', topic: '智慧商務 AI 助理', content: '• 建立商務 AI 通訊自動化助理\n• 多通訊平台整合與推播\n• 權限管理與審核機制' }
+        "schedule": [
+            {
+                "day": "第一天",
+                "time": "09:30-12:00",
+                "topic": "數據分析法則與資料前處理",
+                "content": "• 數據分析法則\n• AI 輔助資料前處理\n• 非結構化資料轉結構化報表",
+                "period": "上午"
+            },
+            {
+                "day": "第一天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第一天",
+                "time": "13:00-16:30",
+                "topic": "探索式分析與銷售數據實戰",
+                "content": "• 探索式數據分析（EDA）\n• 異常偵測\n• Make.com 銷售數據分析",
+                "period": "下午"
+            },
+            {
+                "day": "第二天",
+                "time": "09:30-12:00",
+                "topic": "GAS 專業視覺化與圖表儀表板",
+                "content": "• 圖表選型與視覺化設計\n• GAS 儀表板製作\n• 數據更新與互動呈現",
+                "period": "上午"
+            },
+            {
+                "day": "第二天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第二天",
+                "time": "13:00-16:30",
+                "topic": "Google Slides 自動化報告生成",
+                "content": "• 將分析結果與圖表整合至簡報\n• 以 GAS 自動生成報告\n• 決策重點整理與成果展示",
+                "period": "下午"
+            }
         ]
     },
-    'digital-media': {
-        title: '自媒體 AI 數位創作經營班',
-        subtitle: '打造全自動化自媒體經營系統，從內容創作到發布一站到位',
-        description: '本課程將教你建立完整的自媒體自動化系統，從數據收集、內容創作、影片製作到自動發布，實現真正的自媒體經營自動化，輕鬆打造被動收入來源。',
-        image: 'image/digital-media.png',
-        firstClassDate: '2025/9/11', // 第一堂課日期
-        scheduleText: '2025/9/11(四)、2025/9/18(四)', // 完整課程時間
-        time: '09:30~16:30',
-        location: 'GACC傑登商務會議中心',
-        features: [
-            { title: '熱門 AI 工具輕鬆上手', desc: '熱門生成式 AI 工具實戰運用' },
-            { title: '智能內容生成', desc: '使用 AI 工具自動生成高質量文案與腳本' },
-            { title: '自動化影片製作', desc: '批量製作短影片與長影片內容' },
-            { title: '多平台自動排程發布', desc: '自動化發布至各社群與自媒體平台' },
+    "ai-communication": {
+        "title": "商務營運 AI 通訊助理班",
+        "subtitle": "Make.com 通訊助理 × GAS 與 Ragic 營運串接",
+        "description": "先以 Make.com 建立營運監控與通訊推播助理，再掌握 API 串接心法，將 Ragic 無程式碼資料庫與 AI 程式寫作結合，以 GAS 實現跨系統 ERP／CRM 營運自動化。",
+        "audience": "營運管理師、ERP／CRM 專案人員、管理階層與負責採購、庫存、銷售的工作者。",
+        "image": "image/ai-communication.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶筆電，準備 Google、Make.com 與 Ragic 帳號；串接權限及工具方案需求依課前通知。",
+        "features": [
+            {
+                "title": "通訊助理",
+                "desc": "整合多資料來源、平台推播與審核。"
+            },
+            {
+                "title": "Ragic 資料庫",
+                "desc": "建構採購、庫存、客戶與銷售模組。"
+            },
+            {
+                "title": "GAS API 串接",
+                "desc": "以 AI 撰寫抓取、回寫與同步程式。"
+            },
+            {
+                "title": "營運自動化",
+                "desc": "完成採購預警與銷售配量建議。"
+            }
         ],
-        schedule: [
-            { day: '第一天', time: '09:30-12:00', topic: '生成式 AI 應用實戰', content: '• AI 發展現況\n• Prompt設定技巧\n• 生成式 AI 實戰' },
-            { day: '第一天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第一天', time: '13:00-16:30', topic: '工作流程 AI 自動化', content: '• Google Apps Script入門\n• 關鍵字新聞抓取自動化\n• 自動化觸發條件設定' },
-            { day: '第二天', time: '09:30-12:00', topic: '多媒體 AI 創作', content: '• 自媒體經營策略規劃\n• AI 內容創作技巧\n• 多媒體素材速成法' },
-            { day: '第二天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第二天', time: '13:00-16:30', topic: '多平台自動發布', content: '•每日 AI 文本生成\n• 社群媒體素材自動搭配\n• 排程多平台發布系統' },
+        "schedule": [
+            {
+                "day": "第一天",
+                "time": "09:30-12:00",
+                "topic": "進階通訊自動化實戰（Make.com）",
+                "content": "• 多資料來源整合判斷\n• 庫存與銷售異常通知系統\n• 即時營運監控與自動提醒",
+                "period": "上午"
+            },
+            {
+                "day": "第一天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第一天",
+                "time": "13:00-16:30",
+                "topic": "智慧商務 AI 助理（Make.com）",
+                "content": "• 建立商務 AI 通訊自動化助理\n• 多通訊平台整合與推播\n• 權限管理與審核機制",
+                "period": "下午"
+            },
+            {
+                "day": "第二天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "Ragic 資料庫與 GAS API 串接",
+                "content": "• 建構採購、庫存、客戶與銷售資料庫\n• 理解 Webhook、API Key 與 JSON 資料結構\n• 以 AI 撰寫 GAS，抓取、回寫與同步 Ragic 資料"
+            },
+            {
+                "day": "第二天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第二天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "ERP／CRM 營運自動化實戰",
+                "content": "• 安全庫存預警、自動建立採購單與 Email／LINE 審核通知\n• 分析歷史銷售，產生下季度配量建議並寫回 ERP\n• 整合流程測試、Q&A 與實務情境擴充"
+            }
         ]
     },
-    'vibe-coding': {
-        title: 'Vibe Coding AI 軟體開發班',
-        subtitle: '運用 AI 技術革新軟體開發流程，快速構建現代化應用程式',
-        description: '本課程將教授您如何運用最新的 AI 開發工具，從零開始建立完整的軟體應用程式。透過實務導向的教學方式，讓您掌握 AI 輔助開發的核心技能，並學會將應用程式部署到 Github 雲端平台。',
-        image: 'image/vibe-coding.png',
-        firstClassDate: '2025/8/22', // 第一堂課日期
-        scheduleText: '2025/8/22(五)、2025/8/29(五)', // 完整課程時間
-        time: '09:30~16:30',
-        location: 'GACC傑登商務會議中心',
-        features: [
-            { title: '熱門 AI 工具輕鬆上手', desc: '熱門生成式 AI 工具實戰運用' },
-            { title: 'AI 程式碼生成', desc: '學習使用GitHub Copilot、Cursor等 AI 工具加速開發' },
-            { title: '雲端部署實戰', desc: '透過GitHub 實現應用程式部署與上架' },
-            { title: '專案作品集', desc: '完成2-3個實際可用的軟體專案作品' }
+    "digital-media": {
+        "title": "自媒體 AI 數位創作經營班",
+        "subtitle": "AI 生圖生影、虛擬主播與社群自動化經營",
+        "description": "從手機免費 App 體驗 AI 影片生成，拆解影片製作流程，建立生圖與生影 Prompt 的 AI Agent。進一步製作虛擬主播產品推廣短片，以 GAS 蒐集新聞並建立 FB、IG 自動回覆與粉專配圖貼文發布流程。",
+        "audience": "行銷人員、社群媒體管理員、自媒體經營者與內容創作者。",
+        "image": "image/digital-media.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶筆電與智慧型手機，準備 Google 帳號；社群實作需具管理權限的 FB 粉專／IG 帳號，依課前通知設定。",
+        "features": [
+            {
+                "title": "手機影片體驗",
+                "desc": "以免費 App 體驗 AI 影片製作。"
+            },
+            {
+                "title": "創作 Agent",
+                "desc": "設定生圖、生影提示詞生成助理。"
+            },
+            {
+                "title": "虛擬主播短片",
+                "desc": "完成具分享吸引力的產品推廣短片。"
+            },
+            {
+                "title": "社群自動化",
+                "desc": "新聞蒐集、自動回覆與配圖貼文發布。"
+            }
         ],
-        schedule: [
-            { day: '第一天', time: '09:30-12:00', topic: '生成式 AI 應用實戰', content: '• AI 發展現況\n• Prompt設定技巧\n• 生成式 AI 實戰' },
-            { day: '第一天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第一天', time: '13:00-16:30', topic: '工作流程 AI 自動化', content: '• Google Apps Script入門\n• 關鍵字新聞抓取自動化\n• 自動化觸發條件設定' },
-            { day: '第二天', time: '09:30-12:00', topic: '多功能工具實作', content: '• 製作時間相關工具：時鐘、世界時鐘、線上碼錶、計時器、鬧鐘、番茄鐘、時差換算\n• 製作計數相關工具：計數器、計分版、即時匯率轉換\n• 製作隨機娛樂工具：輪盤、隨機數字、擲硬幣、排序、抽籤' },
-            { day: '第二天', time: '12:00-13:00', topic: '中午用餐與午休', content: '本課程中午提供餐點' },
-            { day: '第二天', time: '13:00-16:30', topic: '個人品牌網頁與雲端部署', content: '• 建立個人品牌網頁\n• 將工具與網頁整合至專案\n• 專案展示與上線測試' }
-            
+        "schedule": [
+            {
+                "day": "第一天",
+                "time": "09:30-12:00",
+                "topic": "AI 影片生成與製作流程",
+                "content": "• 使用手機免費 App 體驗 AI 影片生成\n• 影片製作流程拆解\n• 腳本、素材與鏡頭規劃",
+                "period": "上午"
+            },
+            {
+                "day": "第一天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第一天",
+                "time": "13:00-16:30",
+                "topic": "爆款影片 Prompt 與 AI Agent 設定",
+                "content": "• AI 生圖 Prompt 設計\n• AI 生影 Prompt 設計\n• 建立提示詞生成 AI Agent 並迭代影片",
+                "period": "下午"
+            },
+            {
+                "day": "第二天",
+                "time": "09:30-12:00",
+                "topic": "虛擬主播產品推廣與新聞蒐集",
+                "content": "• 病毒式虛擬主播產品推廣短片實作\n• GAS 新聞蒐集自動化\n• 整理新聞並轉換為創作素材",
+                "period": "上午"
+            },
+            {
+                "day": "第二天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第二天",
+                "time": "13:00-16:30",
+                "topic": "FB／IG 社群經營自動化",
+                "content": "• FB、IG 自動回覆機制\n• FB 粉專自動發布配圖貼文\n• 發布流程測試與內容審核",
+                "period": "下午"
+            }
         ]
     },
+    "human-resources": {
+        "title": "人資 AI 招募排班績效班",
+        "subtitle": "建立招募、排班、薪資與多級績效審核 Web 系統",
+        "description": "第一天透過 AI 編寫 GAS 後端與 HTML 前端，打造招募、排班與薪資通知的一站式人資 Web 系統。第二天以 Vibe Coding 自然語言開發模式，建立員工自評、主管多級審核與 HR 視覺化儀表板的完整績效考核系統。",
+        "audience": "HR 專員、人資主管、薪酬管理師及排班調度人員。",
+        "image": "image/human-resources.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶可連網的筆記型電腦，並準備 Google 帳號。",
+        "features": [
+            {
+                "title": "智慧招募",
+                "desc": "履歷表單、職缺關鍵字匹配與評分。"
+            },
+            {
+                "title": "排班與薪資",
+                "desc": "設定排班限制與薪資計算、通知流程。"
+            },
+            {
+                "title": "多級考核簽核",
+                "desc": "依身分控管自評、退回與核可流程。"
+            },
+            {
+                "title": "HR 儀表板",
+                "desc": "九宮格人才矩陣與部門分數分佈。"
+            }
+        ],
+        "schedule": [
+            {
+                "day": "第一天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "AI 人資系統建構與智慧招募",
+                "content": "• 拆解人資流程，以 AI 建立 GAS 後端與 HTML 前端\n• 設計履歷 Web 表單，串接 Google Sheets\n• AI 匹配職缺關鍵字、評分並回傳篩選結果"
+            },
+            {
+                "day": "第一天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第一天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "智慧排班與薪資通知實戰",
+                "content": "• 依勞基法規與員工偏好設計排班，呈現網頁日曆／表格\n• 編寫加班費、請假扣款與勞健保計算邏輯\n• 一鍵產出與寄送電子薪資單，整合為人資 Web App"
+            },
+            {
+                "day": "第二天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "Vibe Coding 績效考核系統開發",
+                "content": "• 用自然語言設計員工自評與主管多級審核流程\n• 建立 RWD 考評表單、動態評分與評語介面\n• 依員工／主管身分切換介面與可視權限"
+            },
+            {
+                "day": "第二天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第二天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "權限簽核與 HR 視覺化儀表板",
+                "content": "• 實作送出、通知、退回與核可，控管 Sheets 權限與敏感欄位\n• 以 Chart.js 呈現九宮格人才矩陣與部門分數分佈\n• 整合系統，完成權限測試與部署"
+            }
+        ]
+    },
+    "vibe-coding": {
+        "title": "Vibe Coding AI 軟體開發班",
+        "subtitle": "從自然語言開發到具會員與資料庫的網站部署",
+        "description": "以 Gemini Canvas 體驗自然語言開發，再進入 Google AI Studio，透過 Gemini 模型與 System Instructions 建立可運行的 Web App。第二天使用付費 AI 開發工具，結合 Supabase 資料庫、會員系統、GitHub 版本管理與 Zeabur 部署，完成訂餐系統等實務專案。",
+        "audience": "想開發工具的非技術人員、產品經理、新創團隊及個人創作者。",
+        "image": "image/vibe-coding.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶筆電，準備 Google、GitHub、Supabase、Zeabur 帳號；第二天使用付費 AI 工具，方案與費用依課前通知。",
+        "features": [
+            {
+                "title": "Gemini 開發環境",
+                "desc": "體驗 Canvas 與 Google AI Studio。"
+            },
+            {
+                "title": "工程提示詞",
+                "desc": "System Instructions、結構化提示詞與 Few-Shot。"
+            },
+            {
+                "title": "全端網站實作",
+                "desc": "Supabase 資料庫與會員系統。"
+            },
+            {
+                "title": "雲端部署",
+                "desc": "專案提交 GitHub 並部署至 Zeabur。"
+            }
+        ],
+        "schedule": [
+            {
+                "day": "第一天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "Gemini 開發體驗與 Prompt 設計",
+                "content": "• 體驗 Gemini Canvas 與 Google AI Studio 開發環境\n• 認識 Vibe Coding、模型選擇與 Temperature 設定\n• 設計 System Instructions、結構化提示詞與 Few-Shot 範例"
+            },
+            {
+                "day": "第一天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第一天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "自然語言 Web App 開發實戰",
+                "content": "• 從零建立作品集網站／產品訂購計算器\n• 整合表單、計算與互動功能，打造輕量級 Web App\n• 即時預覽、除錯與迭代，規劃第二天資料庫專案"
+            },
+            {
+                "day": "第二天",
+                "time": "09:30-12:00",
+                "topic": "付費 AI 工具與 Supabase 全端開發",
+                "content": "• 以自然語言規劃會員訂餐系統\n• 建立 Supabase 資料庫與會員驗證\n• 串接前端、資料庫及存取權限",
+                "period": "上午"
+            },
+            {
+                "day": "第二天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第二天",
+                "time": "13:00-16:30",
+                "topic": "GitHub 與 Zeabur 部署實戰",
+                "content": "• 將專案提交 GitHub 進行版本管理\n• 串接 Zeabur 部署與環境變數設定\n• 測試會員登入、訂餐流程與網站上線",
+                "period": "下午"
+            }
+        ]
+    },
+    "microsoft-ai": {
+        "title": "Microsoft AI 工作自動化班",
+        "subtitle": "Copilot × Make.com × VBA 跨檔案辦公自動化",
+        "description": "了解 Copilot 的能力與限制，設定簡單任務 Agent 處理客訴信等工作，結合 Make.com 自動化與授權的 Outlook、OneDrive 資料搜尋及回信流程。第二天以 Copilot 輔助撰寫跨檔案 VBA，完成數據分析、工作流程與固定樣式 PowerPoint 簡報自動化。",
+        "audience": "以 Microsoft 作為日常辦公環境的企業、行政人員及數據與簡報工作者。",
+        "image": "image/microsoft-ai.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶可執行 VBA 的桌面版 Office 筆電，準備 Microsoft、Copilot 與 Make.com 帳號；Outlook／OneDrive 授權及方案依課前通知。",
+        "features": [
+            {
+                "title": "Copilot 任務助理",
+                "desc": "了解限制並設定客訴信回覆等簡單任務。"
+            },
+            {
+                "title": "資料與通訊流程",
+                "desc": "透過授權資料搜尋、處理並回傳 Outlook。"
+            },
+            {
+                "title": "跨檔案 VBA",
+                "desc": "以 Copilot 輔助數據分析與流程自動化。"
+            },
+            {
+                "title": "固定樣式簡報",
+                "desc": "使用 PPT 模板與錨點生成簡報。"
+            }
+        ],
+        "schedule": [
+            {
+                "day": "第一天",
+                "time": "09:30-12:00",
+                "topic": "Copilot 與簡單任務 Agent",
+                "content": "• Copilot 介紹、能力與限制\n• 簡單任務 Agent 設定\n• 客訴信回覆情境實作",
+                "period": "上午"
+            },
+            {
+                "day": "第一天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第一天",
+                "time": "13:00-16:30",
+                "topic": "Make.com 與 Microsoft 資料自動化",
+                "content": "• 簡易數據處理自動化\n• 授權 Outlook 與 OneDrive 資料夾存取\n• 知識庫檢索（RAG）：搜尋授權資料、整理分析並回傳結果至 Outlook",
+                "period": "下午"
+            },
+            {
+                "day": "第二天",
+                "time": "09:30-12:00",
+                "topic": "Copilot 輔助跨檔案 VBA",
+                "content": "• 以 Copilot 撰寫與除錯 VBA\n• 跨檔案數據整合與分析\n• 工作流程自動化",
+                "period": "上午"
+            },
+            {
+                "day": "第二天",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點",
+                "period": "中午"
+            },
+            {
+                "day": "第二天",
+                "time": "13:00-16:30",
+                "topic": "PowerPoint 模板與錨點簡報生成",
+                "content": "• 設計固定樣式 PPT 模板與內容錨點\n• 將分析結果寫入指定版位\n• 自動生成簡報並檢查格式",
+                "period": "下午"
+            }
+        ]
+    },
+    "cluade-master": {
+        "title": "Claude 全能 AI Agent 大師班",
+        "subtitle": "Chat、Artifacts、Cowork 與 Claude Code 全面實作",
+        "description": "掌握 Claude Sonnet／Haiku 的應用方式，結合 Chat、Projects、Artifacts 與 Computer Use／Cowork，實作動態網頁資料整理、Office 檔案批次處理及簡報生成。第二天使用 Claude Code，理解 AGENTS.md、Skills 與 MCP，完成可執行的 Web 工具。",
+        "audience": "使用 Claude 付費方案的企業工作者、個人創作者與希望建立 AI Agent 的學員。",
+        "image": "image/cluade-master.png",
+        "days": 2,
+        "hours": 12,
+        "originalPrice": 16000,
+        "price": 10000,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請攜帶筆電與 Claude 付費帳號；Cowork、Computer Use 與 Claude Code 可用環境及權限依課前通知。",
+        "features": [
+            {
+                "title": "專案知識庫",
+                "desc": "進階提問、Projects 與 Artifacts 互動組件。"
+            },
+            {
+                "title": "Agent 操作",
+                "desc": "動態網頁資料抓取與跨視窗資料整理。"
+            },
+            {
+                "title": "Office 批次處理",
+                "desc": "VBA／Python 輔助 Excel、Word 與簡報生成。"
+            },
+            {
+                "title": "Claude Code 開發",
+                "desc": "認識專案指引、Skills、MCP 並完成 Web App。"
+            }
+        ],
+        "schedule": [
+            {
+                "day": "第一天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "Claude 核心模式與 Agent 操作",
+                "content": "• 進階 Chat 提問與 Projects 企業知識庫設定\n• 以 Artifacts 製作互動組件、心智圖、流程圖與簡易網站\n• 體驗 Computer Use／Cowork，規劃網頁抓取與跨視窗任務"
+            },
+            {
+                "day": "第一天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第一天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "資料整理與 Office 自動化實戰",
+                "content": "• 抓取競品價格與動態網站資料，完成結構化清單整理\n• 以 VBA／Python 批次處理 Excel 與 Word\n• 自動生成 PowerPoint 簡報，設定排版與配色"
+            },
+            {
+                "day": "第二天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "Claude Code 開發流程與 Web App 起步",
+                "content": "• 理解 AGENTS.md、Skills 與 MCP 工具串接邏輯\n• 規劃報價計算器／問卷系統的介面與功能\n• 以自然語言生成可執行的 Web App 雛形"
+            },
+            {
+                "day": "第二天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第二天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "Web App 整合、除錯與成果展示",
+                "content": "• 完成工具核心功能與介面整合\n• 以自然語言迭代，進行測試與除錯\n• 展示可執行的 Web 工具與實務應用"
+            }
+        ]
+    }
+,
     'enterprise-general': {
         title: '企業常態課內訓包班',
+        mealNote: '由企業提供中餐，午休時段依企業課程安排。',
         subtitle: '根據常態課程內容，提供企業內部培訓課程',
         description: '本課程將我們現有的常態課程內容調整為企業內部培訓版本，讓企業員工能夠在熟悉的環境中學習 AI 技能，提升整體團隊的數位化能力。',
         image: 'image/enterprise-training-generally.png',
@@ -1077,6 +1650,7 @@ const courseData = {
     },
     'enterprise-custom': {
         title: '客製化企業內訓包班',
+        mealNote: '由企業提供中餐，午休時段依企業課程安排。',
         subtitle: '根據企業特定需求，提供完全客製化的內部培訓課程',
         description: '本課程專為企業量身打造，根據企業的產業特性、業務需求、技術水準等因素，設計完全客製化的 AI 培訓方案，確保每位員工都能掌握最適合的 AI 技能。',
         image: 'image/enterprise-training-customization.png',
@@ -1224,7 +1798,7 @@ function generateSortedCourseTable() {
         tablesHTML += `
         <div class="course-group-table" style="margin-bottom: 2rem;">
             <h4 class="course-group-title">
-                <a href="javascript:void(0)" onclick="showCourseDetail('${courseId}'); return false;" class="course-link" style="font-size: 1.2rem; font-weight: 600;">
+                <a href="#course-${courseId}" data-course-id="${courseId}" class="course-link" style="font-size: 1.2rem; font-weight: 600;">
                     ${courseName}
                 </a>
             </h4>
@@ -1252,13 +1826,7 @@ function generateSortedCourseTable() {
 
 // 預設課程表格（當沒有Google Sheets資料時）
 function generateDefaultCourseTable() {
-    const courses = Object.entries(courseData)
-        .filter(([key, course]) => course.firstClassDate)
-        .sort((a, b) => {
-            const dateA = new Date(a[1].firstClassDate.replace(/\//g, '-'));
-            const dateB = new Date(b[1].firstClassDate.replace(/\//g, '-'));
-            return dateA - dateB;
-        });
+    const courses = Object.entries(courseData).filter(([key]) => !key.startsWith('enterprise-'));
 
     let tablesHTML = '';
     
@@ -1266,7 +1834,7 @@ function generateDefaultCourseTable() {
         tablesHTML += `
         <div class="course-group-table" style="margin-bottom: 2rem;">
             <h4 class="course-group-title">
-                <a href="javascript:void(0)" onclick="showCourseDetail('${courseId}'); return false;" class="course-link" style="font-size: 1.2rem; font-weight: 600;">
+                <a href="#course-${courseId}" data-course-id="${courseId}" class="course-link" style="font-size: 1.2rem; font-weight: 600;">
                     ${course.title}
                 </a>
             </h4>
@@ -1284,8 +1852,8 @@ function generateDefaultCourseTable() {
                         <tr>
             <td>${course.scheduleText}</td>
             <td>${course.time}</td>
-            <td><a href="https://www.google.com/maps/search/${encodeURIComponent(course.location)}" target="_blank" class="location-link" title="點擊開啟Google Maps">${course.location}</a></td>
-                            <td><span class="course-status status-upcoming" data-status="即將到來">即將到來</span></td>
+            <td>${course.location}</td>
+                            <td><span class="course-status status-ended" data-status="待公告">待公告</span></td>
         </tr>
                     </tbody>
                 </table>
@@ -1325,17 +1893,8 @@ function parseDate(dateStr) {
 
 // 根據課程名稱獲取對應的courseId
 function getCourseIdFromName(courseName) {
-    const nameMapping = {
-        '工作流程 AI 自動化實戰班': 'ai-automation',
-        'AI 數據分析與決策輔佐班': 'ai-analytics',
-        '商務營運 AI 通訊助理班': 'ai-communication',
-        '自媒體 AI 數位創作經營班': 'digital-media',
-        'Vibe Coding AI 軟體開發班': 'vibe-coding',
-        '企業常態課內訓包班': 'enterprise-general',
-        '客製化企業內訓包班': 'enterprise-custom'
-    };
-    
-    return nameMapping[courseName] || 'ai-automation';
+    const normalizedName = courseName === '數據分析 AI 決策輔佐班' ? 'AI 數據分析與決策輔佐班' : courseName;
+    return Object.keys(courseData).find(id => courseData[id].title === normalizedName) || null;
 }
 
 // 格式化課程時間顯示
@@ -1483,7 +2042,7 @@ function generateCourseScheduleSection(courseId) {
                     `<button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="showRegistration('${courseId}', '${scheduleId}')">
                         <i class="fas fa-user-plus"></i> 報名
                     </button>` :
-                    `<button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: #e2e8f0; color: #718096; cursor: not-allowed;" disabled>
+                    `<button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: var(--border); color: var(--muted); cursor: not-allowed;" disabled>
                         ${schedule.status === '進行中' ? '進行中' : '已截止'}
                     </button>`
                 }
@@ -1528,8 +2087,122 @@ function generateCourseScheduleSection(courseId) {
 // 全域變數儲存返回頁面
 let previousPage = 'corporate';
 
+let currentDetailCourseId = null;
+let courseSwitchTimer;
+
+function getCourseNeighbors(courseId) {
+    const enterprise = courseId.startsWith('enterprise-');
+    const ids = Object.keys(courseData).filter(id => id.startsWith('enterprise-') === enterprise);
+    const index = ids.indexOf(courseId);
+    return { previous: ids[index - 1], next: ids[index + 1], index, total: ids.length };
+}
+
+function renderCourseSwitcher(courseId) {
+    const neighbors = getCourseNeighbors(courseId);
+    const link = (id, direction) => id ? `
+        <a class="course-switch-link" href="#course-${id}" data-course-id="${id}" data-course-step="${direction}" aria-label="${direction === 'previous' ? '上一堂課程' : '下一堂課程'}：${courseData[id].title}" aria-describedby="course-navigation-hint" title="${courseData[id].title}">
+            <span class="course-switch-arrow" aria-hidden="true">${direction === 'previous' ? '←' : '→'}</span>
+            <span><span class="course-switch-label">${direction === 'previous' ? '上一堂' : '下一堂'}</span><span class="course-switch-title">${courseData[id].title}</span></span>
+        </a>` : `<span class="course-switch-link unavailable" aria-disabled="true"><span class="course-switch-arrow" aria-hidden="true">${direction === 'previous' ? '←' : '→'}</span><span>${direction === 'previous' ? '已是第一堂' : '已是最後一堂'}</span></span>`;
+    return `<nav class="course-switcher" aria-label="切換課程">
+        <div class="course-switch-links">${link(neighbors.previous, 'previous')}<span class="course-switch-count" aria-label="第 ${neighbors.index + 1} 堂，共 ${neighbors.total} 堂">${neighbors.index + 1} / ${neighbors.total}</span>${link(neighbors.next, 'next')}</div>
+    </nav>`;
+}
+
+function announceCourseSwitch(title, boundary = false) {
+    const status = document.getElementById('course-switch-status');
+    clearTimeout(courseSwitchTimer);
+    status.textContent = boundary ? title : `已切換至「${title}」`;
+    status.classList.add('visible');
+    courseSwitchTimer = setTimeout(() => status.classList.remove('visible'), 2500);
+}
+
+function resetCourseToolbar() {
+    document.querySelector('.course-detail-toolbar').classList.remove('is-floating');
+    document.querySelector('.course-toolbar-slot').style.height = '';
+}
+
+function initializeCourseToolbar() {
+    const toolbar = document.querySelector('.course-detail-toolbar');
+    const slot = document.querySelector('.course-toolbar-slot');
+    const page = document.getElementById('course-detail');
+    let lastY = window.scrollY;
+    let pending = false;
+    const updateGeometry = () => {
+        const bounds = slot.getBoundingClientRect();
+        const headerBottom = document.querySelector('.header').getBoundingClientRect().bottom;
+        toolbar.style.setProperty('--toolbar-top', `${headerBottom + 8}px`);
+        toolbar.style.setProperty('--toolbar-left', `${bounds.left}px`);
+        toolbar.style.setProperty('--toolbar-width', `${bounds.width}px`);
+        return { bounds, headerBottom };
+    };
+    window.addEventListener('scroll', () => {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(() => {
+            pending = false;
+            const y = Math.max(0, window.scrollY);
+            if (!page.classList.contains('active')) { resetCourseToolbar(); lastY = y; return; }
+            const delta = y - lastY;
+            const { bounds, headerBottom } = updateGeometry();
+            if (bounds.bottom > headerBottom || delta >= 8) resetCourseToolbar();
+            else if (delta <= -8 && !toolbar.classList.contains('is-floating')) {
+                slot.style.height = `${toolbar.offsetHeight}px`;
+                toolbar.classList.add('is-floating');
+            }
+            if (Math.abs(delta) >= 8 || y === 0) lastY = y;
+        });
+    }, { passive: true });
+    window.addEventListener('resize', updateGeometry);
+}
+
+function initializeCourseSwipe() {
+    const content = document.getElementById('course-detail-content');
+    if (!content) return;
+    let gesture = null;
+    const reset = () => {
+        gesture = null;
+        content.classList.remove('course-dragging');
+    };
+    content.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || event.button !== 0 || !document.getElementById('course-detail').classList.contains('active')) return;
+        // Preserve links, form controls, text selection and independent table scrolling.
+        if (event.target.closest('a, button, input, textarea, select, table, [contenteditable="true"]') || window.getSelection().toString()) return;
+        gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, started: performance.now() };
+        content.setPointerCapture(event.pointerId);
+    });
+    content.addEventListener('pointermove', event => {
+        if (!gesture || gesture.id !== event.pointerId) return;
+        const dx = event.clientX - gesture.x;
+        const dy = event.clientY - gesture.y;
+        if (Math.abs(dy) > 24 && Math.abs(dy) > Math.abs(dx)) { reset(); return; }
+        if (Math.abs(dx) > 18 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+            content.classList.add('course-dragging');
+            event.preventDefault();
+        }
+    });
+    content.addEventListener('pointerup', event => {
+        if (!gesture || gesture.id !== event.pointerId) return;
+        const dx = event.clientX - gesture.x;
+        const dy = event.clientY - gesture.y;
+        const elapsed = performance.now() - gesture.started;
+        reset();
+        if (Math.abs(dx) < 65 || Math.abs(dx) <= Math.abs(dy) * 1.5 || elapsed > 1500 || !currentDetailCourseId) return;
+        const neighbors = getCourseNeighbors(currentDetailCourseId);
+        const nextId = dx < 0 ? neighbors.next : neighbors.previous;
+        if (!nextId) { announceCourseSwitch(dx < 0 ? '已是最後一堂課程' : '已是第一堂課程', true); return; }
+        showCourseDetail(nextId);
+        announceCourseSwitch(courseData[nextId].title);
+    });
+    content.addEventListener('pointercancel', reset);
+    content.addEventListener('lostpointercapture', reset);
+}
+
 // 顯示課程詳細頁面
 function showCourseDetail(courseId) {
+    resetCourseToolbar();
+    clearTimeout(courseSwitchTimer);
+    document.getElementById('course-switch-status').classList.remove('visible');
     // 隱藏下拉選單
     hideDropdown();
     
@@ -1541,7 +2214,7 @@ function showCourseDetail(courseId) {
     }
     
     // 記錄點擊的課程卡片位置
-    const courseCard = document.querySelector(`[onclick="showCourseDetail('${courseId}')"]`);
+    const courseCard = document.querySelector(`.card[data-course-id="${courseId}"]`);
     if (courseCard) {
         window.lastCourseScrollPosition = courseCard.offsetTop - 100; // 減去100px讓卡片稍微在視窗上方
         window.lastClickedCourseId = courseId;
@@ -1554,9 +2227,9 @@ function showCourseDetail(courseId) {
         window.isFromHomeTable = false;
     } 
     // 實體常態課程：根據當前頁面和點擊來源判斷
-    else if (['ai-automation', 'ai-analytics', 'ai-communication', 'digital-media','vibe-coding'].includes(courseId)) {
+    else if (Object.keys(courseData).filter(id => !id.startsWith('enterprise-')).includes(courseId)) {
         // 檢查是否從首頁的課程表格點擊
-        const courseLink = document.querySelector(`#home a[onclick*="showCourseDetail('${courseId}')"]`);
+        const courseLink = document.querySelector(`#home a[data-course-id="${courseId}"]`);
         const isFromHomeTable = currentActive && currentActive.id === 'home' && 
                                courseLink && courseLink.classList.contains('course-link');
         
@@ -1577,7 +2250,7 @@ function showCourseDetail(courseId) {
     window.clickedFromNavMenu = false;
     
     // 記錄課程卡片位置用於返回時高亮顯示
-    const allCourseCards = document.querySelectorAll(`[onclick*="showCourseDetail('${courseId}')"]`);
+    const allCourseCards = document.querySelectorAll(`[data-course-id="${courseId}"]`);
     if (allCourseCards.length > 0) {
         // 優先選擇卡片類型的元素（用於高亮顯示）
         const cardElement = Array.from(allCourseCards).find(card => 
@@ -1599,16 +2272,18 @@ function showCourseDetail(courseId) {
     history.pushState({page: 'course-detail', courseId: courseId}, '', `#course-${courseId}`);
 
     // 生成課程詳細內容
+    currentDetailCourseId = courseId;
+    document.getElementById('course-switcher-container').innerHTML = renderCourseSwitcher(courseId);
     const contentHTML = `
         <div class="course-header">
-            <img src="${course.image}" alt="${course.title}" class="course-hero-image">
+            <img src="${course.image}" alt="${course.title}" class="course-hero-image" draggable="false">
             <h1 class="course-title">${course.title}</h1>
             <p class="course-subtitle">${course.subtitle}</p>
             <div class="price-section">
                 ${courseId === 'enterprise-general' || courseId === 'enterprise-custom' ? 
-                    '<span style="color: #718096; font-weight: 600; font-size: 1.5rem;">依需求報價</span>' :
-                    `<span class="original-price">原價 NT$ 16,000</span>
-                    <span class="current-price">NT$ 10,000</span>
+                    '<span style="color: var(--muted); font-weight: 600; font-size: 1.5rem;">依需求報價</span>' :
+                    `<span class="original-price">原價 NT$ ${course.originalPrice.toLocaleString()}</span>
+                    <span class="current-price">NT$ ${course.price.toLocaleString()}</span>
                     <span class="discount-badge">限時優惠 38% OFF</span>`
                 }
             </div>
@@ -1617,6 +2292,8 @@ function showCourseDetail(courseId) {
         <div class="course-description">
             <h3>課程簡介</h3>
             <p>${course.description}</p>
+            ${course.audience ? `<p class="course-audience"><strong>適合對象：</strong>${course.audience}</p>` : ''}
+            ${course.preparation ? `<p class="course-preparation"><strong>課前準備：</strong>${course.preparation}</p>` : ''}
         </div>
 
         <div class="course-features">
@@ -1629,7 +2306,8 @@ function showCourseDetail(courseId) {
         </div>
 
         <div class="course-schedule">
-            <h3><i class="fas fa-calendar-alt"></i> 課程安排 (2天共12小時)</h3>
+            <h3><i class="fas fa-calendar-alt"></i> 課程安排${course.days ? `（${course.days}天共${course.hours}小時）` : ''}</h3>
+            ${course.mealNote ? `<p class="course-preparation course-meal-note"><strong>中午用餐與午休：</strong>${course.mealNote}</p>` : ''}
             <table class="schedule-table">
                 <thead>
                     <tr>
@@ -1644,7 +2322,7 @@ function showCourseDetail(courseId) {
                             `<tr><td colspan="3" class="day-header">${session.day}</td></tr>` : ''}
                         ${session.time === '' && session.topic === '' && session.content === '' && course.additionalInfo ? 
                             `<tr>
-                                <td colspan="3" style="text-align: center; vertical-align: middle; padding: 2rem 0; background: rgba(247, 250, 252, 0.5);">
+                                <td colspan="3" style="text-align: center; vertical-align: middle; padding: 2rem 0; background: var(--surface-soft);">
                                     <a href="${course.additionalInfo.buttonLink}" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-size: 1rem; padding: 0.8rem 1.5rem;">
                                         <i class="fas fa-calendar-alt"></i>
                                         ${course.additionalInfo.buttonText}
@@ -1652,7 +2330,7 @@ function showCourseDetail(courseId) {
                                 </td>
                             </tr>` : 
                             `<tr>
-                                <td style="text-align: center;">${session.time}</td>
+                                <td style="text-align: center;">${session.period ? `<strong>${session.period}</strong><br>` : ''}${session.time}</td>
                                 <td style="text-align: center;"><strong>${session.topic}</strong></td>
                                 <td style="text-align: center; white-space: pre-line;">${session.content}</td>
                             </tr>`
@@ -1666,25 +2344,25 @@ function showCourseDetail(courseId) {
 
         <div class="course-faq" style="margin: 4rem 0;">
             <h3><i class="fas fa-question-circle"></i> 課程常見問題</h3>
-            <div style="background: #f8f9fa; border-radius: 15px; padding: 2rem; margin: 0.5rem 0;">
+            <div style="background: var(--surface-soft); border-radius: 15px; padding: 2rem; margin: 0.5rem 0;">
                 <div style="margin-bottom: 1.5rem;">
                     <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-utensils" style="margin-right: 0.5rem;"></i>課程有供餐嗎？</h4>
-                    <p style="color: #4a5568; margin-left: 1.5rem;">有的！本課程中午提供精美餐點，讓您專心學習無後顧之憂。</p>
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">${course.mealNote || '有的！本課程中午提供精美餐點，讓您專心學習無後顧之憂。'}</p>
                 </div>
                 
                 <div style="margin-bottom: 1.5rem;">
                     <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-laptop" style="margin-right: 0.5rem;"></i>上課需要帶電腦嗎？</h4>
-                    <p style="color: #4a5568; margin-left: 1.5rem;">需要！請攜帶個人筆記型電腦，課程中會進行實作練習。建議使用 Windows 或 Mac 系統，並確保網路連線功能正常。</p>
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">需要！請攜帶個人筆記型電腦，課程中會進行實作練習。建議使用 Windows 或 Mac 系統，並確保網路連線功能正常。</p>
                 </div>
                 
                 <div style="margin-bottom: 1.5rem;">
                     <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-graduation-cap" style="margin-right: 0.5rem;"></i>上完這門課後有進階課程嗎？</h4>
-                    <p style="color: #4a5568; margin-left: 1.5rem;">有的！我們提供完整的學習路徑，建議按照目前課程順序：工作流程 AI 自動化實戰班 → AI 分析與洞察實戰班→ AI 溝通與協作實戰班→數位媒體行銷實戰班→ Vibe Coding 實戰班。便能完整掌握 AI 應用與實務操作，讓你能更智慧的過好未來每一日！<span style="background: linear-gradient(135deg, #48bb78, #38a169); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 1.1rem; margin-left: 0.5rem;">🎯 續班學員享有優先報名權與專屬折扣，詳見報名後提供的「報名成功信件」！</span></p>
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">有的！我們提供完整的學習路徑，建議按照目前課程順序：人人都該會的生成式 AI 應用班 → 依工作需求選修工作流程、數據分析、商務營運、自媒體、人資、Vibe Coding、Microsoft 或 Claude 課程，逐步掌握 AI 應用與實務操作，讓你能更智慧的過好未來每一日！<span style="background: linear-gradient(135deg, #48bb78, #38a169); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 1.1rem; margin-left: 0.5rem;">🎯 續班學員享有優先報名權與專屬折扣，詳見報名後提供的「報名成功信件」！</span></p>
                 </div>
                 
                 <div style="margin-bottom: 0;">
                     <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-clipboard-list" style="margin-right: 0.5rem;"></i>報名流程為何？</h4>
-                    <p style="color: #4a5568; margin-left: 1.5rem;">
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">
                         1. 填寫報名表單並完成 Email 驗證<br>
                         2. 我們會在 1 小時內寄送「報名成功信件」<br>
                         3. 收到「報名成功信件」後依照繳費通知完成付款，<span style="background: linear-gradient(135deg, #e53e3e, #f56565); color: white; padding: 0.2rem 0.6rem; border-radius: 15px; font-weight: 600; font-size: 1.1rem;">⏰ 請於收到通知後 72 小時內完成付款</span>，逾期將取消報名資格<br>
@@ -1696,17 +2374,17 @@ function showCourseDetail(courseId) {
 
         <div class="course-notice" style="margin: 4rem 0;">
             <h3><i class="fas fa-exclamation-triangle"></i> 注意事項</h3>
-            <div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 15px; padding: 2rem; margin: 1rem 0;">
+            <div style="background: var(--notice-bg); border: 1px solid var(--notice-border); border-radius: 15px; padding: 2rem; margin: 1rem 0;">
                 <div style="margin-bottom: 1.5rem;">
                     <h4 style="color: #e53e3e; margin-bottom: 0.5rem;"><i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>課程調整</h4>
-                    <p style="color: #4a5568; margin-left: 1.5rem;">
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">
                         如遇不可抗力因素（如天災、疫情等）或其他變動因素，主辦單位保留調整課程時間、地點或改為線上授課的權利。若有異動將於開課前 48 小時寄送信件通知學員，請密切留意信件！
                     </p>
                 </div>
                 
                 <div style="margin-bottom: 1.5rem;">
                     <h4 style="color: #e53e3e; margin-bottom: 0.5rem;"><i class="fas fa-receipt" style="margin-right: 0.5rem;"></i>發票統編開立辦法</h4>
-                    <p style="color: #4a5568; margin-left: 1.5rem;">
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">
                         如需開立統編發票，請於報名時填寫正確的統一編號與公司名稱。
                         發票將於課程結束後 7 個工作天內開立並寄送。
                     </p>
@@ -1714,7 +2392,7 @@ function showCourseDetail(courseId) {
                 
                 <div style="margin-bottom: 1.5rem;">
                     <h4 style="color: #e53e3e; margin-bottom: 0.5rem;"><i class="fas fa-undo" style="margin-right: 0.5rem;"></i>退費規定</h4>
-                    <div style="color: #4a5568; margin-left: 1.5rem;">
+                    <div style="color: var(--text-secondary); margin-left: 1.5rem;">
                         <p style="margin-bottom: 0.5rem;"><strong>根據最新退費法規：</strong></p>
                         <ul style="margin-left: 1rem;">
                             <li>開課日 30 天前（含）提出：退回 95% 學費</li>
@@ -1733,7 +2411,7 @@ function showCourseDetail(courseId) {
                 
                 <div style="margin-bottom: 0;">
                     <h4 style="color: #e53e3e; margin-bottom: 0.5rem;"><i class="fas fa-shield-alt" style="margin-right: 0.5rem;"></i>個資相關規定</h4>
-                    <p style="color: #4a5568; margin-left: 1.5rem;">
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">
                         課程期間所拍攝之照片、影片，僅做相關活動推廣使用，同時會依據個資法妥善保管資料，若不同意請主動告知，否則將視為同意授權使用。
                     </p>
                 </div>
@@ -1766,6 +2444,7 @@ function showCourseDetail(courseId) {
 
     // 切換到課程詳細頁面
     showPage('course-detail');
+    updatePageTitle('course-detail', course.title);
     
     // 更新導航狀態 - 設置課程詳細頁面的高亮狀態
     updateCourseDetailNavState(courseId);
@@ -1794,7 +2473,7 @@ function goBackToCourses() {
             // 高亮顯示剛才點擊的課程卡片
             if (window.lastClickedCourseId) {
                 // 尋找對應的課程卡片（優先選擇.clickable-card類型）
-                const allCards = document.querySelectorAll(`[onclick*="showCourseDetail('${window.lastClickedCourseId}')"]`);
+                const allCards = document.querySelectorAll(`[data-course-id="${window.lastClickedCourseId}"]`);
                 const courseCard = Array.from(allCards).find(card => 
                     card.classList.contains('clickable-card') || card.classList.contains('card')
                 ) || allCards[0];
