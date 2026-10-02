@@ -2147,6 +2147,34 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
 .footer-logo, .footer-contact h3, .contact-item-footer i { color: var(--accent) !important; }
 .course-audience, .course-preparation { margin-top: 1rem; color: var(--text-secondary); }
 .course-preparation { padding: 1rem; border-radius: 10px; background: var(--surface-soft); }
+.course-paid-ai-note {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--category-red);
+    border-radius: 8px;
+    background: var(--surface-soft);
+    color: var(--category-red) !important;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+.course-paid-ai-label {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--category-red);
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+.course-day-paid-ai {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--category-red);
+    white-space: normal;
+}
+@media (min-width: 769px) {
+    .dropdown-menu { max-height: calc(100dvh - 130px); overflow-y: auto; }
+}
 .course-schedule { overflow-x: auto; }
 .course-schedule .schedule-table td:last-child { text-align: left !important; }
 .course-schedule .schedule-table td:first-child { white-space: nowrap; }

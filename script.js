@@ -854,6 +854,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const course = courseData[element.dataset.courseAudience];
         if (course) element.textContent = '🔥 適合：' + course.audience;
     });
+    document.querySelectorAll('[data-course-paid-ai]').forEach(element => {
+        element.textContent = getPaidAiNotice(courseData[element.dataset.coursePaidAi], element.classList.contains('course-paid-ai-label'));
+    });
 
     // 為卡片和其他元素添加滾動動畫類
     const animatedElements = document.querySelectorAll('.card, .course-table, .about-content');
@@ -1243,6 +1246,7 @@ const courseData = {
         ]
     },
     "digital-media": {
+        "paidAiDays": ["第二天"],
         "title": "自媒體 AI 數位創作經營班",
         "subtitle": "AI 生圖生影、虛擬主播與社群自動化經營",
         "description": "從手機免費 App 體驗 AI 影片生成，拆解影片製作流程，建立生圖與生影 Prompt 的 AI Agent。進一步製作虛擬主播產品推廣短片，以 GAS 蒐集新聞並建立 FB、IG 自動回覆與粉專配圖貼文發布流程。",
@@ -1320,6 +1324,7 @@ const courseData = {
         ]
     },
     "human-resources": {
+        "paidAiDays": ["第二天"],
         "title": "人資 AI 招募排班績效班",
         "subtitle": "建立招募、排班、薪資與多級績效審核 Web 系統",
         "description": "第一天透過 AI 編寫 GAS 後端與 HTML 前端，打造招募、排班與薪資通知的一站式人資 Web 系統。第二天以 Vibe Coding 自然語言開發模式，建立員工自評、主管多級審核與 HR 視覺化儀表板的完整績效考核系統。",
@@ -1397,6 +1402,7 @@ const courseData = {
         ]
     },
     "vibe-coding": {
+        "paidAiDays": ["第二天"],
         "title": "Vibe Coding AI 軟體開發班",
         "subtitle": "從自然語言開發到具會員與資料庫的網站部署",
         "description": "以 Gemini Canvas 體驗自然語言開發，再進入 Google AI Studio，透過 Gemini 模型與 System Instructions 建立可運行的 Web App。第二天使用付費 AI 開發工具，結合 Supabase 資料庫、會員系統、GitHub 版本管理與 Zeabur 部署，完成訂餐系統等實務專案。",
@@ -1409,7 +1415,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電，準備 Google、GitHub、Supabase、Zeabur 帳號；第二天使用付費 AI 工具，方案與費用依課前通知。",
+        "preparation": "請攜帶筆電，準備 Google、GitHub、Supabase、Zeabur 帳號；第二天需擁有付費 AI 帳號（建議 Codex 或 Claude），實作環境依課前通知。",
         "features": [
             {
                 "title": "Gemini 開發環境",
@@ -1551,6 +1557,7 @@ const courseData = {
         ]
     },
     "cluade-master": {
+        "paidAiDays": ["第一天", "第二天"],
         "title": "Claude 全能 AI Agent 大師班",
         "subtitle": "Chat、Artifacts、Cowork 與 Claude Code 全面實作",
         "description": "掌握 Claude Sonnet／Haiku 的應用方式，結合 Chat、Projects、Artifacts 與 Computer Use／Cowork，實作動態網頁資料整理、Office 檔案批次處理及簡報生成。第二天使用 Claude Code，理解 AGENTS.md、Skills 與 MCP，完成可執行的 Web 工具。",
@@ -2097,6 +2104,12 @@ function getCourseNeighbors(courseId) {
     return { previous: ids[index - 1], next: ids[index + 1], index, total: ids.length };
 }
 
+function getPaidAiNotice(course, compact = false) {
+    if (!course?.paidAiDays?.length) return '';
+    const days = course.paidAiDays.length === course.days ? '兩天皆' : course.paidAiDays.join('、');
+    return `${days}需擁有付費 AI 帳號${compact ? '' : '（建議 Codex 或 Claude）。'}`;
+}
+
 function renderCourseSwitcher(courseId) {
     const neighbors = getCourseNeighbors(courseId);
     const link = (id, direction) => id ? `
@@ -2294,6 +2307,7 @@ function showCourseDetail(courseId) {
             <p>${course.description}</p>
             ${course.audience ? `<p class="course-audience"><strong>適合對象：</strong>${course.audience}</p>` : ''}
             ${course.preparation ? `<p class="course-preparation"><strong>課前準備：</strong>${course.preparation}</p>` : ''}
+            ${course.paidAiDays ? `<p class="course-paid-ai-note"><strong>AI 帳號需求：</strong>${getPaidAiNotice(course)}</p>` : ''}
         </div>
 
         <div class="course-features">
@@ -2319,7 +2333,7 @@ function showCourseDetail(courseId) {
                 <tbody>
                     ${course.schedule.map((session, index) => `
                         ${session.day && (index === 0 || session.day !== course.schedule[index-1].day) ? 
-                            `<tr><td colspan="3" class="day-header">${session.day}</td></tr>` : ''}
+                            `<tr><td colspan="3" class="day-header">${session.day}${course.paidAiDays?.includes(session.day) ? '<span class="course-day-paid-ai">需擁有付費 AI 帳號（建議 Codex 或 Claude）</span>' : ''}</td></tr>` : ''}
                         ${session.time === '' && session.topic === '' && session.content === '' && course.additionalInfo ? 
                             `<tr>
                                 <td colspan="3" style="text-align: center; vertical-align: middle; padding: 2rem 0; background: var(--surface-soft);">
