@@ -1,3 +1,72 @@
+/* Government funding pages share the site's dark/light theme. */
+.subsidy-page { padding: 3rem 0 4rem; }
+.subsidy-hero { padding: 2rem 0 2.5rem; max-width: 850px; }
+.subsidy-eyebrow { color: var(--accent); letter-spacing: .12em; font-size: .8rem; font-weight: 700; margin-bottom: 1rem; }
+.subsidy-page h1 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.3; margin: 1rem 0; }
+.subsidy-intro { font-size: 1.15rem; color: var(--text-secondary); line-height: 1.9; }
+.subsidy-meta { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; margin-top: 1.5rem; color: var(--muted); font-size: .85rem; }
+.subsidy-notice { padding: 1rem 1.25rem; background: var(--surface-soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; color: var(--text-secondary); }
+.subsidy-category { margin-top: 3rem; }
+.subsidy-category-heading { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; }
+.subsidy-category-heading h2 { font-size: clamp(1.3rem, 3vw, 1.7rem); margin-bottom: .4rem; }
+.subsidy-category-heading p, .subsidy-card > p, .subsidy-panel p, .subsidy-panel li, .subsidy-service p, .subsidy-support p { color: var(--text-secondary); }
+.subsidy-number { color: var(--accent); font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid var(--accent); }
+.subsidy-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+.subsidy-card { display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
+.subsidy-card h3 { font-size: 1.2rem; line-height: 1.6; }
+.subsidy-card-top { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
+.subsidy-tag { display: inline-block; border-radius: 6px; padding: .3rem .6rem; font-size: .78rem; font-weight: 600; background: var(--surface-soft); color: var(--accent); }
+.subsidy-status { font-size: .78rem; color: var(--category-green); }
+.subsidy-card .subsidy-amount { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+.subsidy-card .subsidy-period { font-size: .85rem; color: var(--muted); }
+.subsidy-card .btn { margin-top: auto; text-align: center; justify-content: center; }
+.subsidy-support { display: flex; align-items: center; gap: 2rem; padding: 2rem; margin-top: 2.5rem; border: 1px solid var(--accent); border-radius: 18px; background: var(--surface-soft); }
+.subsidy-support > div { flex: 1; }
+.subsidy-support h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+.subsidy-support .btn { flex-shrink: 0; }
+.subsidy-support p + p { margin-top: 1rem; }
+.subsidy-page .subsidy-muted { font-size: .85rem; color: var(--muted); }
+.subsidy-back { display: inline-block; color: var(--accent); padding: .5rem 0; margin-bottom: 1.5rem; text-underline-offset: 5px; }
+.subsidy-detail-header { max-width: 950px; margin-bottom: 2rem; }
+.subsidy-detail-header h1 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+.subsidy-detail-header p { margin-top: 1rem; }
+.subsidy-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.subsidy-facts > div { padding: 1.3rem 1.5rem; border: 1px solid var(--border); background: var(--surface-soft); border-radius: 12px; }
+.subsidy-facts dt { color: var(--muted); font-size: .85rem; margin-bottom: .5rem; }
+.subsidy-facts dd { color: var(--accent); font-weight: 700; font-size: 1.2rem; }
+.subsidy-detail-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 1.5rem; }
+.subsidy-panel { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); padding: 1.7rem; }
+.subsidy-panel h2, .subsidy-service h2 { font-size: 1.2rem; margin-bottom: .8rem; }
+.subsidy-panel h2:not(:first-child) { margin-top: 1.8rem; }
+.subsidy-panel ol { padding-left: 1.3rem; }
+.subsidy-panel li + li { margin-top: .6rem; }
+.subsidy-sources { display: grid; gap: .75rem; margin-bottom: 1rem; }
+.subsidy-source { color: var(--accent); text-underline-offset: 4px; overflow-wrap: anywhere; }
+.subsidy-service { margin-top: 1.5rem; padding: 1.5rem; border-left: 3px solid var(--accent); }
+.subsidy-page a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+.subsidy-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (min-width: 769px) {
+    .header .nav-container { gap: .75rem; }
+    .header .nav-menu { gap: clamp(.2rem, 1vw, 1rem); flex-shrink: 0; }
+    .header .nav-menu > .nav-item > a { white-space: nowrap; padding-left: .65rem; padding-right: .65rem; }
+    .header .logo { min-width: 0; }
+    .header .logo-text { font-size: clamp(1rem, 1.8vw, 1.8rem); }
+}
+@media (min-width: 769px) and (max-width: 1100px) {
+    .header .logo-text { max-width: 170px; font-size: 1rem; }
+    .header .nav-container { padding: 1rem; }
+    .header .nav-menu > .nav-item > a { font-size: .85rem; padding: .4rem; }
+    .header .logo-image { height: 55px; }
+    .header .theme-toggle { margin-left: 0; }
+}
+@media (max-width: 1000px) { .subsidy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 768px) {
+    .subsidy-grid, .subsidy-detail-grid, .subsidy-facts { grid-template-columns: 1fr; }
+    .subsidy-support { flex-direction: column; align-items: stretch; padding: 1.5rem; }
+    .subsidy-support .btn { text-align: center; justify-content: center; }
+    .subsidy-page { padding-top: 2rem; }
+}
+
 :root {
     color-scheme: dark;
     --text: #edf2f7;
@@ -185,6 +254,7 @@ body {
 
 .nav-menu {
     display: flex;
+    align-items: center;
     list-style: none;
     gap: 2rem;
 }
@@ -1913,7 +1983,7 @@ tbody tr:hover {
         max-height: none;
         overflow: visible;
         transition: none;
-        display: block;
+        display: none;
     }
 
     .nav-item.dropdown.mobile-active .dropdown-menu {
@@ -2346,4 +2416,43 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
     .course-detail-toolbar .course-switch-arrow { display: none; }
     .course-detail-toolbar #dynamic-back-button { padding: 0.65rem 0.5rem; font-size: 0.75rem; }
     .course-switch-count { font-size: 0.75rem; }
+}
+
+/* Navigation labels open pages; disclosure buttons only toggle their child menus. */
+.nav-dropdown-heading { display: flex; align-items: center; }
+.nav-dropdown-heading > a { flex: 1; min-width: 0; }
+.nav-disclosure { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 36px; flex-shrink: 0; border: 0; border-radius: 8px; color: var(--text-secondary); background: transparent; cursor: pointer; }
+.nav-disclosure svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s; }
+.nav-disclosure[aria-expanded="true"] svg { transform: rotate(180deg); }
+.nav-disclosure:hover { background: var(--surface-soft); color: var(--accent); }
+.nav-disclosure:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.subsidy-nav > .dropdown-menu { width: 360px; left: auto; right: 0; }
+.dropdown-menu .subsidy-nav-category > a { font-weight: 700; color: var(--accent); background: var(--surface-soft); }
+.subsidy-nav-plan + .subsidy-nav-category { border-top: 1px solid var(--border); margin-top: .5rem; padding-top: .5rem; }
+.dropdown-menu .subsidy-nav-plan > a { font-size: .85rem; }
+.subsidy-category-link { display: inline-flex; align-items: center; gap: .8rem; color: var(--text); text-decoration: none; border: 1px solid var(--border); background: var(--surface); padding: .75rem 1rem; border-radius: 12px; }
+.subsidy-category-link:hover { color: var(--accent); border-color: var(--accent); }
+@media (min-width: 769px) {
+    .header .nav-menu > .nav-item { display: flex; align-items: center; }
+    .header .nav-menu > .nav-item > a,
+    .header .nav-menu > .nav-item > .nav-dropdown-heading > a { display: inline-flex; align-items: center; height: 40px; line-height: 1.4; }
+    .header .nav-menu > .nav-item > .nav-dropdown-heading { height: 40px; }
+    .header .nav-dropdown-heading > a { white-space: nowrap; padding-right: .2rem; padding-left: .5rem; }
+    .nav-item.dropdown.nav-open > .dropdown-menu,
+    .nav-item.dropdown:focus-within > .dropdown-menu { opacity: 1; visibility: visible; transform: none; }
+}
+@media (min-width: 769px) and (max-width: 1100px) {
+    .header .logo-text { max-width: 130px; }
+    .header .nav-disclosure { width: 22px; }
+    .header .nav-dropdown-heading > a { font-size: .85rem; padding: .4rem .2rem; }
+}
+@media (max-width: 768px) {
+    .header .nav-menu { max-height: calc(100dvh - 110px); overflow-y: auto; overscroll-behavior: contain; }
+    .header .nav-menu { align-items: stretch; }
+    .nav-dropdown-heading { width: 100%; }
+    .nav-disclosure { width: 44px; height: 44px; }
+    .nav-item.dropdown > .dropdown-menu { display: none; }
+    .nav-item.dropdown.nav-open > .dropdown-menu { display: block; }
+    .subsidy-nav > .dropdown-menu { width: 100%; }
+    .subsidy-category-link { font-size: 1.15rem; }
 }

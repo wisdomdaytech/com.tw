@@ -64,19 +64,22 @@ function showPage(pageId) {
 // 移動端選單切換
 function toggleMobileMenu() {
     const navMenu = document.querySelector('.nav-menu');
-    navMenu.classList.toggle('active');
+    const open = navMenu.classList.toggle('active');
+    document.querySelector('.mobile-menu-toggle').setAttribute('aria-expanded', String(open));
+    if (!open) closeNavDisclosures();
 }
 
-// 手機版下拉選單切換
-function toggleMobileDropdown(event) {
-    // 只在手機版執行
-    if (window.innerWidth > 768) return;
-    
-    event.preventDefault();
-    event.stopPropagation();
-    
-    // 手機版直接顯示所有課程選項，不需要切換
-    // 這個函數現在主要用於阻止預設行為
+function closeNavDisclosures() {
+    document.querySelectorAll('[data-nav-toggle]').forEach(button => {
+        button.setAttribute('aria-expanded', 'false');
+        button.parentElement.parentElement.classList.remove('nav-open');
+    });
+}
+
+function closeNavigation() {
+    document.querySelector('.nav-menu')?.classList.remove('active');
+    document.querySelector('.mobile-menu-toggle')?.setAttribute('aria-expanded', 'false');
+    closeNavDisclosures();
 }
 
 // 隱藏下拉選單
@@ -160,7 +163,7 @@ function handleUrlAndInit() {
             showCourseDetail(courseId);
             return;
         }
-    } else if (hash && ['home', 'corporate', 'enterprise-training', 'consulting', 'about'].includes(hash)) {
+    } else if (hash && (['home', 'corporate', 'enterprise-training', 'consulting', 'about'].includes(hash) || document.getElementById(hash)?.matches('.subsidy-page'))) {
         // 如果是普通頁面
         showPageFromUrl(hash);
         return;
@@ -208,12 +211,14 @@ function showPageFromUrl(pageId) {
 
 // 更新導航活動狀態
 function updateNavActiveState(pageId) {
+    closeNavigation();
+    const navPageId = pageId.startsWith('subsidy-') ? 'subsidies' : pageId;
     const navLinks = document.querySelectorAll('.nav-item a');
     navLinks.forEach(link => {
         link.classList.remove('active');
         // 檢查連結的onclick屬性
         const onclick = link.getAttribute('onclick');
-        if (onclick && onclick.includes(`'${pageId}'`)) {
+        if ((onclick && onclick.includes(`'${navPageId}'`)) || link.getAttribute('href') === `#${navPageId}`) {
             link.classList.add('active');
         }
     });
@@ -221,6 +226,7 @@ function updateNavActiveState(pageId) {
 
 // 更新課程詳細頁面的導航狀態
 function updateCourseDetailNavState(courseId) {
+    closeNavigation();
     // 清除所有active狀態
     const navLinks = document.querySelectorAll('.nav-item a, .dropdown-menu a');
     navLinks.forEach(link => {
@@ -271,7 +277,8 @@ function updatePageTitle(pageId, courseTitle = null) {
         'course-detail': courseTitle ? `${courseTitle} - ${baseName}` : `課程詳細 - ${baseName}`
     };
     
-    document.title = pageTitles[pageId] || pageTitles['home'];
+    const subsidyTitle = document.getElementById(pageId)?.dataset.pageTitle;
+    document.title = subsidyTitle ? `${subsidyTitle} - ${baseName}` : (pageTitles[pageId] || pageTitles['home']);
 }
 
 // 瀏覽器前進/後退按鈕支援
@@ -280,7 +287,7 @@ window.addEventListener('popstate', function(event) {
         if (event.state.page === 'course-detail' && event.state.courseId) {
             showCourseDetail(event.state.courseId);
         } else {
-            showPage(event.state.page);
+            showPageFromUrl(event.state.page);
         }
     } else {
         handleUrlAndInit();
@@ -840,6 +847,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Only intercept ordinary clicks; let the browser handle new-tab/window gestures.
     document.addEventListener('click', function(event) {
         if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const subsidyLink = event.target.closest('a[href="#subsidies"], a[href^="#subsidy-"]');
+        if (subsidyLink && (!subsidyLink.target || subsidyLink.target === '_self')) {
+            event.preventDefault();
+            const pageId = subsidyLink.hash.slice(1);
+            if (window.location.hash === subsidyLink.hash) showPageFromUrl(pageId);
+            else showPage(pageId);
+            document.querySelector('.page-section.active h1')?.setAttribute('tabindex', '-1');
+            document.querySelector('.page-section.active h1')?.focus({preventScroll: true});
+            return;
+        }
         const link = event.target.closest('a[data-course-id]');
         if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
         if (!courseData[link.dataset.courseId]) return;
@@ -923,19 +940,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // 手機版下拉選單點擊事件
-    const dropdownLinks = document.querySelectorAll('.nav-item.dropdown > a');
-    dropdownLinks.forEach(link => {
-        link.addEventListener('click', toggleMobileDropdown);
-    });
-    
-    // 點擊其他地方關閉下拉選單
+    // 標題負責導覽，獨立箭頭按鈕負責展開／收合，避免同時觸發切頁。
     document.addEventListener('click', function(event) {
-        if (window.innerWidth <= 768) {
-            const isDropdownClick = event.target.closest('.nav-item.dropdown');
-            if (!isDropdownClick) {
-                // 手機版不需要關閉下拉選單，因為課程選項直接顯示
-            }
+        const button = event.target.closest('[data-nav-toggle]');
+        if (button) {
+            const item = button.parentElement.parentElement;
+            const open = button.getAttribute('aria-expanded') !== 'true';
+            item.classList.toggle('nav-open', open);
+            button.setAttribute('aria-expanded', String(open));
+            if (!open) item.querySelectorAll('[data-nav-toggle]').forEach(child => {
+                child.setAttribute('aria-expanded', 'false');
+                child.parentElement.parentElement.classList.remove('nav-open');
+            });
+        } else if (!event.target.closest('.header')) {
+            closeNavigation();
+        }
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            const focused = document.activeElement;
+            const toggle = focused?.closest('.nav-item.dropdown')?.querySelector('[data-nav-toggle]');
+            closeNavigation();
+            (window.innerWidth <= 768 ? document.querySelector('.mobile-menu-toggle') : toggle)?.focus();
         }
     });
 });
@@ -948,7 +974,7 @@ window.addEventListener('hashchange', function() {
 // 響應式導航
 window.addEventListener('resize', function() {
     if (window.innerWidth > 768) {
-        document.querySelector('.nav-menu').classList.remove('active');
+        closeNavigation();
         // 移除手機版下拉選單的活動狀態
         document.querySelectorAll('.nav-item.dropdown.mobile-active').forEach(item => {
             item.classList.remove('mobile-active');
@@ -1558,10 +1584,10 @@ const courseData = {
     },
     "cluade-master": {
         "paidAiDays": ["第一天", "第二天"],
-        "title": "Claude 全能 AI Agent 大師班",
-        "subtitle": "Chat、Artifacts、Cowork 與 Claude Code 全面實作",
-        "description": "掌握 Claude Sonnet／Haiku 的應用方式，結合 Chat、Projects、Artifacts 與 Computer Use／Cowork，實作動態網頁資料整理、Office 檔案批次處理及簡報生成。第二天使用 Claude Code，理解 AGENTS.md、Skills 與 MCP，完成可執行的 Web 工具。",
-        "audience": "使用 Claude 付費方案的企業工作者、個人創作者與希望建立 AI Agent 的學員。",
+        "title": "Claude/Codex 全能 AI Agent 大師班",
+        "subtitle": "Chat 對話解決問題、Cowork 協作處理工作、Code 做出實用工具",
+        "description": "從 Claude/Codex 的實作出發，用三個面向學會讓 AI 幫上忙：Chat，練習把需求說清楚，讓 AI 協助寫文案、整理重點與想辦法；Cowork，學習分配工作、整理資料與製作文件，減少重複操作；Code，用文字描述想做的功能，逐步做出報價計算器、問卷或簡易網站。兩天從日常工作練到實際作品，不必先懂一堆技術名詞。",
+        "audience": "想用 Claude/Codex 提升工作效率的企業工作者、個人創作者，以及想把點子做成工具的學員。",
         "image": "image/cluade-master.png",
         "days": 2,
         "hours": 12,
@@ -1570,23 +1596,19 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電與 Claude 付費帳號；Cowork、Computer Use 與 Claude Code 可用環境及權限依課前通知。",
+        "preparation": "請攜帶筆電，兩天皆需擁有付費 AI 帳號（Claude 或可使用 Codex 的帳號）。課程以 Chat、Cowork、Code 三個學習面向安排實作，使用工具、帳號方案與操作環境依課前通知。",
         "features": [
             {
-                "title": "專案知識庫",
-                "desc": "進階提問、Projects 與 Artifacts 互動組件。"
+                "title": "Chat｜把需求說清楚",
+                "desc": "練習與 Claude/Codex 對話，協助寫文案、整理資料，讓回答更貼近你的需求。"
             },
             {
-                "title": "Agent 操作",
-                "desc": "動態網頁資料抓取與跨視窗資料整理。"
+                "title": "Cowork｜讓 AI 協作做事",
+                "desc": "把任務拆成步驟，交給 AI 協助整理檔案、製作文件與簡報，並檢查成果。"
             },
             {
-                "title": "Office 批次處理",
-                "desc": "VBA／Python 輔助 Excel、Word 與簡報生成。"
-            },
-            {
-                "title": "Claude Code 開發",
-                "desc": "認識專案指引、Skills、MCP 並完成 Web App。"
+                "title": "Code｜把點子做成工具",
+                "desc": "使用 Claude Code／Codex，用文字描述功能，逐步完成簡易網站或工作小工具。"
             }
         ],
         "schedule": [
@@ -1594,8 +1616,8 @@ const courseData = {
                 "day": "第一天",
                 "period": "上午",
                 "time": "09:30-12:00",
-                "topic": "Claude 核心模式與 Agent 操作",
-                "content": "• 進階 Chat 提問與 Projects 企業知識庫設定\n• 以 Artifacts 製作互動組件、心智圖、流程圖與簡易網站\n• 體驗 Computer Use／Cowork，規劃網頁抓取與跨視窗任務"
+                "topic": "Chat：用 Claude/Codex 把需求說清楚",
+                "content": "• 認識 Claude/Codex 的操作方式，練習說明目標、背景與想要的結果\n• 用 AI 協助寫文案、摘要資料，將零散想法整理成清楚的方案\n• 練習追問、補充與檢查回答，建立自己常用的工作指令"
             },
             {
                 "day": "第一天",
@@ -1608,15 +1630,15 @@ const courseData = {
                 "day": "第一天",
                 "period": "下午",
                 "time": "13:00-16:30",
-                "topic": "資料整理與 Office 自動化實戰",
-                "content": "• 抓取競品價格與動態網站資料，完成結構化清單整理\n• 以 VBA／Python 批次處理 Excel 與 Word\n• 自動生成 PowerPoint 簡報，設定排版與配色"
+                "topic": "Cowork：讓 AI 協作處理日常工作",
+                "content": "• 把工作分成明確步驟，安排 AI 協助蒐集與整理資料\n• 練習處理 Excel、Word 與簡報，把重複工作變成可重用的流程\n• 檢查內容與格式，學會在關鍵步驟確認 AI 的成果"
             },
             {
                 "day": "第二天",
                 "period": "上午",
                 "time": "09:30-12:00",
-                "topic": "Claude Code 開發流程與 Web App 起步",
-                "content": "• 理解 AGENTS.md、Skills 與 MCP 工具串接邏輯\n• 規劃報價計算器／問卷系統的介面與功能\n• 以自然語言生成可執行的 Web App 雛形"
+                "topic": "Code：用 Claude Code／Codex 做出第一個工具",
+                "content": "• 用文字描述報價計算器、問卷或簡易網站的功能\n• 將需求交給 Claude Code／Codex，逐步完成可以操作的雛形\n• 學會告訴 AI 專案規則，讓後續修改更有方向"
             },
             {
                 "day": "第二天",
@@ -1629,8 +1651,8 @@ const courseData = {
                 "day": "第二天",
                 "period": "下午",
                 "time": "13:00-16:30",
-                "topic": "Web App 整合、除錯與成果展示",
-                "content": "• 完成工具核心功能與介面整合\n• 以自然語言迭代，進行測試與除錯\n• 展示可執行的 Web 工具與實務應用"
+                "topic": "Code 實戰：把工具改到能用並展示成果",
+                "content": "• 使用 Claude Code／Codex 調整畫面與功能，完成自己的工作小工具\n• 用具體例子檢查結果，描述問題並請 AI 協助修正\n• 展示成品，討論如何將 Chat、Cowork、Code 用回日常工作"
             }
         ]
     }
@@ -2371,7 +2393,7 @@ function showCourseDetail(courseId) {
                 
                 <div style="margin-bottom: 1.5rem;">
                     <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-graduation-cap" style="margin-right: 0.5rem;"></i>上完這門課後有進階課程嗎？</h4>
-                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">有的！我們提供完整的學習路徑，建議按照目前課程順序：人人都該會的生成式 AI 應用班 → 依工作需求選修工作流程、數據分析、商務營運、自媒體、人資、Vibe Coding、Microsoft 或 Claude 課程，逐步掌握 AI 應用與實務操作，讓你能更智慧的過好未來每一日！<span style="background: linear-gradient(135deg, #48bb78, #38a169); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 1.1rem; margin-left: 0.5rem;">🎯 續班學員享有優先報名權與專屬折扣，詳見報名後提供的「報名成功信件」！</span></p>
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">有的！我們提供完整的學習路徑，建議按照目前課程順序：人人都該會的生成式 AI 應用班 → 依工作需求選修工作流程、數據分析、商務營運、自媒體、人資、Vibe Coding、Microsoft 或 Claude/Codex 課程，逐步掌握 AI 應用與實務操作，讓你能更智慧的過好未來每一日！<span style="background: linear-gradient(135deg, #48bb78, #38a169); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 1.1rem; margin-left: 0.5rem;">🎯 續班學員享有優先報名權與專屬折扣，詳見報名後提供的「報名成功信件」！</span></p>
                 </div>
                 
                 <div style="margin-bottom: 0;">

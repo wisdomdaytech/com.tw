@@ -73,8 +73,8 @@
                     <a href="#home" onclick="showPage('home')" class="active">首頁</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="#corporate" onclick="showPage('corporate')">實體常態課程 <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
+                    <div class="nav-dropdown-heading"><a href="#corporate" onclick="showPage('corporate')">實體常態課程</a><button type="button" class="nav-disclosure" data-nav-toggle aria-expanded="false" aria-controls="regular-course-menu" aria-label="展開實體常態課程子選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+                    <ul class="dropdown-menu" id="regular-course-menu">
                         <li><a href="#course-ai-essential" data-course-id="ai-essential">
                             <i class="fa-solid fa-eye"></i>
                             <span><span style="color:var(--category-red)">必修基礎(6hr)</span> 人人都該會的生成式 AI 應用班</span>
@@ -114,8 +114,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a href="#enterprise-training" onclick="showPage('enterprise-training')">企業內訓課程 <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
+                    <div class="nav-dropdown-heading"><a href="#enterprise-training" onclick="showPage('enterprise-training')">企業內訓課程</a><button type="button" class="nav-disclosure" data-nav-toggle aria-expanded="false" aria-controls="enterprise-course-menu" aria-label="展開企業內訓課程子選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+                    <ul class="dropdown-menu" id="enterprise-course-menu">
                         <li><a href="#course-enterprise-general" data-course-id="enterprise-general">
                             <i class="fas fa-users"></i>
                             <span>企業常態課內訓包班</span>
@@ -129,6 +129,10 @@
                 <li class="nav-item" style="display: none;">
                     <a href="#consulting" onclick="showPage('consulting')">自動化顧問</a>
                 </li>
+                <li class="nav-item dropdown subsidy-nav">
+                    <div class="nav-dropdown-heading"><a href="#subsidies">政府補助案申請</a><button type="button" class="nav-disclosure" data-nav-toggle aria-expanded="false" aria-controls="subsidy-nav-menu" aria-label="展開政府補助案申請子選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+                    <ul class="dropdown-menu" id="subsidy-nav-menu"></ul>
+                </li>
                 <li class="nav-item">
                     <a href="#about" onclick="showPage('about')">關於我們</a>
                 </li>
@@ -137,8 +141,8 @@
                 <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
                 <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.5 14.5A9 9 0 0 1 9.5 3.5a9 9 0 1 0 11 11Z"/></svg>
             </button>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="開啟或收合導覽選單">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
             </button>
         </nav>
     </header>
@@ -426,9 +430,9 @@
                         <h3>Claude/Codex 全能 AI Agent 大師班</h3>
                         <p>⏱️ 時長：2天共12小時</p>
                         <br>
-                        <p>Chat、Artifacts、Cowork 與 Claude Code 全面實作</p>
+                        <p>Chat 對話解決問題、Cowork 協作處理工作、Code 做出實用工具</p>
                         <br>
-                        <p class="course-card-audience" data-course-audience="cluade-master">🔥 適合：使用 Claude 付費方案的企業工作者、個人創作者與希望建立 AI Agent 的學員。</p>
+                        <p class="course-card-audience" data-course-audience="cluade-master">🔥 適合：想用 Claude/Codex 提升工作效率的企業工作者、個人創作者，以及想把點子做成工具的學員。</p>
                         <p class="course-paid-ai-note" data-course-paid-ai="cluade-master">兩天皆需擁有付費 AI 帳號（建議 Codex 或 Claude）。</p>
                             <div class="price-preview" style="margin-top: 1rem; text-align: center;">
                                 <span style="color: var(--muted); text-decoration: line-through; font-size: 0.9rem;">NT$ 16,000</span>
@@ -921,6 +925,7 @@
     </footer>
 
     <!-- External JavaScript -->
+    <script src="subsidies.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
