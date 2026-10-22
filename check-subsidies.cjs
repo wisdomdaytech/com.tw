@@ -3,11 +3,14 @@ const assert = require('node:assert/strict');
 (async () => {
  const browser = await chromium.launch({headless: true, channel: 'msedge'});
  const page = await browser.newPage({viewport:{width:1440,height:1000}});
+ // Freeze the audit date so later deadlines do not make this check brittle.
+ await page.addInitScript(() => { const OriginalDate=Date; window.Date=class extends OriginalDate { constructor(...a){super(...(a.length?a:['2026-10-22T12:00:00+08:00']));} }; });
  await page.route('https://**/*', route => route.abort());
  const errors=[]; page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:8765/#subsidies');
  await page.locator('#subsidies.active').waitFor();
- assert.equal(await page.locator('#subsidies .subsidy-card').count(),7);
+ assert.equal(await page.locator('#subsidies .subsidy-card').count(),6);
+ assert.equal(await page.locator('#subsidies a[href="#subsidy-enterprise-human-resources"]').count(),0);
  assert.equal(await page.locator('.nav-menu > li:has(a[href="#subsidies"]) + li a').textContent(),'關於我們');
  const links=await page.locator('#subsidies .subsidy-card > a').evaluateAll(as=>as.map(a=>a.hash));
  for(const hash of links) {
@@ -25,7 +28,7 @@ const assert = require('node:assert/strict');
  for(const category of ['training','software']) {
   await page.goto('http://127.0.0.1:8765/#subsidy-category-'+category);
   await page.locator('#subsidy-category-'+category+'.active').waitFor();
-  assert.equal(await page.locator('#subsidy-category-'+category+' .subsidy-card').count(),category==='training'?5:2);
+  assert.equal(await page.locator('#subsidy-category-'+category+' .subsidy-card').count(),category==='training'?4:2);
   await page.reload();
   await page.locator('#subsidy-category-'+category+'.active').waitFor();
  }
@@ -57,7 +60,7 @@ const assert = require('node:assert/strict');
    assert.equal(await page.locator('#subsidy-nav-menu [data-nav-toggle]').count(),0);
    for(const category of ['training','software']) {
     const plans=page.locator(`#subsidy-nav-menu > .subsidy-nav-plan[data-category="${category}"] > a`);
-    assert.equal(await plans.count(),category==='training'?5:2);
+    assert.equal(await plans.count(),category==='training'?4:2);
     for(const plan of await plans.all()) assert.ok(await plan.isVisible());
    }
    await page.locator('.nav-menu a[href="#subsidies"]').click();
@@ -82,7 +85,7 @@ const assert = require('node:assert/strict');
  await touch.goto('http://127.0.0.1:8765/#subsidies');
  await touch.locator('.mobile-menu-toggle').tap();
  await touch.locator('[aria-controls="subsidy-nav-menu"]').tap();
- assert.equal(await touch.locator('#subsidy-nav-menu > li > a').count(),9);
+ assert.equal(await touch.locator('#subsidy-nav-menu > li > a').count(),8);
  for(const link of await touch.locator('#subsidy-nav-menu > li > a').all()) assert.ok(await link.isVisible());
  await touch.screenshot({path:'subsidies-navigation-mobile.png'});
  await touch.locator('.subsidy-nav a[href="#subsidy-category-training"]').tap();
@@ -117,6 +120,6 @@ const assert = require('node:assert/strict');
  await page.goto('http://127.0.0.1:8765/#subsidy-hualien-ai');
  assert.equal(await page.locator('#subsidy-hualien-ai h1').textContent(),'此方案已結束受理');
  assert.equal(errors.length,0,errors.join('\n'));
- console.log('PASS: 7 subsidy routes, 2 categories, Claude/Codex course and reload, nav horizontal alignment, 7 widths, touch menus, expiry, no page errors.');
+ console.log('PASS: 6 active subsidy routes, 2 categories, Claude/Codex course and reload, nav horizontal alignment, 7 widths, touch menus, expiry, no page errors.');
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1);});

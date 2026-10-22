@@ -1,10 +1,10 @@
-// 資料彙整更新：2026-10-14。各案查核日期分開記錄；期限採台灣時間。
+// 官方資料查核與彙整更新：2026-10-22。固定期限採台灣時間；已截止案件不列入。
 (() => {
-    const checked = '2026/10/14';
+    const checked = '2026/10/22';
     const plans = [
         {
             id: 'small-business-training', category: 'training', title: '小型企業人力提升計畫（小人提）',
-            checked: '2026/10/14', agency: '勞動部勞動力發展署及所屬分署', label: '就保人數 50 人以下', amount: '政府提供訓練輔導與課程服務',
+            checked: '2026/10/22', agency: '勞動部勞動力發展署及所屬分署', label: '就保人數 50 人以下', amount: '政府提供訓練輔導與課程服務',
             status: '依分署經費與服務量能受理', deadline: '2026-10-31', deadlineAt: '2026-10-31T17:00:00+08:00',
             period: '115 年度公告受理至 2026/10/31 17:00（以郵戳為憑）；經費用罄不再受理，備取及剩餘量能請向所屬分署確認。服務及課程辦理至 2026/11/15。',
             summary: '協助小型企業找出員工訓練需求，由計畫安排輔導與課程，可評估 AI 資訊應用培訓。',
@@ -67,7 +67,7 @@
             steps: ['查詢官方在職訓練課程及個人補助資格。', '依核定班別的報名規則與繳費方式完成報名。', '完成課程與規定條件，由辦訓單位依程序辦理補助。'],
             help: '智日未來科技可協助了解方案條件、評估 AI 學習方向，並整理申請或報名資料。',
             note: '這是個人訓練費補助；本公司課程並非一律可核銷，應以官方核定課程名單為準。',
-            links: [['官方方案說明', 'https://www.gov.tw/News_Content_26_682123'], ['官方課程查詢', 'https://course.taiwanjobs.gov.tw/']]
+            links: [['官方補助額度與計算方式', 'https://thmr.wda.gov.tw/News_Content.aspx?n=1A79903405D714E4&s=6B8BBC06EF5448C2&sms=6789F97D2E2677C3'], ['官方課程查詢', 'https://course.taiwanjobs.gov.tw/']]
         },
         {
             id: 'sbir-ai', category: 'software', title: '中央型 SBIR 小型企業創新研發計畫',
@@ -111,7 +111,7 @@
     const overview = `<section id="subsidies" class="page-section subsidy-page" data-page-title="政府補助案申請"><div class="container"><header class="subsidy-hero"><p class="subsidy-eyebrow">AI TRAINING & SOFTWARE</p><h1>政府補助案申請</h1><p class="subsidy-intro">從培育 AI 人才，到導入軟體應用。<br>找到適合你的政府資源，讓智日未來科技協助你開始。</p><div class="subsidy-meta"><span>資料彙整更新 ${checked}</span><span>聚焦培訓與軟體應用</span></div></header><p class="subsidy-notice">依公告受理期間及持續辦理方案整理；班別名額、經費餘額與提前截止公告，請以官方網站為準。已知截止案件不列入。</p>${categories.map(([id, num, title, description]) => `<div class="subsidy-category"><div class="subsidy-category-heading"><span class="subsidy-number">${num}</span><div><h2><a class="subsidy-category-link" href="#${categoryRoute(id)}">${title} <span aria-hidden="true">→</span></a></h2><p>${description}</p></div></div><div class="subsidy-grid">${cards(id)}</div></div>`).join('')}${support}</div></section>`;
     const categoryPages = categories.map(([id, num, title, description]) => `<section id="${categoryRoute(id)}" class="page-section subsidy-page" data-page-title="${title}"><div class="container"><a class="subsidy-back" href="#subsidies">← 返回政府補助案申請</a><header class="subsidy-detail-header"><p class="subsidy-eyebrow">政府補助案申請 · ${num}</p><h1>${title}</h1><p>${description}</p><p class="subsidy-muted">資料彙整更新：${checked}；實際受理狀態以官方公告為準。</p></header><div class="subsidy-grid">${cards(id)}</div>${support}</div></section>`).join('');
     const details = plans.map(plan => {
-        const checked = plan.checked || '2026/10/06';
+        const checked = plan.checked || '2026/10/22';
         const isActive = active.includes(plan);
         return `<section id="subsidy-${plan.id}" class="page-section subsidy-page" data-page-title="${plan.title}"><div class="container subsidy-detail"><a class="subsidy-back" href="#subsidies">← 返回政府補助案申請</a>${isActive ? `<header class="subsidy-detail-header"><span class="subsidy-tag">${plan.label}</span><h1>${plan.title}</h1><p>${plan.summary}</p><p class="subsidy-muted">主管單位：${plan.agency} · 資料查核：${checked}</p></header><dl class="subsidy-facts"><div><dt>補助／資源</dt><dd>${plan.amount}</dd></div><div><dt>申請狀態</dt><dd>${plan.status}</dd></div></dl><div class="subsidy-detail-grid"><article class="subsidy-panel"><h2>誰適合申請</h2><p>${plan.audience}</p><h2>補助內容</h2><p>${plan.funding}</p><h2>AI 培訓／軟體應用方向</h2><p>${plan.scope}</p><h2>如何申請</h2><ol>${plan.steps.map(step => `<li>${step}</li>`).join('')}</ol></article><aside class="subsidy-panel subsidy-sidebar"><h2>申請時間</h2><p>${plan.period}</p><h2>官方原始資料</h2><div class="subsidy-sources">${sources(plan)}</div><p class="subsidy-muted">金額均為新臺幣。名額、申請文件及可核銷項目，以最新官方公告為準。</p><h2>申請前請留意</h2><p>${plan.note}</p></aside></div><div class="subsidy-service"><h2>智日未來科技可以怎麼協助你？</h2><p>${plan.help}</p></div>${support}` : `<header class="subsidy-detail-header"><h1>此方案已結束受理</h1><p>請返回補助專區查看其他方案。</p></header>`}</div></section>`;
     }).join('');
