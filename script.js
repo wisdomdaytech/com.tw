@@ -871,6 +871,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const course = courseData[element.dataset.courseAudience];
         if (course) element.textContent = '🔥 適合：' + course.audience;
     });
+    document.querySelectorAll('[data-course-subtitle]').forEach(element => {
+        const course = courseData[element.dataset.courseSubtitle];
+        if (course) element.textContent = course.subtitle;
+    });
     document.querySelectorAll('[data-course-paid-ai]').forEach(element => {
         element.textContent = getPaidAiNotice(courseData[element.dataset.coursePaidAi], element.classList.contains('course-paid-ai-label'));
     });
@@ -1042,8 +1046,8 @@ const courseData = {
     },
     "ai-automation": {
         "title": "工作流程 AI 自動化實戰班",
-        "subtitle": "GAS 複雜流程整合 × Make.com 規則式客服",
-        "description": "進階運用 GAS 串接多檔案數據，建立可測試與除錯的自動化流程，再以 Make.com 完成問卷生成、LINE 官方帳號串接與規則式問答。依問題分類逐步引導，最後根據 Google Sheets 資料提供對應答案。",
+        "subtitle": "GAS 複雜流程 AI 自動化 × No-code × 業務平台與 Grok 每日情報",
+        "description": "第一天以 GAS 整合多檔案資料、處理例外，搭配 No-code 工具串接表單、LINE 與自動通知。第二天用 GAS 製作自己的 AI 自動化平台，集中管理業務報價單、客戶紀錄與常用工具；再以 Grok 協助整理每日新知，依主題摘要、分類與保留來源，建立省下搜尋時間的情報彙整流程。",
         "audience": "行政人員、庶務人員、助理及有基礎 AI 應用經驗的工作者。",
         "image": "image/ai-automation.png",
         "days": 2,
@@ -1053,23 +1057,23 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶可連網的筆記型電腦，並準備 Google 帳號。",
+        "preparation": "請攜帶可連網的筆記型電腦，準備 Google、Make.com、LINE 官方帳號與 Grok 帳號；排程串接、工具方案及所需權限依課前通知。",
         "features": [
             {
                 "title": "多檔案整合",
                 "desc": "以 GAS 串接數據並處理例外。"
             },
             {
-                "title": "問卷自動生成",
-                "desc": "以 Make.com 建立問卷生成流程。"
+                "title": "No-code 流程自動化",
+                "desc": "串接表單、LINE 與通知，練習流程測試及維護。"
             },
             {
-                "title": "規則式問答",
-                "desc": "透過條件分支引導問題，查詢 Sheets 回答。"
+                "title": "GAS AI 自動化平台",
+                "desc": "整合業務報價單、客戶紀錄與自動化工具網站。"
             },
             {
-                "title": "維護與監控",
-                "desc": "建立流程測試、錯誤紀錄與維護機制。"
+                "title": "Grok 每日情報員",
+                "desc": "依關注主題整理新知、重點摘要與來源連結。"
             }
         ],
         "schedule": [
@@ -1077,7 +1081,7 @@ const courseData = {
                 "day": "第一天",
                 "time": "09:30-12:00",
                 "topic": "GAS 複雜流程 AI 自動化",
-                "content": "• 多檔案間數據整合\n• 錯誤處理與例外管理",
+                "content": "• 多檔案間數據整合\n• 錯誤處理與例外管理\n• 流程測試與除錯",
                 "period": "上午"
             },
             {
@@ -1090,15 +1094,15 @@ const courseData = {
             {
                 "day": "第一天",
                 "time": "13:00-16:30",
-                "topic": "流程測試與 Make.com 問卷生成",
-                "content": "• 流程測試與除錯\n• Make.com 問卷自動化生成\n• 串接表單與 Google Sheets",
+                "topic": "No-code 流程自動化",
+                "content": "• 跨平台資料串接處理\n• LINE 官方智能聊天機器人\n• 流程監控與維護",
                 "period": "下午"
             },
             {
                 "day": "第二天",
                 "time": "09:30-12:00",
-                "topic": "No-code 流程自動化",
-                "content": "• LINE 官方帳號自動化\n• 客服 AI 聊天機器人\n• 監控與維護機制建立",
+                "topic": "GAS AI 自動化平台系統",
+                "content": "• 報價單自動生成與紀錄\n• 客戶往來資訊紀錄管理\n• 自動化工具網站製作",
                 "period": "上午"
             },
             {
@@ -1111,16 +1115,16 @@ const courseData = {
             {
                 "day": "第二天",
                 "time": "13:00-16:30",
-                "topic": "Make.com 規則式問答實戰",
-                "content": "• 透過規則分類問題，不經 AI 分析數據\n• 依不同問題逐層引導與條件分流\n• 依 Google Sheets 資料內容提供答案",
+                "topic": "Grok 流程自動化",
+                "content": "• 關注主題與資料來源設定\n• 每日新知摘要與分類\n• 情報彙整、排程與通知",
                 "period": "下午"
             }
         ]
     },
     "ai-analytics": {
         "title": "AI 數據分析與決策輔佐班",
-        "subtitle": "從資料清理到儀表板與自動化決策報告",
-        "description": "學習數據分析法則，以 AI 協助資料前處理與非結構化資料轉換，進行探索式數據分析與異常偵測。結合 Make.com 分析銷售數據，再以 GAS 製作視覺化儀表板及 Google Slides 自動化報告。",
+        "subtitle": "AI 資料前處理 × 輿情分析 × 儀表板與自動化決策報告",
+        "description": "從問題定義、分析指標與資料品質檢查開始，運用 AI 協助清理與整理資料；再將評論、留言與新聞等文字轉成結構化報表，歸納輿情主題、情緒傾向與顧客關注重點。第二天以 GAS 製作視覺化儀表板，並將分析結果與圖表整合為 Google Slides 自動化報告。",
         "audience": "財務人員、管理階層、決策者、數據分析師、行銷及業務人員。",
         "image": "image/ai-analytics.png",
         "days": 2,
@@ -1137,12 +1141,12 @@ const courseData = {
                 "desc": "清理資料並將非結構化內容轉為報表。"
             },
             {
-                "title": "EDA 與異常偵測",
-                "desc": "探索趨勢、關聯與異常數據。"
+                "title": "非結構化資料轉報表",
+                "desc": "將評論、留言與新聞整理成可比較的資料欄位。"
             },
             {
-                "title": "銷售數據分析",
-                "desc": "以 Make.com 串接銷售資料分析流程。"
+                "title": "輿情分析與洞察",
+                "desc": "歸納討論主題、情緒傾向與顧客需求，整理行動建議。"
             },
             {
                 "title": "自動化報告",
@@ -1154,7 +1158,7 @@ const courseData = {
                 "day": "第一天",
                 "time": "09:30-12:00",
                 "topic": "數據分析法則與資料前處理",
-                "content": "• 數據分析法則\n• AI 輔助資料前處理\n• 非結構化資料轉結構化報表",
+                "content": "• 數據分析法則與指標設定\n• AI 輔助資料清理與格式統一\n• 資料品質檢查與結果驗證",
                 "period": "上午"
             },
             {
@@ -1167,8 +1171,8 @@ const courseData = {
             {
                 "day": "第一天",
                 "time": "13:00-16:30",
-                "topic": "探索式分析與銷售數據實戰",
-                "content": "• 探索式數據分析（EDA）\n• 異常偵測\n• Make.com 銷售數據分析",
+                "topic": "非結構化資料轉結構化報表",
+                "content": "• 主觀資料轉結構化報表\n• 輿情分類與主題比較\n• 重點摘要與行動建議",
                 "period": "下午"
             },
             {
@@ -1196,8 +1200,8 @@ const courseData = {
     },
     "ai-communication": {
         "title": "商務營運 AI 通訊助理班",
-        "subtitle": "Make.com 通訊助理 × GAS 與 Ragic 營運串接",
-        "description": "先以 Make.com 建立營運監控與通訊推播助理，再掌握 API 串接心法，將 Ragic 無程式碼資料庫與 AI 程式寫作結合，以 GAS 實現跨系統 ERP／CRM 營運自動化。",
+        "subtitle": "AI 營運規則分析 × GAS LINE 客戶追蹤 × Ragic 營運串接",
+        "description": "先從營運資料與規則分析出發，整理庫存、銷售異常及追蹤提醒；再用 GAS 串接 LINE，將業務收到的客戶資訊記錄到 Google Sheets，管理客戶狀態、下次聯繫日期與待辦提醒。第二天結合 Ragic 資料庫與 GAS API 串接，完成 ERP／CRM 營運自動化。",
         "audience": "營運管理師、ERP／CRM 專案人員、管理階層與負責採購、庫存、銷售的工作者。",
         "image": "image/ai-communication.png",
         "days": 2,
@@ -1207,11 +1211,11 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電，準備 Google、Make.com 與 Ragic 帳號；串接權限及工具方案需求依課前通知。",
+        "preparation": "請攜帶筆電，準備 Google、Make.com、LINE 官方帳號與 Ragic 帳號；串接權限及工具方案需求依課前通知。",
         "features": [
             {
-                "title": "通訊助理",
-                "desc": "整合多資料來源、平台推播與審核。"
+                "title": "LINE 業務追蹤助理",
+                "desc": "以 GAS 將客戶資訊記錄至 Google Sheets，追蹤狀態與聯繫提醒。"
             },
             {
                 "title": "Ragic 資料庫",
@@ -1230,7 +1234,7 @@ const courseData = {
             {
                 "day": "第一天",
                 "time": "09:30-12:00",
-                "topic": "進階通訊自動化實戰（Make.com）",
+                "topic": "AI 營運資料智能與規則分析",
                 "content": "• 多資料來源整合判斷\n• 庫存與銷售異常通知系統\n• 即時營運監控與自動提醒",
                 "period": "上午"
             },
@@ -1244,8 +1248,8 @@ const courseData = {
             {
                 "day": "第一天",
                 "time": "13:00-16:30",
-                "topic": "智慧商務 AI 助理（Make.com）",
-                "content": "• 建立商務 AI 通訊自動化助理\n• 多通訊平台整合與推播\n• 權限管理與審核機制",
+                "topic": "業務通訊自動化助理",
+                "content": "• GAS 串接 LINE 與 Google Sheets\n• 客戶資訊記錄與洽談狀態追蹤\n• 聯繫排程與自動提醒",
                 "period": "下午"
             },
             {
@@ -1388,7 +1392,7 @@ const courseData = {
                 "period": "上午",
                 "time": "09:30-12:00",
                 "topic": "AI 人資系統建構與智慧招募",
-                "content": "• 拆解人資流程，以 AI 建立 GAS 後端與 HTML 前端\n• 設計履歷 Web 表單，串接 Google Sheets\n• AI 匹配職缺關鍵字、評分並回傳篩選結果"
+                "content": "• AI 輔助 GAS 後端與 HTML 前端建構\n• 履歷表單與 Google Sheets 串接\n• AI 職缺匹配、評分與篩選"
             },
             {
                 "day": "第一天",
@@ -1423,7 +1427,7 @@ const courseData = {
                 "period": "下午",
                 "time": "13:00-16:30",
                 "topic": "權限簽核與 HR 視覺化儀表板",
-                "content": "• 實作送出、通知、退回與核可，控管 Sheets 權限與敏感欄位\n• 以 Chart.js 呈現九宮格人才矩陣與部門分數分佈\n• 整合系統，完成權限測試與部署"
+                "content": "• 多級簽核流程與資料權限控管\n• Chart.js 人才矩陣與部門分數圖表\n• 系統整合、權限測試與部署"
             }
         ]
     },
@@ -1466,7 +1470,7 @@ const courseData = {
                 "period": "上午",
                 "time": "09:30-12:00",
                 "topic": "Gemini 開發體驗與 Prompt 設計",
-                "content": "• 體驗 Gemini Canvas 與 Google AI Studio 開發環境\n• 認識 Vibe Coding、模型選擇與 Temperature 設定\n• 設計 System Instructions、結構化提示詞與 Few-Shot 範例"
+                "content": "• Gemini Canvas 與 AI Studio 體驗\n• Vibe Coding 與模型參數設定\n• 系統指令、結構化提示詞與範例設計"
             },
             {
                 "day": "第一天",
@@ -1556,7 +1560,7 @@ const courseData = {
                 "day": "第一天",
                 "time": "13:00-16:30",
                 "topic": "Make.com 與 Microsoft 資料自動化",
-                "content": "• 簡易數據處理自動化\n• 授權 Outlook 與 OneDrive 資料夾存取\n• 知識庫檢索（RAG）：搜尋授權資料、整理分析並回傳結果至 Outlook",
+                "content": "• 簡易數據處理自動化\n• Outlook 與 OneDrive 授權存取\n• RAG 知識庫檢索與郵件結果回傳",
                 "period": "下午"
             },
             {
@@ -1617,7 +1621,7 @@ const courseData = {
                 "period": "上午",
                 "time": "09:30-12:00",
                 "topic": "Chat：用 Claude/Codex 把需求說清楚",
-                "content": "• 認識 Claude/Codex 的操作方式，練習說明目標、背景與想要的結果\n• 用 AI 協助寫文案、摘要資料，將零散想法整理成清楚的方案\n• 練習追問、補充與檢查回答，建立自己常用的工作指令"
+                "content": "• Claude/Codex 操作與需求描述\n• 文案撰寫、資料摘要與方案整理\n• 追問、修正與常用指令建立"
             },
             {
                 "day": "第一天",
@@ -1631,14 +1635,14 @@ const courseData = {
                 "period": "下午",
                 "time": "13:00-16:30",
                 "topic": "Cowork：讓 AI 協作處理日常工作",
-                "content": "• 把工作分成明確步驟，安排 AI 協助蒐集與整理資料\n• 練習處理 Excel、Word 與簡報，把重複工作變成可重用的流程\n• 檢查內容與格式，學會在關鍵步驟確認 AI 的成果"
+                "content": "• 任務拆解與資料蒐集整理\n• Excel、Word 與簡報協作\n• 成果檢查與工作流程建立"
             },
             {
                 "day": "第二天",
                 "period": "上午",
                 "time": "09:30-12:00",
                 "topic": "Code：用 Claude Code／Codex 做出第一個工具",
-                "content": "• 用文字描述報價計算器、問卷或簡易網站的功能\n• 將需求交給 Claude Code／Codex，逐步完成可以操作的雛形\n• 學會告訴 AI 專案規則，讓後續修改更有方向"
+                "content": "• 工作小工具需求與功能規劃\n• Claude Code／Codex 工具雛形實作\n• 專案規則與修改方式設定"
             },
             {
                 "day": "第二天",
@@ -1652,7 +1656,7 @@ const courseData = {
                 "period": "下午",
                 "time": "13:00-16:30",
                 "topic": "Code 實戰：把工具改到能用並展示成果",
-                "content": "• 使用 Claude Code／Codex 調整畫面與功能，完成自己的工作小工具\n• 用具體例子檢查結果，描述問題並請 AI 協助修正\n• 展示成品，討論如何將 Chat、Cowork、Code 用回日常工作"
+                "content": "• 工作小工具功能整合與介面調整\n• 測試、除錯與 AI 協作修正\n• 成果展示與工作情境應用"
             }
         ]
     }
@@ -1690,10 +1694,10 @@ const courseData = {
             { title: '持續支援', desc: '提供培訓後的技術支援與諮詢服務' }
         ],
         schedule: [
-            { day: '需求調研', time: '1-2週', topic: '企業現況分析', content: '• 業務流程盤點\n• AI 應用機會識別\n• 員工技能評估\n• 培訓需求確認' },
-            { day: '課程設計', time: '2-3週', topic: '客製化方案制定', content: '• 課程內容設計\n• 教學方式規劃\n• 教材準備\n• 評估機制建立' },
-            { day: '培訓執行', time: '依需求', topic: '分階段培訓實施', content: '• 基礎概念教學\n• 實務操作演練\n• 專案實作指導\n• 成果驗收' },
-            { day: '後續支援', time: '持續', topic: '技術支援與優化', content: '• 問題諮詢服務\n• 進階應用指導\n• 成效追蹤評估\n• 持續改進建議' }
+            { day: '需求調研', time: '1-2週', topic: '企業現況分析', content: '• 業務流程與 AI 應用機會盤點\n• 員工技能評估\n• 培訓需求確認' },
+            { day: '課程設計', time: '2-3週', topic: '客製化方案制定', content: '• 課程內容與教學方式規劃\n• 教材準備\n• 評估機制建立' },
+            { day: '培訓執行', time: '依需求', topic: '分階段培訓實施', content: '• 基礎概念與實務操作演練\n• 專案實作指導\n• 成果驗收' },
+            { day: '後續支援', time: '持續', topic: '技術支援與優化', content: '• 問題諮詢與進階應用指導\n• 成效追蹤評估\n• 持續改進建議' }
         ]
     }
 };
