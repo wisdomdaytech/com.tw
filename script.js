@@ -1199,10 +1199,10 @@ const courseData = {
         ]
     },
     "ai-communication": {
-        "title": "商務營運 AI 通訊助理班",
+        "title": "營運智慧 AI 通訊助理班",
         "subtitle": "AI 營運規則分析 × GAS LINE 客戶追蹤 × ERP 營運串接",
         "description": "先從營運資料與規則分析出發，整理庫存、銷售異常及追蹤提醒；再用 GAS 串接 LINE，將業務收到的客戶資訊記錄到 Google Sheets，管理客戶狀態、下次聯繫日期與待辦提醒。第二天結合 Ragic 資料庫與 GAS API 串接，完成 ERP／CRM 營運自動化。",
-        "audience": "營運管理師、ERP／CRM 專案人員、管理階層與負責採購、庫存、銷售的工作者。",
+        "audience": "營運管理師、ERP／CRM 專案人員、管理階層與負責採購、庫存、銷售、業務的工作者。",
         "image": "image/ai-communication.png",
         "days": 2,
         "hours": 12,
@@ -1257,7 +1257,7 @@ const courseData = {
                 "period": "上午",
                 "time": "09:30-12:00",
                 "topic": "ERP 與 GAS API 串接",
-                "content": "• 建構採購、庫存、客戶與銷售資料庫\n• 理解 API 串接流程\n• 抓取與同步 ERP 資料"
+                "content": "• 建構企業營運資料庫\n• 理解 API 串接流程\n• 抓取與同步營運資料"
             },
             {
                 "day": "第二天",
@@ -1271,7 +1271,7 @@ const courseData = {
                 "period": "下午",
                 "time": "13:00-16:30",
                 "topic": "ERP／CRM 營運自動化實戰",
-                "content": "• 安全庫存預警、自動建立採購單與 Email／LINE 審核通知\n• 分析歷史銷售，產生下季度配量建議並寫回 ERP\n• 整合流程測試、Q&A 與實務情境擴充"
+                "content": "• 安全庫存預警與採購單自動建立\n• 營運智慧分析與自動化儀錶板\n• 營運異常 LINE 通知"
             }
         ]
     },
