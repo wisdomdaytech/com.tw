@@ -2072,9 +2072,9 @@ function generateCourseScheduleSection(courseId) {
             <td><span class="course-status ${schedule.statusClass}" data-status="${schedule.status}">${schedule.status}</span></td>
             <td style="text-align: center;">
                 ${schedule.canRegister ? 
-                    `<button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="showRegistration('${courseId}', '${scheduleId}')">
-                        <i class="fas fa-user-plus"></i> 報名
-                    </button>` :
+                    `<a class="btn btn-primary" href="https://line.me/ti/p/@154gflfs" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.9rem; text-decoration: none;">
+                        <i class="fab fa-line"></i> LINE 詢問場次
+                    </a>` :
                     `<button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: var(--border); color: var(--muted); cursor: not-allowed;" disabled>
                         ${schedule.status === '進行中' ? '進行中' : '已截止'}
                     </button>`
@@ -2382,6 +2382,7 @@ function showCourseDetail(courseId) {
 
         ${generateCourseScheduleSection(courseId)}
 
+        <!-- 舊版課程 FAQ 與注意事項（暫時保留）：
         <div class="course-faq" style="margin: 4rem 0;">
             <h3><i class="fas fa-question-circle"></i> 課程常見問題</h3>
             <div style="background: var(--surface-soft); border-radius: 15px; padding: 2rem; margin: 0.5rem 0;">
@@ -2457,11 +2458,33 @@ function showCourseDetail(courseId) {
                 </div>
             </div>
         </div>
+        -->
+
+        <div class="course-faq" style="margin: 4rem 0;">
+            <h3><i class="fas fa-question-circle"></i> 課程常見問題</h3>
+            <div style="background: var(--surface-soft); border-radius: 15px; padding: 2rem; margin: 0.5rem 0;">
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-utensils" style="margin-right: 0.5rem;"></i>課程有供餐嗎？</h4>
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">${course.mealNote || '有的！本課程中午提供精美餐點，讓您專心學習無後顧之憂。'}</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-laptop" style="margin-right: 0.5rem;"></i>上課需要帶電腦嗎？</h4>
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">需要！請攜帶個人筆記型電腦，課程中會進行實作練習。建議使用 Windows 或 Mac 系統，並確保網路連線功能正常。</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #667eea; margin-bottom: 0.5rem;"><i class="fas fa-graduation-cap" style="margin-right: 0.5rem;"></i>上完這門課後有進階課程嗎？</h4>
+                    <p style="color: var(--text-secondary); margin-left: 1.5rem;">有的！我們提供完整的學習路徑，建議按照目前課程順序：人人都該會的生成式 AI 應用班 → 依工作需求選修工作流程、數據分析、商務營運、自媒體、人資、Vibe Coding、Microsoft 或 Claude/Codex 課程，逐步掌握 AI 應用與實務操作，讓你能更智慧的過好未來每一日！</p>
+                </div>
+            </div>
+        </div>
 
         <div style="text-align: center; margin-top: 3rem;">
-            <a href="javascript:void(0)" onclick="showRegistration('${courseId}')" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 2rem;">
-                <i class="fas fa-user-plus"></i> 立即報名
+            <a href="https://line.me/ti/p/@154gflfs" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                <i class="fab fa-line"></i> LINE 課程諮詢
             </a>
+            <p style="color: var(--text-secondary); margin-top: 0.75rem;">先聊聊課程內容與場次，確認適合後再決定是否報名。</p>
         </div>
         
     `;
