@@ -2498,10 +2498,9 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
     .subsidy-category-link { font-size: 1.15rem; }
 }
 
-/* 暫時隱藏：價格、首頁近期實體課程表，以及 Vibe Coding 程式課入口。 */
+/* 暫時隱藏：價格資訊與首頁近期實體課程表。 */
 .price-preview,
 .price-section,
-#home .course-table,
-[data-course-id="vibe-coding"] {
+#home .course-table {
     display: none !important;
 }

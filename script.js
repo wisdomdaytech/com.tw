@@ -1434,8 +1434,8 @@ const courseData = {
     "vibe-coding": {
         "paidAiDays": ["第二天"],
         "title": "Vibe Coding AI 軟體開發班",
-        "subtitle": "從自然語言開發到具會員與資料庫的網站部署",
-        "description": "以 Gemini Canvas 體驗自然語言開發，再進入 Google AI Studio，透過 Gemini 模型與 System Instructions 建立可運行的 Web App。第二天使用付費 AI 開發工具，結合 Supabase 資料庫、會員系統、GitHub 版本管理與 Zeabur 部署，完成訂餐系統等實務專案。",
+        "subtitle": "用自然語言打造智慧倉儲 Web App，並部署上線",
+        "description": "以 Vibe Coding 實作倉儲平面圖編輯器與 3D 貨物裝載系統，初探 Firestore 資料庫整合，最後部署至 Cloudflare。",
         "audience": "想開發工具的非技術人員、產品經理、新創團隊及個人創作者。",
         "image": "image/vibe-coding.png",
         "days": 2,
@@ -1445,23 +1445,23 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電，準備 Google、GitHub、Supabase、Zeabur 帳號；第二天需擁有付費 AI 帳號（建議 Codex 或 Claude），實作環境依課前通知。",
+        "preparation": "請攜帶筆電，並依課前通知準備 AI 與 Cloudflare 帳號；第二天需使用付費 AI 帳號。",
         "features": [
             {
-                "title": "Gemini 開發環境",
-                "desc": "體驗 Canvas 與 Google AI Studio。"
+                "title": "倉儲平面圖編輯器",
+                "desc": "以自然語言打造 Web App。"
             },
             {
-                "title": "工程提示詞",
-                "desc": "System Instructions、結構化提示詞與 Few-Shot。"
+                "title": "3D 貨物裝載系統",
+                "desc": "實作智慧倉儲裝載情境。"
             },
             {
-                "title": "全端網站實作",
-                "desc": "Supabase 資料庫與會員系統。"
+                "title": "Firestore 資料整合",
+                "desc": "初探雲端資料庫串接。"
             },
             {
-                "title": "雲端部署",
-                "desc": "專案提交 GitHub 並部署至 Zeabur。"
+                "title": "Cloudflare 部署",
+                "desc": "將 Web App 部署上線。"
             }
         ],
         "schedule": [
@@ -1469,8 +1469,8 @@ const courseData = {
                 "day": "第一天",
                 "period": "上午",
                 "time": "09:30-12:00",
-                "topic": "Gemini 開發體驗與 Prompt 設計",
-                "content": "• Gemini Canvas 與 AI Studio 體驗\n• Vibe Coding 與模型參數設定\n• 系統指令、結構化提示詞與範例設計"
+                "topic": "Vibe Coding 與倉儲平面圖編輯器",
+                "content": "• 認識 Vibe Coding 與自然語言開發\n• 掌握軟體開發流程規範\n• 實作倉儲平面圖編輯器 Web App"
             },
             {
                 "day": "第一天",
@@ -1483,8 +1483,8 @@ const courseData = {
                 "day": "第一天",
                 "period": "下午",
                 "time": "13:00-16:30",
-                "topic": "自然語言 Web App 開發實戰",
-                "content": "• 從零建立作品集網站／產品訂購計算器\n• 整合表單、計算與互動功能，打造輕量級 Web App\n• 即時預覽、除錯與迭代，規劃第二天資料庫專案"
+                "topic": "3D 智慧倉儲貨物裝載系統",
+                "content": "• 實作 3D 貨物裝載與配置\n• 初探 Firestore 資料庫整合\n• 即時預覽、除錯與迭代"
             },
             {
                 "day": "第二天",
@@ -1503,8 +1503,8 @@ const courseData = {
             {
                 "day": "第二天",
                 "time": "13:00-16:30",
-                "topic": "GitHub 與 Zeabur 部署實戰",
-                "content": "• 將專案提交 GitHub 進行版本管理\n• 串接 Zeabur 部署與環境變數設定\n• 測試會員登入、訂餐流程與網站上線",
+                "topic": "Cloudflare 部署與成果展示",
+                "content": "• 將專案提交 GitHub 進行版本管理\n• 串接 Cloudflare 部署與環境變數設定\n• 測試上線成果並進行展示",
                 "period": "下午"
             }
         ]
@@ -1583,6 +1583,84 @@ const courseData = {
                 "topic": "PowerPoint 模板與錨點簡報生成",
                 "content": "• 設計固定樣式 PPT 模板與內容錨點\n• 將分析結果寫入指定版位\n• 自動生成簡報並檢查格式",
                 "period": "下午"
+            }
+        ]
+    },
+    "microsoft-auto": {
+        "paidAiDays": ["第一天", "第二天"],
+        "paidAiNotice": "兩天皆需具備 Copilot Studio／Power Automate 付費授權（帳號與環境依課前通知確認）。",
+        "paidAiDayNotice": "當日需具備 Copilot Studio／Power Automate 相關付費授權",
+        "title": "Microsoft AI 全站自動化班",
+        "subtitle": "Copilot Studio × Power Automate，串接 Microsoft 365 全流程",
+        "description": "以 Copilot Studio 打造團隊知識 Agent 與智慧客服，再用 Power Automate 串接 SharePoint、Teams、Outlook、OneDrive，實作收單通知、簽核、資料整理與報表生成。從 Agent 設定、流程設計到權限與資安控管，建立可管理、可延伸的 Microsoft 365 自動化工作流。",
+        "audience": "適合使用 Microsoft 365，想導入 AI 知識助理、客服回覆與跨部門流程自動化的企業團隊、管理者與資訊人員。",
+        "image": "image/microsoft-auto.png",
+        "days": 2,
+        "hours": 12,
+        "time": "09:30–16:30（12:00–13:00 午休）",
+        "scheduleText": "開課日期待公告",
+        "location": "依開課公告",
+        "preparation": "請準備可使用的 Microsoft 365 帳號與筆電。Copilot Studio、Power Automate 的授權及實作環境需求依課前通知確認。",
+        "features": [
+            {
+                "title": "Copilot Studio Agent",
+                "desc": "設定知識來源、主題與工具，打造團隊 AI 助理。"
+            },
+            {
+                "title": "團隊知識與客服",
+                "desc": "整合 SharePoint 知識及 Outlook 智慧客服回信。"
+            },
+            {
+                "title": "Microsoft 365 流程串接",
+                "desc": "用 Power Automate 串接 Teams、Outlook、OneDrive 與 SharePoint。"
+            },
+            {
+                "title": "自動報表與流程治理",
+                "desc": "自動彙整資料、產出報表，並加入權限與人工審核。"
+            }
+        ],
+        "schedule": [
+            {
+                "day": "第一天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "Copilot Studio Agent 與團隊知識管理",
+                "content": "• 認識 Copilot 與 Copilot Studio 的差異\n• 設定 AI Agent、指示與知識來源\n• 建置團隊知識管理系統（KAS）"
+            },
+            {
+                "day": "第一天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第一天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "Outlook 智慧客服與 SharePoint 自動化",
+                "content": "• 延伸 Agent 串接 Outlook，草擬客服回信\n• SharePoint 網站、文件庫與管理技巧\n• 自動收單並通知 Teams／Outlook"
+            },
+            {
+                "day": "第二天",
+                "period": "上午",
+                "time": "09:30-12:00",
+                "topic": "Copilot Studio 工具與 Power Automate 入門",
+                "content": "• 串接 SharePoint 主題與 Agent tools\n• 設定權限、人工審核與流程控管\n• 認識 Power Automate 雲端流程"
+            },
+            {
+                "day": "第二天",
+                "period": "中午",
+                "time": "12:00-13:00",
+                "topic": "中午用餐與午休",
+                "content": "本課程中午提供餐點"
+            },
+            {
+                "day": "第二天",
+                "period": "下午",
+                "time": "13:00-16:30",
+                "topic": "Power Automate 跨平台與報表實戰",
+                "content": "• 串接 SharePoint、Teams、Outlook 與 OneDrive\n• 自動整理 OneDrive 檔案並更新追蹤清單\n• 自動彙整資料並生成分析報表"
             }
         ]
     },
@@ -2132,6 +2210,7 @@ function getCourseNeighbors(courseId) {
 
 function getPaidAiNotice(course, compact = false) {
     if (!course?.paidAiDays?.length) return '';
+    if (course.paidAiNotice) return course.paidAiNotice;
     const days = course.paidAiDays.length === course.days ? '兩天皆' : course.paidAiDays.join('、');
     return `${days}需擁有付費 AI 帳號${compact ? '' : '（建議 Codex 或 Claude）。'}`;
 }
@@ -2321,6 +2400,8 @@ function showCourseDetail(courseId) {
             <div class="price-section">
                 ${courseId === 'enterprise-general' || courseId === 'enterprise-custom' ? 
                     '<span style="color: var(--muted); font-weight: 600; font-size: 1.5rem;">依需求報價</span>' :
+                    course.price == null ?
+                    '<span style="color: var(--muted); font-weight: 600; font-size: 1.2rem;">課程費用請洽官方 LINE</span>' :
                     `<span class="original-price">原價 NT$ ${course.originalPrice.toLocaleString()}</span>
                     <span class="current-price">NT$ ${course.price.toLocaleString()}</span>
                     <span class="discount-badge">限時優惠 38% OFF</span>`
@@ -2359,7 +2440,7 @@ function showCourseDetail(courseId) {
                 <tbody>
                     ${course.schedule.map((session, index) => `
                         ${session.day && (index === 0 || session.day !== course.schedule[index-1].day) ? 
-                            `<tr><td colspan="3" class="day-header">${session.day}${course.paidAiDays?.includes(session.day) ? '<span class="course-day-paid-ai">需擁有付費 AI 帳號（建議 Codex 或 Claude）</span>' : ''}</td></tr>` : ''}
+                            `<tr><td colspan="3" class="day-header">${session.day}${course.paidAiDays?.includes(session.day) ? `<span class="course-day-paid-ai">${course.paidAiDayNotice || '需擁有付費 AI 帳號（建議 Codex 或 Claude）'}</span>` : ''}</td></tr>` : ''}
                         ${session.time === '' && session.topic === '' && session.content === '' && course.additionalInfo ? 
                             `<tr>
                                 <td colspan="3" style="text-align: center; vertical-align: middle; padding: 2rem 0; background: var(--surface-soft);">
@@ -2380,7 +2461,7 @@ function showCourseDetail(courseId) {
             </table>
         </div>
 
-        ${generateCourseScheduleSection(courseId)}
+        ${courseId === 'vibe-coding' ? '' : generateCourseScheduleSection(courseId)}
 
         <!-- 舊版課程 FAQ 與注意事項（暫時保留）：
         <div class="course-faq" style="margin: 4rem 0;">
