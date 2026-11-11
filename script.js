@@ -1489,7 +1489,7 @@ const courseData = {
             {
                 "day": "第二天",
                 "time": "09:30-12:00",
-                "topic": "付費 AI 工具與 Supabase 全端開發",
+                "topic": "付費 AI 工具與全端訂餐系統開發",
                 "content": "• 以自然語言規劃會員訂餐系統\n• 建立 Supabase 資料庫與會員驗證\n• 串接前端、資料庫及存取權限",
                 "period": "上午"
             },
@@ -1503,8 +1503,8 @@ const courseData = {
             {
                 "day": "第二天",
                 "time": "13:00-16:30",
-                "topic": "Cloudflare 部署與成果展示",
-                "content": "• 將專案提交 GitHub 進行版本管理\n• 串接 Cloudflare 部署與環境變數設定\n• 測試上線成果並進行展示",
+                "topic": "系統部署與成果展示",
+                "content": "• 將專案提交 GitHub 進行版本管理\n• 串接 Cloudflare 部署與環境變數設定\n• 手機 APP 製作與部署",
                 "period": "下午"
             }
         ]
