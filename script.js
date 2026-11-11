@@ -1057,7 +1057,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶可連網的筆記型電腦，準備 Google、Make.com、LINE 官方帳號與 Grok 帳號；排程串接、工具方案及所需權限依課前通知。",
+        "preparation": "請攜帶可連網的筆記型電腦，準備 Google、Make.com、LINE 官方帳號與 Grok 帳號。",
         "features": [
             {
                 "title": "多檔案整合",
@@ -1211,7 +1211,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電，準備 Google、Make.com、LINE 官方帳號與 Ragic 帳號；串接權限及工具方案需求依課前通知。",
+        "preparation": "請攜帶筆電，準備 Google、Make.com、LINE 官方帳號與 Ragic 帳號。",
         "features": [
             {
                 "title": "LINE 業務追蹤助理",
@@ -1289,7 +1289,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電與智慧型手機，準備 Google 帳號；社群實作需具管理權限的 FB 粉專／IG 帳號，依課前通知設定。",
+        "preparation": "請攜帶筆電，準備 Google 帳號；社群實作需具管理權限的 FB 粉專／IG 帳號。",
         "features": [
             {
                 "title": "手機影片體驗",
@@ -1445,7 +1445,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電，並依課前通知準備 AI 與 Cloudflare 帳號；第二天需使用付費 AI 帳號。",
+        "preparation": "請攜帶筆電，並準備 AI 與 Cloudflare 帳號；第二天需使用付費 AI 帳號。",
         "features": [
             {
                 "title": "倉儲平面圖編輯器",
@@ -1522,7 +1522,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶可執行 VBA 的桌面版 Office 筆電，準備 Microsoft、Copilot 與 Make.com 帳號；Outlook／OneDrive 授權及方案依課前通知。",
+        "preparation": "請攜帶可執行 VBA 的桌面版 Office 筆電，準備 Microsoft、Copilot 與 Make.com 帳號。",
         "features": [
             {
                 "title": "Copilot 任務助理",
@@ -1588,7 +1588,7 @@ const courseData = {
     },
     "microsoft-auto": {
         "paidAiDays": ["第一天", "第二天"],
-        "paidAiNotice": "兩天皆需具備 Copilot Studio／Power Automate 付費授權（帳號與環境依課前通知確認）。",
+        "paidAiNotice": "兩天皆需具備 Copilot Studio／Power Automate 付費授權。",
         "paidAiDayNotice": "當日需具備 Copilot Studio／Power Automate 相關付費授權",
         "title": "Microsoft AI 全站自動化班",
         "subtitle": "Copilot Studio × Power Automate，串接 Microsoft 365 全流程",
@@ -1600,7 +1600,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請準備可使用的 Microsoft 365 帳號與筆電。Copilot Studio、Power Automate 的授權及實作環境需求依課前通知確認。",
+        "preparation": "請準備可使用的 Microsoft 365 帳號與筆電。確認 Copilot Studio、Power Automate 是已授權及可用狀態。",
         "features": [
             {
                 "title": "Copilot Studio Agent",
@@ -1678,7 +1678,7 @@ const courseData = {
         "time": "09:30–16:30（12:00–13:00 午休）",
         "scheduleText": "開課日期待公告",
         "location": "依開課公告",
-        "preparation": "請攜帶筆電，兩天皆需擁有付費 AI 帳號（Claude 或可使用 Codex 的帳號）。課程以 Chat、Cowork、Code 三個學習面向安排實作，使用工具、帳號方案與操作環境依課前通知。",
+        "preparation": "請攜帶筆電，兩天皆需擁有付費 AI 帳號（Claude 或可使用 Codex 的帳號）。課程以 Chat、Cowork、Code 三個學習面向安排實作。",
         "features": [
             {
                 "title": "Chat｜把需求說清楚",
