@@ -1435,7 +1435,7 @@ const courseData = {
         "paidAiDays": ["第二天"],
         "title": "Vibe Coding AI 軟體開發班",
         "subtitle": "用自然語言打造智慧倉儲 Web App，並部署上線",
-        "description": "以 Vibe Coding 實作倉儲平面圖編輯器與 3D 貨物裝載系統，初探 Firestore 資料庫整合，最後部署至 Cloudflare。",
+        "description": "以 Vibe Coding 實作倉儲 3D 貨物裝載系統、手機 APP 、點餐系統與資料庫整合，最後學會 Cloudflare 部署。",
         "audience": "想開發工具的非技術人員、產品經理、新創團隊及個人創作者。",
         "image": "image/vibe-coding.png",
         "days": 2,
@@ -1448,16 +1448,16 @@ const courseData = {
         "preparation": "請攜帶筆電，並準備 AI 與 Cloudflare 帳號；第二天需使用付費 AI 帳號。",
         "features": [
             {
-                "title": "倉儲平面圖編輯器",
+                "title": "3D 貨物裝載系統",
                 "desc": "以自然語言打造 Web App。"
             },
             {
-                "title": "3D 貨物裝載系統",
-                "desc": "實作智慧倉儲裝載情境。"
+                "title": "打造手機 APP ",
+                "desc": "實作手機應用程式開發。"
             },
             {
-                "title": "Firestore 資料整合",
-                "desc": "初探雲端資料庫串接。"
+                "title": "Supabase 資料整合",
+                "desc": "雲端資料庫串接。"
             },
             {
                 "title": "Cloudflare 部署",
@@ -1469,8 +1469,8 @@ const courseData = {
                 "day": "第一天",
                 "period": "上午",
                 "time": "09:30-12:00",
-                "topic": "Vibe Coding 與倉儲平面圖編輯器",
-                "content": "• 認識 Vibe Coding 與自然語言開發\n• 掌握軟體開發流程規範\n• 實作倉儲平面圖編輯器 Web App"
+                "topic": "3D 智慧倉儲貨物裝載系統",
+                "content": "• 認識 Vibe Coding 與自然語言開發\n• 掌握軟體開發流程規範\n• 實作 3D 貨物裝載與配置"
             },
             {
                 "day": "第一天",
@@ -1483,8 +1483,8 @@ const courseData = {
                 "day": "第一天",
                 "period": "下午",
                 "time": "13:00-16:30",
-                "topic": "3D 智慧倉儲貨物裝載系統",
-                "content": "• 實作 3D 貨物裝載與配置\n• 初探 Firestore 資料庫整合\n• 即時預覽、除錯與迭代"
+                "topic": "手機 APP 開發",
+                "content": "• 實作手機應用程式開發\n• 初探手機環境設定與開發工具\n• 即時預覽、除錯與迭代"
             },
             {
                 "day": "第二天",
