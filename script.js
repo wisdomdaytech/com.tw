@@ -1435,7 +1435,7 @@ const courseData = {
         "paidAiDays": ["第二天"],
         "title": "Vibe Coding AI 軟體開發班",
         "subtitle": "用自然語言打造智慧倉儲 Web App，並部署上線",
-        "description": "以 Vibe Coding 實作倉儲 3D 貨物裝載系統、手機 APP 、點餐系統與資料庫整合，最後學會 Cloudflare 部署。",
+        "description": "以 Vibe Coding 實作倉儲 3D 貨物裝載系統、手機 APP、點餐系統與資料庫整合，最後學會 Cloudflare 部署。",
         "audience": "想開發工具的非技術人員、產品經理、新創團隊及個人創作者。",
         "image": "image/vibe-coding.png",
         "days": 2,
@@ -1489,8 +1489,8 @@ const courseData = {
             {
                 "day": "第二天",
                 "time": "09:30-12:00",
-                "topic": "付費 AI 工具與全端訂餐系統開發",
-                "content": "• 以自然語言規劃會員訂餐系統\n• 建立 Supabase 資料庫與會員驗證\n• 串接前端、資料庫及存取權限",
+                "topic": "全端 APP 系統開發",
+                "content": "• OCR 收據整合系統\n• 前後端整合運作\n• API 設計與串接技巧",
                 "period": "上午"
             },
             {
@@ -1503,8 +1503,8 @@ const courseData = {
             {
                 "day": "第二天",
                 "time": "13:00-16:30",
-                "topic": "系統部署與成果展示",
-                "content": "• 將專案提交 GitHub 進行版本管理\n• 串接 Cloudflare 部署與環境變數設定\n• 手機 APP 製作與部署",
+                "topic": "全端訂餐系統開發",
+                "content": "• 會員訂餐系統開發\n• 建立 Supabase 資料庫與會員驗證\n• 專案部署與環境變數設定",
                 "period": "下午"
             }
         ]
