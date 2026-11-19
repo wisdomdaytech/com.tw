@@ -2504,3 +2504,51 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
 #home .course-table {
     display: none !important;
 }
+
+/* AI 實戰觀點：整合在官網單頁導覽中的閱讀版型 */
+.insights-page { padding: 2rem 0 4rem; }
+.insights-page > .container > .hero { max-width: 920px; margin: 0 auto 2rem; }
+.insights-eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .08em; }
+.insights-page > .container > .hero h1 { margin: .5rem 0 1rem; line-height: 1.3; }
+.insights-article-shell { max-width: 900px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 3rem); border: 1px solid var(--border); border-radius: 20px; background: var(--surface); }
+.insights-article-shell article { color: var(--text); font-size: 1.02rem; line-height: 1.85; }
+.insights-article-shell article h2 { margin: 2.25em 0 .8em; border-left: 4px solid var(--accent); padding-left: .8rem; line-height: 1.4; }
+.insights-article-shell article h3 { margin: 1.6em 0 .55em; }
+.insights-article-shell article p, .insights-article-shell article li { color: var(--text-secondary); }
+.insights-article-shell article a { color: var(--accent); text-underline-offset: 3px; }
+.insights-article-shell article img { display: block; width: 100%; height: auto; border-radius: 14px; }
+.insights-article-shell article figure { margin: 1.5rem 0; }
+.insights-article-shell article figcaption { color: var(--muted); text-align: center; font-size: .9rem; margin-top: .45rem; }
+.insights-article-shell article .box { padding: 1rem 1.2rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-soft); margin: 1.25rem 0; }
+.insights-article-shell article .tw { overflow-x: auto; }
+.insights-article-shell article table { width: 100%; min-width: 560px; border-collapse: collapse; }
+.insights-article-shell article th, .insights-article-shell article td { border: 1px solid var(--border); padding: .75rem; text-align: left; vertical-align: top; }
+.insights-article-shell article th { background: var(--surface-soft); color: var(--text); }
+.insights-article-shell article .meta { color: var(--muted); font-size: .9rem; }
+@media (max-width: 768px) { .insights-page > .container > .hero { padding: 1rem 0; } .insights-article-shell { padding: 1.1rem; } }
+
+/* AI 實戰觀點文章列表與閱讀狀態 */
+.insights-list-intro { max-width: 850px; margin: 0 auto 1.25rem; color: var(--text-secondary); }
+.insights-card-grid { display: grid; grid-template-columns: 1fr; gap: .85rem; max-width: 900px; margin: 0 auto; }
+.insights-card { display: block; width: 100%; padding: 1.3rem 1.5rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text); text-align: left; font: inherit; cursor: pointer; transition: border-color .2s, transform .2s, background .2s; }
+.insights-card:hover, .insights-card:focus-visible { border-color: var(--accent); transform: translateY(-2px); background: var(--surface-soft); outline: none; }
+.insights-card h2 { margin: .35rem 0; font-size: 1.2rem; line-height: 1.5; }
+.insights-card p { color: var(--text-secondary); margin: .2rem 0 .65rem; }
+.insights-tag, .insights-eyebrow { color: var(--accent); font-size: .86rem; font-weight: 700; }
+.insights-read { color: var(--accent); font-weight: 700; }
+.insights-article-shell { scroll-margin-top: 100px; }
+.insights-article-shell [data-insight-article] h1 { margin: 1rem 0; font-size: clamp(1.7rem, 4vw, 2.35rem); line-height: 1.4; }
+.insights-article-shell [data-insight-article] h2[id] { scroll-margin-top: 105px; }
+.insights-back { display: inline-flex; align-items: center; margin: 0 0 1.25rem; padding: .65rem 1rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface-soft); color: var(--text); font: inherit; cursor: pointer; }
+.insights-back:hover, .insights-back:focus-visible { border-color: var(--accent); color: var(--accent); }
+
+.insights-card { text-decoration: none; }
+.insights-card { display: grid; grid-template-columns: minmax(190px, 270px) minmax(0, 1fr); align-items: stretch; gap: 1.25rem; }
+.insights-card-thumb { display: block; overflow: hidden; border-radius: 10px; background: var(--surface-soft); }
+.insights-card-thumb img { display: block; width: 100%; height: 100%; min-height: 150px; object-fit: cover; }
+.insights-card-copy { display: flex; flex-direction: column; align-items: flex-start; }
+.insights-card-meta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem 1rem; width: 100%; margin-top: auto; }
+.insights-card-meta time { color: var(--muted); font-size: .86rem; }
+@media (max-width: 640px) { .insights-card { grid-template-columns: 1fr; gap: .8rem; } .insights-card-thumb img { aspect-ratio: 16 / 9; height: auto; min-height: 0; } }
+
+.subsidy-hero { max-width: none; }

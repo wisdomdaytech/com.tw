@@ -1,4 +1,46 @@
 // 課程資料最後更新時間: 2026/4/24 上午3:52:23
+function setInsightMeta(title, description) {
+    document.title = title;
+    const descriptionMeta = document.querySelector('meta[name="description"]');
+    if (descriptionMeta) descriptionMeta.content = description;
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.content = title;
+    const twitterTitle = document.querySelector('meta[property="twitter:title"]');
+    if (twitterTitle) twitterTitle.content = title;
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) ogDescription.content = description;
+    const twitterDescription = document.querySelector('meta[property="twitter:description"]');
+    if (twitterDescription) twitterDescription.content = description;
+}
+
+function showInsightList(updateLocation = false) {
+    const list = document.querySelector('[data-insight-list]');
+    const view = document.querySelector('[data-insight-view]');
+    if (list) list.hidden = false;
+    if (view) view.hidden = true;
+    document.querySelectorAll('[data-insight-article]').forEach(article => { article.hidden = true; });
+    if (updateLocation) history.pushState({page: 'insights'}, '', '#insights');
+    setInsightMeta('AI 實戰觀點｜AI 工具、工作應用與實戰指南 - 智日未來科技 WisdomDaytech', '探索生成式 AI、AI Agent、流程自動化、數據分析、人資與行銷等實用教學與案例。');
+}
+
+function showInsightArticle(articleId, updateLocation = true) {
+    const list = document.querySelector('[data-insight-list]');
+    const view = document.querySelector('[data-insight-view]');
+    const selected = document.querySelector(`[data-insight-article="${articleId}"]`);
+    if (!list || !view || !selected) return;
+    list.hidden = true;
+    view.hidden = false;
+    document.querySelectorAll('[data-insight-article]').forEach(article => { article.hidden = article !== selected; });
+    const heading = selected.querySelector('h1');
+    const title = heading?.textContent || 'AI 實戰觀點';
+    const description = selected.dataset.description || title;
+    if (updateLocation) history.pushState({page: 'insights', articleId}, '', `#insights-${articleId}`);
+    setInsightMeta(`${title} - 智日未來科技 WisdomDaytech`, description);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    heading?.setAttribute('tabindex', '-1');
+    heading?.focus({preventScroll: true});
+}
+
 // 頁面切換功能（用戶點擊觸發）
 function showPage(pageId) {
     // 隱藏所有頁面
@@ -10,6 +52,7 @@ function showPage(pageId) {
     if (targetPage) {
         targetPage.classList.add('active');
     }
+    if (pageId === 'insights') showInsightList();
     
     // 更新頁面標題
     updatePageTitle(pageId);
@@ -154,6 +197,16 @@ function handleScrollAnimations() {
 // URL處理和頁面初始化
 function handleUrlAndInit() {
     const hash = window.location.hash.substring(1); // 移除 #
+
+    if (hash.startsWith('insights-')) {
+        const articleId = hash.slice('insights-'.length);
+        if (document.querySelector(`[data-insight-article="${articleId}"]`)) {
+            showPageFromUrl('insights');
+            history.replaceState({page: 'insights', articleId}, '', `#insights-${articleId}`);
+            showInsightArticle(articleId, false);
+            return;
+        }
+    }
     
     if (hash.startsWith('course-')) {
         // 如果是課程頁面
@@ -163,7 +216,7 @@ function handleUrlAndInit() {
             showCourseDetail(courseId);
             return;
         }
-    } else if (hash && (['home', 'corporate', 'enterprise-training', 'consulting', 'about'].includes(hash) || document.getElementById(hash)?.matches('.subsidy-page'))) {
+    } else if (hash && (['home', 'corporate', 'enterprise-training', 'consulting', 'about', 'insights'].includes(hash) || document.getElementById(hash)?.matches('.subsidy-page'))) {
         // 如果是普通頁面
         showPageFromUrl(hash);
         return;
@@ -184,6 +237,7 @@ function showPageFromUrl(pageId) {
     if (targetPage) {
         targetPage.classList.add('active');
     }
+    if (pageId === 'insights') showInsightList();
     
     // 更新頁面標題
     updatePageTitle(pageId);
@@ -274,6 +328,7 @@ function updatePageTitle(pageId, courseTitle = null) {
         'enterprise-training': `企業內訓課程 - ${baseName}`,
         'consulting': `自動化顧問服務 - ${baseName}`,
         'about': `關於我們 - ${baseName}`,
+        'insights': `AI 實戰觀點｜AI Agent、ChatGPT 與工作應用 - ${baseName}`,
         'course-detail': courseTitle ? `${courseTitle} - ${baseName}` : `課程詳細 - ${baseName}`
     };
     
@@ -284,7 +339,13 @@ function updatePageTitle(pageId, courseTitle = null) {
 // 瀏覽器前進/後退按鈕支援
 window.addEventListener('popstate', function(event) {
     if (event.state) {
-        if (event.state.page === 'course-detail' && event.state.courseId) {
+        if (event.state.page === 'insights') {
+            showPageFromUrl('insights');
+            if (event.state.articleId) {
+                history.replaceState({page: 'insights', articleId: event.state.articleId}, '', `#insights-${event.state.articleId}`);
+                showInsightArticle(event.state.articleId, false);
+            }
+        } else if (event.state.page === 'course-detail' && event.state.courseId) {
             showCourseDetail(event.state.courseId);
         } else {
             showPageFromUrl(event.state.page);
@@ -847,6 +908,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Only intercept ordinary clicks; let the browser handle new-tab/window gestures.
     document.addEventListener('click', function(event) {
         if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const insightOpen = event.target.closest('[data-open-insight]');
+        if (insightOpen) {
+            event.preventDefault();
+            showInsightArticle(insightOpen.dataset.openInsight);
+            return;
+        }
+        if (event.target.closest('[data-insight-back]')) {
+            event.preventDefault();
+            showInsightList(true);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            return;
+        }
+        const insightTocLink = event.target.closest('.insights-article-shell a[href^="#"]');
+        const insightArticle = insightTocLink?.closest('[data-insight-article]');
+        const insightTarget = insightTocLink && document.getElementById(decodeURIComponent(insightTocLink.hash.slice(1)));
+        if (insightTocLink && insightArticle && insightTarget && insightArticle.contains(insightTarget)) {
+            event.preventDefault();
+            insightTarget.scrollIntoView({behavior: 'smooth', block: 'start'});
+            return;
+        }
         const subsidyLink = event.target.closest('a[href="#subsidies"], a[href^="#subsidy-"]');
         if (subsidyLink && (!subsidyLink.target || subsidyLink.target === '_self')) {
             event.preventDefault();
@@ -2688,3 +2769,6 @@ function showPageWithoutScroll(pageId) {
         navMenu.classList.remove('active');
     }
 }
+
+
+
